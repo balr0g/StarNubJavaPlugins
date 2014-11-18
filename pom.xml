@@ -25,7 +25,7 @@
     </organization>
     <scm>
         <developerConnection>Underbalanced</developerConnection>
-        <url>https://github.com/StarNub/EssentialsPlugin</url>
+        <url>https://github.com/StarNub/StarNubPlugins</url>
     </scm>
     <issueManagement>
         <url>http://www.starnub.org</url>
@@ -42,6 +42,12 @@
             <artifactId>starnub</artifactId>
             <version>0.6</version>
             <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.14.8</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
