@@ -1,0 +1,9 @@
+commands: ['spawnitem']
+main_args: ['None']
+class: starboundcommands.commands.spawning.SpawnItem
+can_use: 1
+description: |-
+    - Spawns specified item
+    - This has 3 arguements, for StarNub purpose ignore the args 2.
+
+    - NOTE: This command is forwarded to the Starbound server.

@@ -1,0 +1,9 @@
+commands: ['spawnmonster']
+main_args: ['None']
+class: starboundcommands.commands.spawning.SpawnMonster
+can_use: 1
+description: |-
+    - Spawns a monster at mouse cursor
+    - This has 3 arguements, for StarNub purpose ignore the args 2.
+
+    - NOTE: This command is forwarded to the Starbound server.

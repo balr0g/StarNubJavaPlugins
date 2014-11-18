@@ -1,0 +1,5 @@
+commands: ['account']
+main_args: ['new', 'addchar', 'changepass', 'adminnew', 'adminaddchar']
+class: org.starnub.starnubcommands.commands.player.Accounts
+can_use: 3
+description: |-

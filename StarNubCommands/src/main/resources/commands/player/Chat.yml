@@ -1,0 +1,5 @@
+commands: ['chatrooms', 'chat']
+main_args: ['join', 'leave']
+class: org.starnub.starnubcommands.commands.player.Chat
+can_use: 3
+description: |-

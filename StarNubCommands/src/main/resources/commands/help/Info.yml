@@ -1,0 +1,5 @@
+commands: ['help', 'info']
+main_args: ['None']
+class: org.starnub.starnubcommands.commands.help.HelpInfo
+can_use: 1
+description: |-

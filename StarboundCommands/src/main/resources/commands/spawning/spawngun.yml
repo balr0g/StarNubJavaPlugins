@@ -1,0 +1,10 @@
+commands: ['spawngun']
+main_args: ['None']
+class: starboundcommands.commands.spawning.SpawnGun
+can_use: 1
+examples: |-
+    /spawngun <level> [kind]
+description: |-
+    - Spawns a randomly generated ranged weapon
+
+    - NOTE: This command is forwarded to the Starbound server.

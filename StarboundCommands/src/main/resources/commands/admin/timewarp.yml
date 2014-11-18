@@ -1,0 +1,8 @@
+commands: ['timewarp']
+main_args: ['None']
+class: starboundcommands.commands.admin.TimeWarp
+can_use: 1
+description: |-
+    - Changes the current planet’s clock
+
+    - NOTE: This command is forwarded to the Starbound server.

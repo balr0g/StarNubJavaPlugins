@@ -1,0 +1,6 @@
+commands: ['wordfilter']
+main_args: ['add', 'delete']
+class: org.starnub.starnubcommands.commands.admin.WordFilter
+can_use: 3
+description: |-
+    -

@@ -1,0 +1,8 @@
+commands: ['kickcid']
+main_args: ['None']
+class: starboundcommands.commands.kickban.KickCid
+can_use: 1
+description: |-
+    - Kicks a player based on their CID
+
+    - NOTE: This command is forwarded to the Starbound server.

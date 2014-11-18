@@ -1,0 +1,5 @@
+commands: ['ping']
+main_args: ['']
+class: org.starnub.starnubcommands.commands.player.Ping
+can_use: 3
+description: |-
