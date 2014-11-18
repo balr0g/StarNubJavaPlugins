@@ -1,0 +1,10 @@
+{
+  "server_monitor": true,
+  "auto_restart": true,
+  "auto_restart_timer": 4,
+  "motd": true,
+  "player_join_leave_message": true,
+  "server_broadcast": true
+}
+
+#Autorestarter on or off // MOTD message // Server restart messages // TimeUnits for restarter //

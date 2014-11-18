@@ -1,0 +1,18 @@
+name: ChatManager
+class: org.starnub.essentials.ChatManager
+version: 1.0
+author: Underbalanced
+url: http://www.starnub.org
+dependencies: None
+languages: english
+configuration: yes
+commands: yes
+commands_name: chatmanager
+commands_alias: cm
+runnables: false
+runnable_classes: ['']
+description: |-
+    Under Current Development.
+    Features:
+    Additions:
+    Removals:

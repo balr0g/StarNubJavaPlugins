@@ -1,0 +1,18 @@
+name: EnjinSync
+class: org.starnub.enjinsync.EnjinSync
+version: 1.0
+author: Underbalanced
+url: http://www.starnub.org
+dependencies: None
+languages: english
+configuration: yes
+commands: yes
+commands_name: enjin
+commands_alias: enj
+runnables: false
+runnable_classes: ['']
+description: |-
+    Under Current Development.
+    Features:
+    Additions:
+    Removals:

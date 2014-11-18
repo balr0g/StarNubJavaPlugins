@@ -1,0 +1,20 @@
+{
+"server chat": {
+    "server_name_color": "white",
+    "server_message_color": "white",
+    "global_name_color": "#FFFF00",
+    "global_message_name_color": "#FFFF00",
+    "player_command_delivery_reply": true,
+    "global_message_speed": 3000,
+    "global_command_speed": 1000,
+    "global_word_filter": true,
+    "global_caps_limiter": true,
+    "global_message_remove_continuous_letters": true,
+    "global_message_block_repeat_messages": true,
+    "global_caps_percentage": 50.0,
+    "global_message_similarity": 100.0,
+    "global_add_groups_illegal_nicks": true,
+    "global_add_tags_illegal_nicks": true,
+    "global_spam_reply": "Woah! Slow down your spamming the server."
+  }
+}

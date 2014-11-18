@@ -1,0 +1,14 @@
+name: NoCheats
+class: org.starnub.nocheats.NoCheats
+version: 1.0
+author: Underbalanced
+url: http://www.starnub.org
+dependencies: None
+languages: english
+configuration: yes
+commands: yes
+commands_base_name: nocheats
+commands_alias_name: nc
+runnables: false
+runnable_classes: ['none']
+description: |-

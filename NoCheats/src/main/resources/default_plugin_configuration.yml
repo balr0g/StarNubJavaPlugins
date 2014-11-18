@@ -1,0 +1,14 @@
+"tiles": {
+    "misc": {
+      "frequency": 300,
+      "radius": 3,
+      "damage_min": !!float 0,
+      "damage_max": !!float 3.5
+    },
+    "manipulators": {
+      "frequency": 50,
+      "radius": 5
+#      "damage_min": 0,
+#      "damage_max": 0.5
+    }
+  }

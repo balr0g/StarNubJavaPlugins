@@ -1,0 +1,37 @@
+{
+   "database": {
+     "type": "sqlite",
+     "mysql_url": "127.0.0.1:3306/StarNubEnjin",
+     "mysql_user": "StarNubEnjin",
+     "mysql_pass": "StarNubEnjin+-*/"
+   },
+   "enjin": {
+     "website_url": "http://www.free-universe.com/",
+     "secret_key": "",
+     "shop_module": ""
+     },
+     "other": {
+       "refresh_rate": 5
+     },
+   "groups_map": {
+     "owner": [
+       "[Free Universe Owner]"
+     ],
+     "moderator": [
+       "[moderator]"
+     ],
+     "testgroup": [
+       "[outcast]",
+       "[visitor]"
+     ],
+     "communitymanager": [
+       "[Community Manager]"
+     ]
+   },
+     "awards_map": {
+       "testaward": [
+         "[Harvestor]",
+         "[visitor]"
+       ]
+     }
+ }

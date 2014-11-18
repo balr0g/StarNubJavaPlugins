@@ -9,7 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>commandparser</artifactId>
+    <artifactId>enjinsync</artifactId>
     <version>1.0-SNAPSHOT</version>
+
 
 </project>

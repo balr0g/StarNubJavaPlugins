@@ -1,0 +1,5 @@
+commands: ['sync', 'link', 'help']
+main_args: ['']
+class: org.starnub.starnubcommands.commands.player.Accounts
+can_use: 3
+description: |-

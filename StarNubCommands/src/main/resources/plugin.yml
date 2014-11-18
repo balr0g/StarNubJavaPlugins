@@ -1,0 +1,29 @@
+name: StarNubCommands
+class: org.starnub.starnubcommands.StarNubCommands
+version: 0.5
+live_update: yes
+author: Underbalanced
+url: http://www.starnub.org
+dependencies: None
+languages: english
+configuration: no
+commands: yes
+commands_name: starnub
+commands_alias: sn
+runnables: false
+runnable_classes: ['none']
+description: |-
+    - Starnub Commands Plugin was created to separate the commands
+    from the StarNubPlugin. This will allow new commands to be added
+    while the server is running without restarting the entire server.
+    - This plugin is packaged by default with the StarNub Server and cannot
+    be removed. It is an essential Plugin.
+
+    Features:
+    - StarNub Commands
+
+    Additions:
+    1.0 - Coming Soon
+
+    Removals:
+    None
