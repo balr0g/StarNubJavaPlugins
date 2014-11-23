@@ -16,5 +16,10 @@
     "global_add_groups_illegal_nicks": true,
     "global_add_tags_illegal_nicks": true,
     "global_spam_reply": "Woah! Slow down your spamming the server."
-  }
+  },
+  "groups": {
+      "bracket_color": "#FFFF00",
+      "bracket_end": "]",
+      "bracket_start": "["
+    }
 }
