@@ -39,15 +39,9 @@
     <dependencies>
         <dependency>
             <groupId>org.starnub</groupId>
-            <artifactId>starnub</artifactId>
-            <version>0.6</version>
+            <artifactId>starnubserver</artifactId>
+            <version>1.0-Beta</version>
             <type>jar</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.14.8</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

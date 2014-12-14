@@ -27,7 +27,12 @@ import org.starnub.eventsrouter.events.PlayerEvent;
 import org.starnub.eventsrouter.events.StarNubEvent;
 import org.starnub.eventsrouter.events.TimeEvent;
 import org.starnub.eventsrouter.handlers.StarNubEventHandler;
-import org.starnub.plugins.Plugin;
+import starnubserver.plugins.JavaPlugin;
+import starnubserver.plugins.generic.CommandInfo;
+import starnubserver.plugins.generic.PluginDetails;
+import starnubserver.plugins.resources.PluginRunnables;
+import starnubserver.plugins.resources.YAMLFiles;
+import starnubserver.resources.files.PluginConfiguration;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -45,9 +50,11 @@ import java.util.concurrent.TimeUnit;
  * @author Daniel (Underbalanced) (www.StarNub.org)
  * @since 1.0
  */
-public final class Essentials extends Plugin {
+public final class Essentials extends JavaPlugin {
 
     private PlayerCtxCacheWrapper joinLeaveCache;
+
+
 
     @Override
     public void onPluginEnable() {
@@ -68,6 +75,7 @@ public final class Essentials extends Plugin {
         if ((boolean) StarNub.getPluginManager().getConfiguration("essentials").get("player_join_leave_message")) {
             playerJoinDisconnectMessages();
         }
+
     }
 
     @Override

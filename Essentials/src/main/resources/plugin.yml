@@ -1,18 +1,24 @@
-name: Essentials
-class: essentials.Essentials
-version: 1.0
-author: Underbalanced
-url: http://www.starnub.org
-dependencies: None
-languages: english
-configuration: yes
-commands: yes
-commands_name: essentials
-commands_alias: es
-runnables: false
-runnable_classes: ['essentials.Test1', 'essentials.Test2']
-description: |-
-    Under Current Development.
-    Features:
-    Additions:
-    Removals:
+{
+  "name": "Essentials",
+  "class": "essentials.Essentials",
+    "details": {
+    "languages": "english",
+    "version": 1.0,
+    "description": "None",
+    "dependencies": "None",
+    "author": "Underbalanced",
+    "url": "http://www.starnub.org"
+  },
+  "configuration": true,
+  "commands": {
+    "has": true,
+    "name": "essentials",
+    "alias": "es",
+  },
+  "runnables": {
+    "has": false, 
+    "runnables": []
+  }, 
+  "additional_permissions": [],
+  "yaml_files": [{filename.yml: directory}, {filename.yml: directory}],
+}
