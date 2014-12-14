@@ -6,7 +6,6 @@ url: http://www.starnub.org
 dependencies: None
 languages: english
 configuration: yes
-commands: yes
 commands_name: chatmanager
 commands_alias: cm
 runnables: false

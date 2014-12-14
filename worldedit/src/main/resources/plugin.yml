@@ -1,9 +1,8 @@
 {
-  "name": "Essentials",
-  "class": "essentials.Essentials",
-  "details": {
-    "live_update": true,
-    "languages": ['English'],
+  "name": "WorldEdit",
+  "class": "org.starnub.worldedit.WorldEdit",
+    "details": {
+    "languages": ['english'],
     "version": 1.0,
     "description": "None",
     "dependencies": [],
@@ -12,13 +11,15 @@
   },
   "configuration": true,
   "commands": {
-    "has": true,
+    "has": false,
     "name": "essentials",
     "alias": "es",
+
   },
   "runnables": {
-    "has": false, 
+    "has": false,
     "runnables": []
-  }, 
+  },
   "additional_permissions": [],
 }
+

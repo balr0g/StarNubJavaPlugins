@@ -16,6 +16,7 @@
         <module>ChatManager</module>
         <module>NoCheats</module>
         <module>EnjinSync</module>
+        <module>worldedit</module>
     </modules>
 
     <description>StarNubPlugins are plugins created by the StarNub Developers. These plugins may be required to run a StarNub server while some may be optional.</description>
