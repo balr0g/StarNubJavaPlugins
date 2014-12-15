@@ -1,5 +1,5 @@
 commands: ['buildmode']
 main_args: ['on', 'off']
-class: org.starnub.worldedit.commands.BaseCommand
+class: BaseCommand
 can_use: 0
 description: |-

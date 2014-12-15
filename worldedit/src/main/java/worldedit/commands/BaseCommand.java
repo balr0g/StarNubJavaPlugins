@@ -1,4 +1,4 @@
-package org.starnub.worldedit.commands;
+package worldedit.commands;
 
 import starnubserver.plugins.Command;
 

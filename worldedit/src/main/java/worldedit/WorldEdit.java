@@ -16,7 +16,7 @@
 * this StarNub Software.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.starnub.worldedit;
+package worldedit;
 
 
 import io.netty.channel.ChannelHandlerContext;
@@ -54,6 +54,7 @@ public final class WorldEdit extends JavaPlugin {
     public WorldEdit(String NAME, File FILE, String MAIN_CLASS, PluginDetails PLUGIN_DETAILS, PluginConfiguration CONFIGURATION, YAMLFiles FILES, CommandInfo COMMAND_INFO, PluginRunnables PLUGIN_RUNNABLES) {
         super(NAME, FILE, MAIN_CLASS, PLUGIN_DETAILS, CONFIGURATION, FILES, COMMAND_INFO, PLUGIN_RUNNABLES);
     }
+
     volatile Vec2I point1 = null;
     volatile Vec2I point2 = null;
 

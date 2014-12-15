@@ -1,6 +1,6 @@
 {
   "name": "WorldEdit",
-  "class": "org.starnub.worldedit.WorldEdit",
+  "class": "WorldEdit",
     "details": {
     "languages": ['english'],
     "version": 1.0,
