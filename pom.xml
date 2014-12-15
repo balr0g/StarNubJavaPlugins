@@ -19,33 +19,38 @@
         <module>worldedit</module>
     </modules>
 
-    <description>StarNubPlugins are plugins created by the StarNub Developers. These plugins may be required to run a StarNub server while some may be optional.</description>
+    <name>starnubplugins</name>
+    <url>http://www.starnub.org</url>
+    <description>StarNub is a set of libraries and tools for Starbound Servers.</description>
     <organization>
         <name>StarNub</name>
         <url>http://www.starnub.org</url>
     </organization>
     <scm>
         <developerConnection>Underbalanced</developerConnection>
-        <url>https://github.com/StarNub/StarNubPlugins</url>
-    </scm>
-    <issueManagement>
         <url>http://www.starnub.org</url>
-    </issueManagement>
+    </scm>
+
     <repositories>
         <repository>
             <id>StarNub</id>
-            <url>http://repo.starnub.org/</url>
+            <url>http://repo.starnub.org/repository/internal/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </repository>
     </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.starnub</groupId>
-            <artifactId>starnubserver</artifactId>
-            <version>1.0-Beta</version>
+            <artifactId>starnub</artifactId>
+            <version>1.01-beta</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
