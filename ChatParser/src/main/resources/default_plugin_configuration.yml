@@ -1,0 +1,6 @@
+{
+  global_chat_rate: 3000,
+  spam_message_chat: "Woah! Slow down your spamming the server with chat messages.",
+  global_command_rate: 1000,
+  spam_message_command: "Woah! Slow down your spamming the server with command messages."
+}

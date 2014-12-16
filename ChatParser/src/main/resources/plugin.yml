@@ -1,0 +1,26 @@
+{
+  "name": "ChatParser",
+  "class": "chatparser.ChatParser",
+    "details": {
+    "languages": ['english'],
+    "version": 1.0,
+    "description": "None",
+    "dependencies": [],
+    "author": "Underbalanced",
+    "url": "http://www.starnub.org"
+  },
+  "configuration": true,
+  "commands": {
+    "has": false,
+    "name": "essentials",
+    "alias": "es",
+  },
+  "runnables": {
+    "has": false,
+    "runnables": []
+  },
+  "additional_permissions": [ 'chatparser.chat',
+                              'chatparser.chat.#',
+                              'chatparser.command',
+                              'chatparser.command.#'],
+}
