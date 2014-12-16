@@ -19,8 +19,8 @@
     "has": false,
     "runnables": []
   },
-  "additional_permissions": [ 'chatparser.chat',
-                              'chatparser.chat.#',
-                              'chatparser.command',
-                              'chatparser.command.#'],
+  "additional_permissions": [ 'commandparser.chat',
+                              'commandparser.chat.#',
+                              'commandparser.command',
+                              'commandparser.command.#'],
 }

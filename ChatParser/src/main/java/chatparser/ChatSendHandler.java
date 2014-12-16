@@ -18,9 +18,9 @@ public class ChatSendHandler extends PacketEventHandler {
 
     private final PluginConfiguration CONFIG;
     private final PlayerCtxCacheWrapper CTX_CACHE_CHAT = new PlayerCtxCacheWrapper("StarNub", "StarNub - Chat Parser - Chat Rate", true);
-    private final PermissionCacheWrapper CHAT_PERMISSION = new PermissionCacheWrapper("ChatParser", "chatparser.chat");
+    private final PermissionCacheWrapper CHAT_PERMISSION = new PermissionCacheWrapper("ChatParser", "commandparser.chat");
     private final PlayerCtxCacheWrapper CTX_CACHE_COMMAND = new PlayerCtxCacheWrapper("StarNub", "StarNub - Chat Parser - Command Rate", true);
-    private final PermissionCacheWrapper COMMAND_PERMISSION = new PermissionCacheWrapper("ChatParser", "chatparser.command");
+    private final PermissionCacheWrapper COMMAND_PERMISSION = new PermissionCacheWrapper("ChatParser", "commandparser.command");
 
     public ChatSendHandler(PluginConfiguration configuration) {
         CONFIG = configuration;
@@ -45,7 +45,7 @@ public class ChatSendHandler extends PacketEventHandler {
         BooleanCache cache = (BooleanCache) CHAT_PERMISSION.getCache(clientCtx);
         if (!cache.isBool()) {
             if (cache.isPastDesignatedTimeRefreshTimeNowIfPast(5000)) {
-                playerSession.sendChatMessage("StarNub", ChatReceiveChannel.UNIVERSE, "You do not have permission to chat. Permission required: \"chatparser.chat\".");
+                playerSession.sendChatMessage("StarNub", ChatReceiveChannel.UNIVERSE, "You do not have permission to chat. Permission required: \"commandparser.chat\".");
                 new StarNubEvent("Player_Chat_Failed_No_Permission_Client", playerSession);
                 return;
             }
@@ -54,7 +54,7 @@ public class ChatSendHandler extends PacketEventHandler {
         if (timeCache == null) {
             CTX_CACHE_CHAT.addCache(clientCtx, new TimeCache());
         } else {
-            int chatRate = playerSession.getSpecificPermissionInteger("chatparser.chat");
+            int chatRate = playerSession.getSpecificPermissionInteger("commandparser.chat");
             if (chatRate < -10000) {
                 chatRate = (int) CONFIG.getValue("global_chat_rate");
             } else if (chatRate == -10000) {
@@ -77,7 +77,7 @@ public class ChatSendHandler extends PacketEventHandler {
         BooleanCache cache = (BooleanCache) COMMAND_PERMISSION.getCache(clientCtx);
         if (!cache.isBool()) {
             if (cache.isPastDesignatedTimeRefreshTimeNowIfPast(5000)) {
-                playerSession.sendChatMessage("StarNub", ChatReceiveChannel.UNIVERSE, "You do not have permission to use commands. Permission required: \"chatparser.command\".");
+                playerSession.sendChatMessage("StarNub", ChatReceiveChannel.UNIVERSE, "You do not have permission to use commands. Permission required: \"commandparser.command\".");
                 new StarNubEvent("Player_Command_Failed_No_Permission_Client", playerSession);
                 return;
             }
@@ -86,7 +86,7 @@ public class ChatSendHandler extends PacketEventHandler {
         if (timeCache == null) {
             CTX_CACHE_COMMAND.addCache(clientCtx, new TimeCache());
         } else {
-            int commandRate = playerSession.getSpecificPermissionInteger("chatparser.command");
+            int commandRate = playerSession.getSpecificPermissionInteger("commandparser.command");
             if (commandRate < -10000) {
                 commandRate = (int) CONFIG.getValue("global_command_rate");
             } else if (commandRate == -10000) {
@@ -100,7 +100,6 @@ public class ChatSendHandler extends PacketEventHandler {
                 return;
             }
         }
-        ChatSendPacket chatSendPacketCopy = chatSendPacket.copy();
-        new StarNubEventTwo("Player_Command_Parsed_From_Client", playerSession, chatSendPacketCopy);
+        new StarNubEventTwo("Player_Command_Parsed_From_Client", playerSession, chatSendPacket.getMessage());
     }
 }

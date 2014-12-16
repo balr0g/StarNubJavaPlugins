@@ -37,8 +37,8 @@ import java.io.File;
  */
 public final class ChatParser extends JavaPlugin {
 
-    private PacketEventSubscription CHAT_SENT_HANDLER;
-    private PacketEventSubscription CHAT_RECEIVE_HANDLER;
+    private PacketEventSubscription chatSentHandler;
+    private PacketEventSubscription chatReceiveHandler;
 
     public ChatParser(String NAME, File FILE, String MAIN_CLASS, PluginDetails PLUGIN_DETAILS, PluginConfiguration CONFIGURATION, YAMLFiles FILES, CommandInfo COMMAND_INFO, PluginRunnables PLUGIN_RUNNABLES) {
         super(NAME, FILE, MAIN_CLASS, PLUGIN_DETAILS, CONFIGURATION, FILES, COMMAND_INFO, PLUGIN_RUNNABLES);
@@ -46,13 +46,13 @@ public final class ChatParser extends JavaPlugin {
 
     @Override
     public void onPluginEnable() {
-        CHAT_SENT_HANDLER = new PacketEventSubscription("StarNub", Priority.CRITICAL, ChatSendPacket.class, new ChatSendHandler(getCONFIGURATION()));
-        CHAT_RECEIVE_HANDLER = new PacketEventSubscription("StarNub", Priority.CRITICAL, ChatReceivePacket.class, new ChatReceiveHandler());
+        chatSentHandler = new PacketEventSubscription("StarNub", Priority.CRITICAL, ChatSendPacket.class, new ChatSendHandler(getCONFIGURATION()));
+        chatReceiveHandler = new PacketEventSubscription("StarNub", Priority.CRITICAL, ChatReceivePacket.class, new ChatReceiveHandler());
     }
 
     @Override
     public void onPluginDisable() {
-        CHAT_SENT_HANDLER.removeRegistration();
-        CHAT_RECEIVE_HANDLER.removeRegistration();
+        chatSentHandler.removeRegistration();
+        chatReceiveHandler.removeRegistration();
     }
 }

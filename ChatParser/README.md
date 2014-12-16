@@ -2,20 +2,27 @@ Updated: 16 DEC 14
 
 ChatParser
 =======
-This plugin will parse chat messages and send chat or command usage events.
+This plugin will parse chat messages and send chat or command events that can be handled by a Chat Manager or Command Parser plugin.
 
 Authors: Underbalanced
 
 Requirements
 ============
 - StarNub Server
-- Packet decoding turned on
+- Packet decoding turned on (StarNub)
+
+Installation
+============
+- Place inside of `StarNub/Plugins/`
 
 Current Features
 ========
 - This plugin will take ChatReceive and ChatSent message and recycle them and create events for other plugins to
 handle the chat messages without sending them through to the server or client unless routed by a Chat Manager or Command Parser.
-- This is essential for ChatManager and CommandParser
+
+Planned Features
+================
+- None
 
 Configuration Variables:
 ========
@@ -31,10 +38,10 @@ Permissions
 ========
 | Permission           | Description                                             |
 |---                   |---                                                      |
-| chatparser.chat      | Gives permission to send chat messages                  |
-| chatparser.chat.#    | A Integer representing the chat rate in milliseconds    |
-| chatparser.command   | Gives permission to send commands                       |
-| chatparser.command.# | A Integer representing the command rate in milliseconds |
+| commandparser.chat      | Gives permission to send chat messages                  |
+| commandparser.chat.#    | A Integer representing the chat rate in milliseconds    |
+| commandparser.command   | Gives permission to send commands                       |
+| commandparser.command.# | A Integer representing the command rate in milliseconds |
 
 
 Published Events
@@ -47,13 +54,4 @@ Published Events
 | StarNubEventTwo | Player_Chat_Parsed_From_Client    | PlayerSession.class, ChatSentPacket.class (Copy) |
 | StarNubEvent | Player_Command_Failed_Spam_Client | PlayerSession.class |
 | StarNubEvent | Player_Command_Failed_No_Permission_Client | PlayerSession.class |
-| StarNubEventTwo | Player_Command_Parsed_From_Client | PlayerSession.class, ChatSentPacket.class (Copy) |
-
-Planned Features
-================
-- None
-
-	
-Installation
-============
-- Place inside of `StarNub/Plugins/`
+| StarNubEventTwo | Player_Command_Parsed_From_Client | PlayerSession.class, String.class |
