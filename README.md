@@ -11,13 +11,14 @@ Project Start Date: April 2014
 
 Documents can be found here:
 
+[StarNub Main Documents](http://docs.starnub.org/main/)
 [StarNub Plugin Documents](http://docs.starnub.org/plugins/)
 
 [Twitch Stream](http://www.twitch.tv/Underbalanced/)
 
-[StarNub](starnub.org)
+[StarNub](http://starnub.org)
 
-[StarNub Repo](repo.starnub.org)
+[StarNub Repo](http://repo.starnub.org)
 
 Contacts:
 Freenode IRC:

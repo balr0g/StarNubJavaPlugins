@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.starnub</groupId>
     <artifactId>plugins</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <modules>
         <module>Essentials</module>
         <module>StarNubCommands</module>
@@ -16,7 +16,8 @@
         <module>ChatManager</module>
         <module>NoCheats</module>
         <module>EnjinSync</module>
-        <module>worldedit</module>
+        <module>WorldEdit</module>
+        <module>ChatParser</module>
     </modules>
 
     <name>starnubplugins</name>
@@ -33,8 +34,15 @@
 
     <repositories>
         <repository>
-            <id>StarNub</id>
+            <id>StarNubInternal</id>
             <url>http://repo.starnub.org/repository/internal/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>StarNubSnapshots</id>
+            <url>http://repo.starnub.org/repository/snapshots/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -45,7 +53,7 @@
         <dependency>
             <groupId>org.starnub</groupId>
             <artifactId>starnub</artifactId>
-            <version>1.01-beta</version>
+            <version>1.5-beta-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>

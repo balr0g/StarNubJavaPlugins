@@ -9,10 +9,8 @@ import starnubserver.events.events.StarNubEventTwo;
 import starnubserver.events.starnub.StarNubEventHandler;
 import starnubserver.events.starnub.StarNubEventSubscription;
 import starnubserver.plugins.Command;
-import starnubserver.plugins.JavaPlugin;
 import starnubserver.plugins.Plugin;
 import starnubserver.plugins.PluginManager;
-import starnubserver.plugins.generic.CommandInfo;
 import starnubserver.plugins.resources.PluginYAMLWrapper;
 import starnubserver.plugins.resources.YAMLFiles;
 import starnubserver.resources.files.PluginConfiguration;
@@ -28,14 +26,10 @@ import java.util.regex.Pattern;
 public class CommandHandler extends StarNubEventHandler {
 
     private final PluginConfiguration CONFIG;
-    private final PluginManager PLUGIN_MANAGER = PluginManager.getInstance();
     private final StarNubEventSubscription YAML_RELOAD;
     private final StarNubEventSubscription YAML_DUMP;
-    private final StarNubEventSubscription PLUGIN_LOAD;
-    private final StarNubEventSubscription PLUGIN_UNLOAD;
     private final PluginYAMLWrapper SHORTCUTS;
-    private final ConcurrentHashMap<String, String> SHORTCUT_CACHE = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, String> ALIAS_CACHE = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, String> SHORTCUT_CACHE;
 
     public CommandHandler(PluginConfiguration configuration, YAMLFiles files) {
         CONFIG = configuration;
@@ -52,26 +46,7 @@ public class CommandHandler extends StarNubEventHandler {
                 shortcutReload();
             }
         });
-        PLUGIN_LOAD = new StarNubEventSubscription("CommandParser", Priority.MEDIUM, "StarNub_Plugin_Loaded", new StarNubEventHandler() {
-            @Override
-            public void onEvent(StarNubEvent starNubEvent) {
-                JavaPlugin javaPlugin = (JavaPlugin) starNubEvent.getEVENT_DATA();
-                CommandInfo commandInfo = javaPlugin.getCOMMAND_INFO();
-                String command = commandInfo.getCOMMANDS_NAME();
-                String alias = commandInfo.getCOMMANDS_ALIAS();
-                ALIAS_CACHE.put(alias, command);
-            }
-        });
-        PLUGIN_UNLOAD = new StarNubEventSubscription("CommandParser", Priority.MEDIUM, "StarNub_Plugin_Unloaded", new StarNubEventHandler() {
-            @Override
-            public void onEvent(StarNubEvent starNubEvent) {
-                JavaPlugin javaPlugin = (JavaPlugin) starNubEvent.getEVENT_DATA();
-                CommandInfo commandInfo = javaPlugin.getCOMMAND_INFO();
-                String alias = commandInfo.getCOMMANDS_ALIAS();
-                ALIAS_CACHE.remove(alias);
-            }
-        });
-        aliasLoad();
+        SHORTCUT_CACHE = new ConcurrentHashMap<>();
         shortcutReload();
     }
 
@@ -87,31 +62,12 @@ public class CommandHandler extends StarNubEventHandler {
         }
     }
 
-    private void aliasLoad() {
-        ALIAS_CACHE.clear();
-        HashSet<Plugin> loadedPlugins = PluginManager.getInstance().getAllLoadedPlugins();
-        for (Plugin plugin : loadedPlugins) {
-            CommandInfo commandInfo = plugin.getCOMMAND_INFO();
-            String command = commandInfo.getCOMMANDS_NAME();
-            String alias = commandInfo.getCOMMANDS_ALIAS();
-            ALIAS_CACHE.put(alias, command);
-        }
-    }
-
     public StarNubEventSubscription getYAML_RELOAD() {
         return YAML_RELOAD;
     }
 
     public StarNubEventSubscription getYAML_DUMP() {
         return YAML_DUMP;
-    }
-
-    public StarNubEventSubscription getPLUGIN_UNLOAD() {
-        return PLUGIN_UNLOAD;
-    }
-
-    public StarNubEventSubscription getPLUGIN_LOAD() {
-        return PLUGIN_LOAD;
     }
 
     private String shortcutLookup(String commandString) {
@@ -143,23 +99,23 @@ public class CommandHandler extends StarNubEventHandler {
         while (m.find()) {
             argsList.add(m.group(1));
         }
-
+        System.err.println("HERE");//REMOVE
         /* Check is the command was long enough */
         if (argsList.size() <= 1) {
             new StarNubEventTwo("Player_Command_Failed_Argument_Count", playerSession, commandString);
             playerSession.sendChatMessage("CommandParser", ChatReceiveChannel.UNIVERSE, "Your \"" + commandString + "\" command was to short. Please check the plugin this command is for.");
             return;
         }
-
+        System.err.println("HERE");//REMOVE
         String commandNameOrAlias = argsList.get(0).replace("/", "");
 
-        Plugin plugin = PLUGIN_MANAGER.resolveLoadedPluginByCommand(commandNameOrAlias);
+        Plugin plugin = PluginManager.getInstance().resolveLoadedPluginByCommand(commandNameOrAlias);
         if (plugin == null) {
             new StarNubEventTwo("Player_Command_Failed_No_Plugin", playerSession, commandString);
             playerSession.sendChatMessage("CommandParser", ChatReceiveChannel.UNIVERSE, "Plugin name or alias \"" + commandNameOrAlias + "\" does not exist or is not loaded.");
             return;
         }
-
+        System.err.println("HERE");//REMOVE
         String pluginName = plugin.getNAME();
         String exactCommand = argsList.get(1);
         Command command = plugin.getCOMMAND_INFO().getCommandByName(exactCommand);
@@ -168,7 +124,7 @@ public class CommandHandler extends StarNubEventHandler {
             playerSession.sendChatMessage("CommandParser", ChatReceiveChannel.UNIVERSE, "Command \"" + exactCommand + "\" is not a valid " + pluginName + " command.");
             return;
         }
-
+        System.err.println("HERE");//REMOVE
         HashMap<String, Integer> customSplit = command.getCUSTOM_SPLIT();
         boolean fullPermission = true;
         if (customSplit.containsKey(exactCommand)) {
@@ -176,18 +132,18 @@ public class CommandHandler extends StarNubEventHandler {
             Collections.addAll(argsList, StringUtils.stripAll(commandString.split(" ", customSplit.get(exactCommand))));
             fullPermission = false;
         }
-
+        System.err.println("HERE");//REMOVE
         /* Remove the plugin name/alias and command from the args list*/
         argsList.remove(0);
         argsList.remove(0);
-
+        System.err.println("HERE");//REMOVE
         CanUse canUse = command.getCAN_USE();
         Connection connection = playerSession.getCONNECTION();
         boolean isInGame = true;
         if (!(connection instanceof ProxyConnection)) {
             isInGame = false;
         }
-
+        System.err.println("HERE");//REMOVE
         switch (canUse) {
             case PLAYER: {
                 if (!isInGame) {
@@ -206,7 +162,7 @@ public class CommandHandler extends StarNubEventHandler {
                 break;
             }
         }
-
+        System.err.println("HERE");//REMOVE
         String main_arg = null;
         String args[] = null;
         if (argsList.size() > 0) {
@@ -216,9 +172,8 @@ public class CommandHandler extends StarNubEventHandler {
         }
         if (argsList.size() > 0) {
             args = argsList.toArray(new String[argsList.size()]);
-        } else {
-            fullPermission = false;
         }
+        System.err.println("HERE");//REMOVE
         boolean hasPermission = playerSession.hasPermission(commandNameOrAlias, exactCommand, main_arg, true);
         if (!hasPermission) {
             String failedCommand = exactCommand;
@@ -229,7 +184,7 @@ public class CommandHandler extends StarNubEventHandler {
             playerSession.sendChatMessage("CommandParser", ChatReceiveChannel.UNIVERSE, "You do not have permission to use " + pluginName + " command \"" + failedCommand + "\".");
             return;
         }
-
+        System.err.println("HERE");//REMOVE
         new StarNubEventTwo("Player_Command_Delivered_To_Plugin", playerSession, commandString);
         command.onCommand(playerSession, exactCommand, args);
     }

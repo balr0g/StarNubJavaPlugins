@@ -1,5 +1,6 @@
 package commandparser.commands;
 
+import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.plugins.Command;
 
 import java.util.HashMap;
@@ -12,7 +13,9 @@ public class CommandParserCommands extends Command {
     }
 
     @Override
-    public void onCommand(Object sender, String command, String[] args) {
+    public void onCommand(PlayerSession playerSession, String command, String[] args) {
 
     }
+
+
 }

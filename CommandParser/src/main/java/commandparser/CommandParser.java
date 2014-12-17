@@ -55,7 +55,5 @@ public final class CommandParser extends JavaPlugin {
         commandEventHandler.removeRegistration();
         commandHandler.getYAML_RELOAD().removeRegistration();
         commandHandler.getYAML_DUMP().removeRegistration();
-        commandHandler.getPLUGIN_LOAD().removeRegistration();
-        commandHandler.getPLUGIN_UNLOAD().removeRegistration();
     }
 }
