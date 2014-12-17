@@ -1,18 +1,26 @@
-name: CommandParser
-class: org.starnub.essentials.CommandParser
-version: 1.0
-author: Underbalanced
-url: http://www.starnub.org
-dependencies: None
-languages: english
-configuration: yes
-commands: yes
-commands_name: commandparser
-commands_alias: cp
-runnables: false
-runnable_classes: ['']
-description: |-
-    Under Current Development.
-    Features:
-    Additions:
-    Removals:
+{
+  "name": "CommandParser",
+  "class": "commandparser.CommandParser",
+    "details": {
+    "languages": ['english'],
+    "version": 1.0,
+    "description": "None",
+    "dependencies": ['ChatParser'],
+    "author": "Underbalanced",
+    "url": "http://www.starnub.org"
+  },
+  "configuration": true,
+  "commands": {
+    "has": true,
+    "name": "CommandParser",
+    "alias": "cp",
+  },
+  "runnables": {
+    "has": false,
+    "runnables": []
+  },
+  "additional_permissions": [ 'commandparser.chat',
+                              'commandparser.chat.#',
+                              'commandparser.command',
+                              'commandparser.command.#'],
+}

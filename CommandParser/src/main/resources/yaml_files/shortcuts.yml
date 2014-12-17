@@ -43,3 +43,5 @@ starnub: [
   'stop',
   'off',
   'plugin']
+commandparser: [
+  '']

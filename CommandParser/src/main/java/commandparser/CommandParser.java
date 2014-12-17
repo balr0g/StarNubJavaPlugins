@@ -18,26 +18,44 @@
 
 package commandparser;
 
+import starnubserver.events.starnub.StarNubEventSubscription;
+import starnubserver.plugins.JavaPlugin;
+import starnubserver.plugins.generic.CommandInfo;
+import starnubserver.plugins.generic.PluginDetails;
+import starnubserver.plugins.resources.PluginRunnables;
+import starnubserver.plugins.resources.YAMLFiles;
+import starnubserver.resources.files.PluginConfiguration;
+import utilities.events.Priority;
 
-import org.starnub.plugins.Plugin;
+import java.io.File;
 
 /**
  *
  * @author Daniel (Underbalanced) (www.StarNub.org)
  * @since 1.0
  */
-public final class CommandParser extends Plugin {
+public final class CommandParser extends JavaPlugin {
 
+    private StarNubEventSubscription commandEventHandler;
+    private CommandHandler commandHandler;
+
+    public CommandParser(String NAME, File FILE, String MAIN_CLASS, PluginDetails PLUGIN_DETAILS, PluginConfiguration CONFIGURATION, YAMLFiles FILES, CommandInfo COMMAND_INFO, PluginRunnables PLUGIN_RUNNABLES) {
+        super(NAME, FILE, MAIN_CLASS, PLUGIN_DETAILS, CONFIGURATION, FILES, COMMAND_INFO, PLUGIN_RUNNABLES);
+
+    }
 
     @Override
     public void onPluginEnable() {
-        
+        commandHandler = new CommandHandler(getCONFIGURATION(), getFILES());
+        commandEventHandler = new StarNubEventSubscription("StarNub", Priority.CRITICAL, "Player_Command_Parsed_From_Client", commandHandler);
     }
 
     @Override
     public void onPluginDisable() {
-
+        commandEventHandler.removeRegistration();
+        commandHandler.getYAML_RELOAD().removeRegistration();
+        commandHandler.getYAML_DUMP().removeRegistration();
+        commandHandler.getPLUGIN_LOAD().removeRegistration();
+        commandHandler.getPLUGIN_UNLOAD().removeRegistration();
     }
-
-  
 }

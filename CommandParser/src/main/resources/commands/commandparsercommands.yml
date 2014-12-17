@@ -1,0 +1,7 @@
+commands: ['shortcuts', ]
+main_args: ['reload', 'add', 'remove', 'get']
+custom_split: {}
+class: commandparser.commands.CommandParserCommands
+can_use: 3
+description: |-
+    -
