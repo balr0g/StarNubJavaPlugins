@@ -12,8 +12,8 @@
   "configuration": true,
   "commands": {
     "has": false,
-    "name": "essentials",
-    "alias": "es",
+    "name": "chatparser",
+    "alias": "cp",
   },
   "runnables": {
     "has": false,
