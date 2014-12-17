@@ -24,7 +24,7 @@ Planned Features
 ================
 - None
 
-Configuration Variables:
+Configuration Variables
 ========
 | Variable             | Description                                                                           |
 |---                   |---                                                                                    |
@@ -46,7 +46,7 @@ Permissions
 
 Published Events
 ========
-| Event           | Key                               | Event Data                                       |
+| Event Class           | Event Key                               | Event Data                                       |
 |---              |---                                |---                                               |
 | StarNubEvent    | Player_Chat_Parsed_From_Server    | ChatReceivePacket.class (Copy)                   |
 | StarNubEvent | Player_Chat_Failed_Spam_Client    | PlayerSession.class |

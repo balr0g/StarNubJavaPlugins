@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>worldedit</artifactId>
+    <artifactId>worldguard</artifactId>
     <version>1.0</version>
-
 
 </project>

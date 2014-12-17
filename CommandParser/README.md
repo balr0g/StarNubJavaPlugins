@@ -2,7 +2,7 @@ Updated: 16 DEC 14
 
 CommandParser
 =============
-This plugin will parse Command Strings sent by the a Chat Parser. This plugin subscribes to "Player_Command_Parsed_From_Client" events.
+This plugin will parse Command Strings sent by the a Chat Parser. This plugin subscribes to `Player_Command_Parsed_From_Client` events.
 
 Authors: Underbalanced
 
@@ -43,7 +43,7 @@ Planned Features
 ================
 - None
 
-Configuration Variables:
+Configuration Variables
 ========
 | Variable             | Description                                                                           |
 |---                   |---                                                                                    |
@@ -55,7 +55,7 @@ Permissions
 
 Published Events
 ========
-| Event           | Key                               | Event Data                                       |
+| Event Class           | Event Key                               | Event Data                                       |
 |---              |---                                |---                                               |
 | StarNubEventTwo | Player_Command_Failed_Argument_Count           | PlayerSession.class, String.class (Command) |
 | StarNubEventTwo | Player_Command_Failed_No_Plugin                | PlayerSession.class, String.class (Command) |

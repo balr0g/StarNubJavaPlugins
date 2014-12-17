@@ -18,6 +18,7 @@
         <module>EnjinSync</module>
         <module>WorldEdit</module>
         <module>ChatParser</module>
+        <module>WorldGuard</module>
     </modules>
 
     <name>starnubplugins</name>

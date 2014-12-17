@@ -51,12 +51,11 @@ import java.util.HashSet;
  */
 public final class WorldEdit extends JavaPlugin {
 
+    volatile Vec2I point1 = null;
+    volatile Vec2I point2 = null;
     public WorldEdit(String NAME, File FILE, String MAIN_CLASS, PluginDetails PLUGIN_DETAILS, PluginConfiguration CONFIGURATION, YAMLFiles FILES, CommandInfo COMMAND_INFO, PluginRunnables PLUGIN_RUNNABLES) {
         super(NAME, FILE, MAIN_CLASS, PLUGIN_DETAILS, CONFIGURATION, FILES, COMMAND_INFO, PLUGIN_RUNNABLES);
     }
-
-    volatile Vec2I point1 = null;
-    volatile Vec2I point2 = null;
 
     @Override
     public void onPluginEnable() {
