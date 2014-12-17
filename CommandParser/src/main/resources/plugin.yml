@@ -5,7 +5,9 @@
     "languages": ['english'],
     "version": 1.0,
     "description": "None",
-    "dependencies": ['ChatParser'],
+    "dependencies": [
+       {ChatParser: [1.0, 1.1]}
+       ],
     "author": "Underbalanced",
     "url": "http://www.starnub.org"
   },
@@ -19,8 +21,5 @@
     "has": false,
     "runnables": []
   },
-  "additional_permissions": [ 'commandparser.chat',
-                              'commandparser.chat.#',
-                              'commandparser.command',
-                              'commandparser.command.#'],
+  "additional_permissions": [],
 }

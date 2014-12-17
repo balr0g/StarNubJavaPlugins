@@ -54,4 +54,4 @@ Published Events
 | StarNubEventTwo | Player_Chat_Parsed_From_Client    | PlayerSession.class, ChatSentPacket.class (Copy) |
 | StarNubEvent | Player_Command_Failed_Spam_Client | PlayerSession.class |
 | StarNubEvent | Player_Command_Failed_No_Permission_Client | PlayerSession.class |
-| StarNubEventTwo | Player_Command_Parsed_From_Client | PlayerSession.class, String.class |
+| StarNubEventTwo | Player_Command_Parsed_From_Client | PlayerSession.class, String.class (Command) |
