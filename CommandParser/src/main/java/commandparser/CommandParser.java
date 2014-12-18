@@ -26,8 +26,10 @@ import starnubserver.plugins.resources.PluginRunnables;
 import starnubserver.plugins.resources.YAMLFiles;
 import starnubserver.resources.files.PluginConfiguration;
 import utilities.events.Priority;
+import utilities.exceptions.CollectionDoesNotExistException;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -44,9 +46,17 @@ public final class CommandParser extends JavaPlugin {
 
     }
 
+    public CommandHandler getCommandHandler() {
+        return commandHandler;
+    }
+
     @Override
     public void onPluginEnable() {
-        commandHandler = new CommandHandler(getCONFIGURATION(), getFILES());
+        try {
+            commandHandler = new CommandHandler(getCONFIGURATION(), getFILES());
+        } catch (IOException | CollectionDoesNotExistException e) {
+            e.printStackTrace();
+        }
         commandEventHandler = new StarNubEventSubscription("StarNub", Priority.CRITICAL, "Player_Command_Parsed_From_Client", commandHandler);
     }
 
@@ -55,5 +65,6 @@ public final class CommandParser extends JavaPlugin {
         commandEventHandler.removeRegistration();
         commandHandler.getYAML_RELOAD().removeRegistration();
         commandHandler.getYAML_DUMP().removeRegistration();
+        commandHandler.getPLUGIN_LOAD().removeRegistration();
     }
 }

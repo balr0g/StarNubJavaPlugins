@@ -1,5 +1,0 @@
-commands: ['buildmode']
-main_args: ['on', 'off']
-class: BaseCommand
-can_use: 0
-description: |-
