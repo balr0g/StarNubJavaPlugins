@@ -51,7 +51,16 @@ Configuration Variables
 
 Permissions
 ========
-- None
+| Permission             | Command                             |
+|---                   |---                 |
+| commandparser.*     |  All Commands  |       
+| commandparser.shortcuts | /shorcuts  |
+| commandparser.shortcuts.* | /shortcuts <args> |
+| commandparser.shortcuts.get | /shortcuts get |
+| commandparser.shortcuts.add | /shortcuts add |
+| commandparser.shortcuts.remove | /shortcuts remove |
+| commandparser.shortcuts.swap | /shortcuts swap
+| commandparser.shortcuts.reload | /shortcuts reload |
 
 Published Events
 ========
