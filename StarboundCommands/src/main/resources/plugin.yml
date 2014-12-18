@@ -1,33 +1,23 @@
-name: StarboundCommands
-class: starboundcommands.StarboundCommands
-version: 0.002
-live_update: true
-author: Underbalanced
-url: http://www.starnub.org
-dependencies: None
-languages: english
-configuration: no
-commands: yes
-commands_name: starbound
-commands_alias: sb
-runnables: false
-runnable_classes: ['none']
-description: |-
-    - Starbound Commands Plugin was created to bridge Starbound commands
-    with StarNub Wrapper. You can find more information at www.StarNub.org.
-    - This plugin is packaged by default with the StarNub Server and cannot
-    be removed. It is an essential Plugin.
-
-    Features:
-    Starbound command bridge
-
-    Additions:
-    1.0 - Commands: nick, w, listcid, kickcid, kick, ban, bancid, softban, softbancid, globalalert,
-          spawnitem, spawnsword, spawngun, spawnshield, spawnliquid, spawnmonster,
-          spawnnpc, timewarp, togglelayer, fullbright, setgravity, resetgravity, debug,
-          togglelogmap, boxes, itemID, reload, serverreload, r, reply, msg, pm
-
-          Features: Can /reply {message} to players or /r {message}
-
-    Removals:
-    None
+{
+    "name": "StarboundCommands",
+    "class": "starboundcommands.StarboundCommands",
+    "details": {
+        "languages": ['english'],
+        "version": 1.0,
+        "description": "None",
+        "dependencies": [],
+        "author": "Underbalanced",
+        "url": "http://www.starnub.org"
+    },
+    "configuration": false,
+    "commands": {
+        "has": true,
+        "name": "starbound",
+        "alias": "sb",
+    },
+    "runnables": {
+        "has": false,
+        "runnables": []
+    },
+    "additional_permissions": [ ''],
+}
