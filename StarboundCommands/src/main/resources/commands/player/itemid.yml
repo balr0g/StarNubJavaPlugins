@@ -1,8 +1,0 @@
-commands: ['itemID']
-main_args: ['None']
-class: starboundcommands.commands.player.ItemID
-can_use: 1
-description: |-
-    - Displays information on given item
-
-    - NOTE: This command is forwarded to the Starbound server.

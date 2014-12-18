@@ -1,9 +1,0 @@
-commands: ['spawnnpc']
-main_args: ['None']
-class: starboundcommands.commands.spawning.SpawnNPC
-can_use: 1
-description: |-
-    - Spawns an NPC at mouse cursor
-    - This has 3 arguements, for StarNub purpose ignore the args 2.
-
-    - NOTE: This command is forwarded to the Starbound server.

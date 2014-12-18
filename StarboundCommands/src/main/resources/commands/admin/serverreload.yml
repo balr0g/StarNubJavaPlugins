@@ -1,8 +1,0 @@
-commands: ['serverreload']
-main_args: ['None']
-class: starboundcommands.commands.admin.ServerReload
-can_use: 1
-description: |-
-    - Reloads remote assets
-
-    - NOTE: This command is forwarded to the Starbound server.

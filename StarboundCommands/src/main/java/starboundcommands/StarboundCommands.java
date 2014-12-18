@@ -18,36 +18,26 @@
 
 package starboundcommands;
 
-import org.starnub.StarNub;
-import org.starnub.plugins.Plugin;
-import starboundcommands.commands.player.Whisper;
+import starnubserver.plugins.JavaPlugin;
+import starnubserver.plugins.generic.CommandInfo;
+import starnubserver.plugins.generic.PluginDetails;
+import starnubserver.plugins.resources.PluginRunnables;
+import starnubserver.plugins.resources.YAMLFiles;
+import starnubserver.resources.files.PluginConfiguration;
 
-/**
- * Empty class as this plugin is a Starnub Command bridge
- * <p>
- * @author Daniel (Underbalanced) (www.StarNub.org)
- * @since 1.0
- */
-public final class StarboundCommands extends Plugin {
+import java.io.File;
+
+public final class StarboundCommands extends JavaPlugin {
+
+    public StarboundCommands(String NAME, File FILE, String MAIN_CLASS, PluginDetails PLUGIN_DETAILS, PluginConfiguration CONFIGURATION, YAMLFiles FILES, CommandInfo COMMAND_INFO, PluginRunnables PLUGIN_RUNNABLES) {
+        super(NAME, FILE, MAIN_CLASS, PLUGIN_DETAILS, CONFIGURATION, FILES, COMMAND_INFO, PLUGIN_RUNNABLES);
+    }
 
     @Override
     public void onPluginEnable() {
-        new Whisper().startEvents();
-        registerCustomSplit();
-        registerNoCommandDelivery();
     }
 
     @Override
     public void onPluginDisable() {
-        //STOP EVENTS
     }
-
-    private void registerCustomSplit() {
-        StarNub.getCommandSender().registerCustomSplitCount("StarboundCommands", new String[] {"w", "r", "nick"}, 2);
-    }
-
-    private void registerNoCommandDelivery() {
-        StarNub.getMessageSender().registerNoCommandDelivery("StarboundCommands", new String[] {"w", "r", "pvp", "nick"});
-    }
-
 }

@@ -1,6 +1,0 @@
-commands: ['kick']
-main_args: ['None']
-class: starboundcommands.commands.kickban.Kick
-can_use: 1
-description: |-
-    - Kicks a player based on username

@@ -1,8 +1,0 @@
-commands: ['pvp']
-main_args: ['mode']
-class: starboundcommands.commands.player.PVP
-can_use: 1
-description: |-
-    - This command will enable or disable pvp.
-
-    - NOTE: This command is forwarded to the Starbound server.
