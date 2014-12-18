@@ -1,26 +1,70 @@
-Updated: 27 JUL 14
+Updated: 16 DEC 14
 
-StarNub
-=======
-Starbound Commands Plugin was created to bridge Starbound commands with StarNub Wrapper. You
-can find more information at www.StarNub.org. This plugin is packaged by default
-with the StarNub Server and cannot be removed. It is an essential Plugin.
+StarboundCommands
+=============
+This plugin simple bridges commands sent from a player through StarNub and forwards them to the Starbound server.
 
 Authors: Underbalanced
 
 Requirements
 ============
 - StarNub Server
+- Packet decoding turned on (StarNub)
+
+Installation
+============
+- Place inside of `StarNub/Plugins/`
 
 Current Features
 ========
-- Starbound command bridge
+- This forwards player Starbound commands from StarNub to the Starbound server
+- Some of these commands may be enhanced and used by other plugins
 
 Planned Features
 ================
-- Maintain Starbound command compatibility
-- Illegal Nick Name Change Checker
-	
-Installation
-============
-- None, self extracts from StarNub Server.
+- None
+
+Configuration Variables
+========
+- None
+
+Permissions
+========
+| Permission             | Command                             |
+|---                   |---                 |
+| starbound.*     |  All Commands  |
+|   starbound.bancid | To Do |
+|    starbound.togglelayer | To Do |
+|    starbound.spawnnpc | To Do |
+|    starbound.listcid | To Do |
+|    starbound.spawnliquid |  To Do |
+|    starbound.nick | To Do |
+|    starbound.reload  | To Do |
+|    starbound.debug | To Do |
+|    starbound.softban | To Do |
+|    starbound.serveralert | To Do |
+|    starbound.softbancid | To Do |
+|    starbound.fullbright | To Do |
+|    starbound.ban | To Do |
+|    starbound.setgravity | To Do |
+|    starbound.w | To Do |
+|    starbound.spawnsword | To Do |
+|    starbound.spawnitem | To Do |
+|    starbound.globalalert | To Do |
+|    starbound.kickcid | To Do |
+|    starbound.spawnmonster | To Do |
+|    starbound.spawngun | To Do |
+|    starbound.alert | To Do |
+|    starbound.kick | To Do |
+|    starbound.spawnshield  | To Do |
+|    starbound.boxes  | To Do |
+|    starbound.togglelogmap | To Do |
+|    starbound.timewarp | To Do |
+|    starbound.pvp | To Do |
+|    starbound.itemid | To Do |
+|    starbound.serverreload | To Do |
+
+
+Published Events
+========
+-None
