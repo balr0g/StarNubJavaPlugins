@@ -1,0 +1,66 @@
+commands: ['globalalert', 
+           'serveralert', 
+           'alert',
+           'reload',
+           'serverreload',
+           'setgravity',
+           'timewarp',
+           'boxes',
+           'debug',
+           'fullbright',
+           'togglelayer',
+           'togglelogmap',
+           'ban',
+           'bancid',
+           'kick',
+           'kickcid',
+           'softban',
+           'softbancid',
+           'itemID',
+           'listcid',
+           'nick',
+           'pvp',
+           'w',
+           'spawngun',
+           'spawnitem',
+           'spawnliquid',
+           'spawnmonster',
+           'spawnnpc',
+           'spawnshield',
+           'spawnsword'
+           ]
+main_args: []
+custom_split: {}
+class: commandparser.commands.CommandParserCommands
+can_use: 0
+description: |-
+ - NOTE: These command are forwarded to the Starbound server.
+ 
+ - globalalert, serveralert and alert: Issues a global alert to all players in large text
+ - reload: Reloads local assets
+ - serverreload: Reloads remote assets
+ - setgravity: Sets your local gravity
+ - timewarp: Changes the current planet’s clock
+ - boxes: Displays collisions (requires debug mode)
+ - debug: Enables debug mode
+ - fullbright: Disables the lighting engine
+ - togglelayer: Toggles the visibility of specified draw lay
+ - togglelogmap: Displays performance info (requires debug mode)
+ - ban: Kicks and IP bans a player based on their username
+ - bancid: Kicks and IP bans a player based on their clientID
+ - kick: Kicks a player based on username
+ - kickcid: Kicks a player based on their CID
+ - softban: Kicks and UUID bans a specific players character based on their username
+ - softbancid: Kicks and UUID bans a specific players character based on their client ID
+ - itemID: Displays information on given item
+ - listcid: Lists all users and their associated client IDs
+ - nick: This command will allow a player to change theyre name
+ - pvp: This command will enable or disable pvp
+ - w: This command will allow a player to whisper to others
+ - spawngun: Spawns a randomly generated ranged weapon, /spawngun <level> [kind]
+ - spawnitem: Spawns specified item
+ - spawnliquid: Spawns a liquid at mouse cursor
+ - spawnmonster: Spawns a monster at mouse cursor
+ - spawnnpc: Spawns an NPC at mouse cursor
+ - spawnshield: Spawns a randomly generated shield
+ - spawnsword: Spawns a randomly generated melee weapon
