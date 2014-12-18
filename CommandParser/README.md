@@ -47,7 +47,7 @@ Configuration Variables
 ========
 | Variable             | Description                                                                           |
 |---                   |---                                                                                    |
-| auto_shortcuts     |  If this is set to true, then any command that has no duplicate command will be save with a shortcut automatically |                           |
+| auto_shortcuts     |  If this is set to true, then any command that has no registered command will be save with a shortcut automatically to the plugin that it belongs to |                           |
 
 Permissions
 ========
@@ -55,7 +55,7 @@ Permissions
 |---                   |---                 |
 | commandparser.*     |  All Commands  |       
 | commandparser.shortcuts | /shorcuts  |
-| commandparser.shortcuts.* | /shortcuts <args> |
+| commandparser.shortcuts.* | /shortcuts {args} |
 | commandparser.shortcuts.get | /shortcuts get |
 | commandparser.shortcuts.add | /shortcuts add |
 | commandparser.shortcuts.remove | /shortcuts remove |
