@@ -40,7 +40,7 @@ public class CommandParserCommands extends Command {
         int argsLength = args.length;
         boolean isNoArgs = argsLength == 0;
         if (isNoArgs) {
-            sendMessage(playerSession, "You did not supply a correct main argument for command \"shortcuts\".");
+            sendMessage(playerSession, "You did not supply a correct main argument for command \"shortcuts\", available commands: get, add, remove, swap and reload.");
             return;
         }
         String mainArg = args[0].toLowerCase();
@@ -163,7 +163,7 @@ public class CommandParserCommands extends Command {
                 break;
             }
             case NO_PLUGIN: {
-                sendMessage(playerSession, "Your command shortcut \"" + commandString + "\" was not successfully " + type + " for plugin \"" + pluginString + "\". No plugin with this name has shortcuts.");
+                sendMessage(playerSession, "Your command shortcut \"" + commandString + "\" was not successfully " + type + " for plugin \"" + pluginString + "\". No plugin with this name has exist or has shortcuts.");
                 break;
             }
             case NO_COMMAND: {

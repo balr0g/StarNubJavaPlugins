@@ -105,6 +105,15 @@ public class CommandHandler extends StarNubEventHandler {
         for (Plugin plugin : loadedPlugins) {
             autoShortcutAdd(plugin);
         }
+        Map<String, Object> data = SHORTCUTS.getDATA();
+        /* Clean shortcuts of empty*/
+        for (Map.Entry<String, Object> dataEntry : data.entrySet()) {
+            String dataStringKey = dataEntry.getKey();
+            List<String> dataListValue = (List<String>) dataEntry.getValue();
+            if (dataListValue.size() == 0) {
+                SHORTCUTS.removeValue(dataStringKey);
+            }
+        }
 
     }
 
@@ -144,9 +153,7 @@ public class CommandHandler extends StarNubEventHandler {
         if (alreadyShortcut.contains(commandString)) {
             return Shortcut.COMMAND_ASSIGNED;
         }
-        System.err.println("HERE");
         Plugin plugin = PluginManager.getInstance().resolveLoadedPlugin(pluginString, false);
-        System.err.println(plugin);
         if (plugin == null) {
             return Shortcut.NO_PLUGIN;
         }
@@ -155,18 +162,13 @@ public class CommandHandler extends StarNubEventHandler {
             return Shortcut.NO_COMMANDS;
         }
         HashSet<Command> commands = commandInfo.getCOMMANDS();
-        System.err.println(plugin);
         for (Command command : commands) {
-            System.err.println(plugin);
             HashSet<String> strings = command.getCOMMANDS();
-            System.err.println(plugin);
             if (strings.contains(commandString)) {
-                String pluginName = plugin.getNAME();
-                System.err.println(plugin);
+                String pluginName = plugin.getNAME().toLowerCase();
                 if (!SHORTCUTS.hasKey(pluginName)) {
                     SHORTCUTS.createList(pluginName);
                 }
-                System.err.println(plugin);
                 SHORTCUTS.addToCollection(commandString, false, false, pluginName);
                 shortcutCacheReload();
                 return Shortcut.SUCCESS;
