@@ -64,3 +64,4 @@ description: |-
  - spawnnpc: Spawns an NPC at mouse cursor
  - spawnshield: Spawns a randomly generated shield
  - spawnsword: Spawns a randomly generated melee weapon
+ - test 
