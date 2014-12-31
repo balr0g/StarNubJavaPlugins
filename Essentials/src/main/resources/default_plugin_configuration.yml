@@ -14,7 +14,7 @@
   }
   "motd": {
       "enabled": true,
-      "type": static, #static, rotating, random
+      "type": static, #Options: static, rotating, random
       "messages": [
       "Welcome to Free Universe powered by StarNub (Updated: 10 October), this server is Modded, please visit www.free-universe.com for more details. There are currently //INSERT FORMATER// + " player(s) online. This server tool is a work in progress, some commands are not available yet.",
       "Test Message 1",
