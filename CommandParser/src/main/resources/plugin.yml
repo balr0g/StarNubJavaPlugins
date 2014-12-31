@@ -1,7 +1,7 @@
 {
   "name": "CommandParser",
   "class": "commandparser.CommandParser",
-    "details": {
+  "details": {
     "languages": ['english'],
     "version": 1.0,
     "description": "None",

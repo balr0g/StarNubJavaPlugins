@@ -1,10 +1,39 @@
 {
-  "server_monitor": true,
-  "auto_restart": true,
-  "auto_restart_timer": 4,
-  "motd": true,
-  "player_join_leave_message": true,
-  "server_broadcast": true
-}
+  "monitor": {
+    "process_crash": true,
+    "tcp_responsivness": true,
+  }
+  "auto_restart": {
+    "enabled": true,
+    "timer": 240, # Minutes
+    "notifcation": {
+      "enabled": true,
+      "times": [60, 45, 30, 15, 10, 5, 1], # Minutes
+      "mesage": "Starbound will restart in %i",
+    }
+  }
+  "motd": {
+      "enabled": true,
+      "type": static, #static, rotating, random
+      "messages": [
+      "Welcome to Free Universe powered by StarNub (Updated: 10 October), this server is Modded, please visit www.free-universe.com for more details. There are currently //INSERT FORMATER// + " player(s) online. This server tool is a work in progress, some commands are not available yet.",
+      "Test Message 1",
+      "Test Message 2",
+      "Test Message 3",
+      ],
+  }
+  "server_broadcast": {
+    "enabled": true,
+    "broadcast": [
+      {"interval": 15, "message": "Don't forget this is a modded server! Download the modpack at http://www.free-universe.com/sbm and don't forget to step by the teamspeak to chat once in a while: ts3.free-universe.com"}
+      {"interval": 16, "message": "We made some recent changes, if you experience frequent connection loss, please post on the forums and search out "Frequent Connection Lost". http://www.free-universe.com/"}
 
-#Autorestarter on or off // MOTD message // Server restart messages // TimeUnits for restarter //
+    ],
+  }
+  "random_broadcast": {
+    "enabled": true,
+    "interval": 10,
+    "message_pool": [],
+  }
+"player_join_leave_message": true,
+}

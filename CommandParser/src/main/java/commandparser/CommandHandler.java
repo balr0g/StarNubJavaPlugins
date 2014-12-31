@@ -2,7 +2,7 @@ package commandparser;
 
 import commandparser.data.Shortcut;
 import org.apache.commons.lang3.StringUtils;
-import starbounddata.chat.ChatReceiveChannel;
+import starbounddata.types.chat.Mode;
 import starnubdata.generic.CanUse;
 import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.events.events.StarNubEvent;
@@ -313,6 +313,6 @@ public class CommandHandler extends StarNubEventHandler {
     }
 
     private void sendChatMessage(PlayerSession playerSession, String message) {
-        playerSession.sendChatMessage("CommandParser", ChatReceiveChannel.UNIVERSE, message);
+        playerSession.sendChatMessage("CommandParser", Mode.BROADCAST, message);
     }
 }

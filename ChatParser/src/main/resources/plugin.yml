@@ -1,7 +1,7 @@
 {
   "name": "ChatParser",
   "class": "chatparser.ChatParser",
-    "details": {
+  "details": {
     "languages": ['english'],
     "version": 1.1,
     "description": "None",
