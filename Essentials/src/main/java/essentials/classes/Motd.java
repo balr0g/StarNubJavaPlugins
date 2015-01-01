@@ -22,9 +22,6 @@ public class Motd {
         });
     }
 
-    public void registerEventsTask() {
-
-    }
 
     public void unregisterEventsTask() {
 

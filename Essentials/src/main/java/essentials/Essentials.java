@@ -20,6 +20,13 @@ package essentials;
 
 import essentials.classes.*;
 import starnubserver.plugins.JavaPlugin;
+import starnubserver.plugins.generic.CommandInfo;
+import starnubserver.plugins.generic.PluginDetails;
+import starnubserver.plugins.resources.PluginRunnables;
+import starnubserver.plugins.resources.YAMLFiles;
+import starnubserver.resources.files.PluginConfiguration;
+
+import java.io.File;
 
 public final class Essentials extends JavaPlugin {
 
@@ -28,6 +35,10 @@ public final class Essentials extends JavaPlugin {
     private Motd motd;
     private Broadcaster broadcaster;
     private PlayerMessages playerMessages;
+
+    public Essentials(String NAME, File FILE, String MAIN_CLASS, PluginDetails PLUGIN_DETAILS, PluginConfiguration CONFIGURATION, YAMLFiles FILES, CommandInfo COMMAND_INFO, PluginRunnables PLUGIN_RUNNABLES) {
+        super(NAME, FILE, MAIN_CLASS, PLUGIN_DETAILS, CONFIGURATION, FILES, COMMAND_INFO, PLUGIN_RUNNABLES);
+    }
 
     @Override
     public void onPluginEnable() {

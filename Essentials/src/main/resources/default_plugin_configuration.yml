@@ -4,10 +4,10 @@
     "start_on_load": true, # Starts the server when StarNub has finished starting up
     "interval": 30, # Interval in seconds to check for the server process and its responsivness
     "process_crash": true, # Will restart on crash
-    "responsivness": {
+    "responsiveness": {
       "tcp_query": true, # Will restart on unresponsiveness
       "tries": 12, # Number of queries, Queries are conducted in 10 seconds intervals
-    }
+    },
     "crashed_notification": {
         "color": "crimson",
         "message": "It appears the server crashed."
@@ -16,10 +16,10 @@
   "auto_restart": {
     "enabled": true,
     "timer": 240, # Minutes
-    "notifcation": {
+    "notification": {
       "enabled": true,
       "times": [60, 45, 30, 15, 10, 5, 1], # Minutes
-      "mesage": 'Starbound will restart in %i minutes.',
+      "message": 'Starbound will restart in %i minutes.',
       "color": "default", # Use the default server chat color
     }
   },
@@ -49,6 +49,7 @@
   "player_messages": {
     "enabled": true,
     "pvp": {
+      "enabled": true,
       "channel": local,  # Options: local or broadcast
       "enabled": {
         "color": "#DC143C",
@@ -60,8 +61,9 @@
         }
     },
     "leave_join": {
+      "enabled": true,
       "delay": 3,  # Seconds
-      "name_color": true,
+      "name_color": true, # Show players name color
       "join_message": "%s has joined the server.",
       "leave_message": "%s has left the server."
     }

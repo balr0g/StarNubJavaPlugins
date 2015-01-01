@@ -13,6 +13,7 @@ import utilities.events.Priority;
 import utilities.file.simplejson.parser.ParseException;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,14 +26,14 @@ public class ServerMonitor {
     private final StarNubEventSubscription PLAYER_JOIN_CRASH_HANDLER;
     private final CrashedHandler CRASH_HANDLER;
     private final StarNubEventSubscription STARNUB_STARTED;
-    private final StarNubTask PROCESS_CHECK;
-    private final StarNubTask QUERY_CHECK;
+    private final StarNubEventSubscription STARBOUND_STARTED;
+    private StarNubTask PROCESS_CHECK;
+    private StarNubTask QUERY_CHECK;
 
     public ServerMonitor(PluginConfiguration CONFIG) {
         this.CONFIG = CONFIG;
         CRASH_HANDLER = new CrashedHandler(CONFIG);
         PLAYER_JOIN_CRASH_HANDLER = new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Player_Connected", CRASH_HANDLER);
-
 
         if ((boolean) CONFIG.getNestedValue("monitor", "start_on_load")) {
             this.STARNUB_STARTED = startStarnubStartedListener();
@@ -40,21 +41,26 @@ public class ServerMonitor {
             STARNUB_STARTED = null;
         }
 
-        int interval = (int) CONFIG.getNestedValue("monitor", "interval");
-        boolean processCheck = (boolean) CONFIG.getNestedValue("monitor", "process_crash");
-        if (processCheck) {
-            PROCESS_CHECK = processCheck(interval);
-        } else {
-            PROCESS_CHECK = null;
-        }
+        STARBOUND_STARTED = new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Starbound_Status_Online", new StarNubEventHandler() {
+            @Override
+            public void onEvent(StarNubEvent starNubEvent) {
+                int interval = (int) CONFIG.getNestedValue("monitor", "interval");
+                boolean processCheck = (boolean) CONFIG.getNestedValue("monitor", "process_crash");
+                if (processCheck) {
+                    PROCESS_CHECK = processCheck(interval);
+                } else {
+                    PROCESS_CHECK = null;
+                }
 
-        boolean responsiveness = (boolean) CONFIG.getNestedValue("monitor", "responsiveness", "tcp_query");
-        if (responsiveness) {
-            int tries = (int) CONFIG.getNestedValue("monitor", "responsiveness", "tries");
-            QUERY_CHECK = responsiveness(interval, tries);
-        } else {
-            QUERY_CHECK = null;
-        }
+                boolean responsiveness = (boolean) CONFIG.getNestedValue("monitor", "responsiveness", "tcp_query");
+                if (responsiveness) {
+                    int tries = (int) CONFIG.getNestedValue("monitor", "responsiveness", "tries");
+                    QUERY_CHECK = responsiveness(interval, tries);
+                } else {
+                    QUERY_CHECK = null;
+                }
+            }
+        });
     }
 
     private StarNubEventSubscription startStarnubStartedListener() {
@@ -97,6 +103,9 @@ public class ServerMonitor {
     }
 
     private void serverCrash() {
+        new StarNubEvent("Essentials_Server_Crash", this);
+        PROCESS_CHECK.removeTask();
+        QUERY_CHECK.removeTask();
         ConcurrentHashMap<UUID, TimeCache> cacheMap = CRASH_HANDLER.getPLAYER_UUID_CACHE().getCACHE_MAP();
         for (TimeCache timeCache : cacheMap.values()) {
             BooleanCache booleanCache = (BooleanCache) timeCache;
@@ -106,11 +115,20 @@ public class ServerMonitor {
             for (Map.Entry entry : cacheMap.entrySet()) {
                 UUID key = (UUID) entry.getKey();
                 BooleanCache booleanCache = (BooleanCache) entry.getValue();
+                HashSet<UUID> onlineUUIDS = StarNub.getConnections().getCONNECTED_PLAYERS().getOnlinePlayersUuids();
                 if (booleanCache.isBool()) {
-                    cacheMap.remove(key);
+                    if (onlineUUIDS.contains(key)) {
+                        booleanCache.setBool(false);
+                    } else {
+                        cacheMap.remove(key);
+                    }
                 }
             }
         });
+    }
+
+    public CrashedHandler getCRASH_HANDLER() {
+        return CRASH_HANDLER;
     }
 
     public StarNubEventSubscription getPLAYER_JOIN_CRASH_HANDLER() {
@@ -134,5 +152,6 @@ public class ServerMonitor {
         STARNUB_STARTED.removeRegistration();
         PROCESS_CHECK.removeTask();
         QUERY_CHECK.removeTask();
+        CRASH_HANDLER.unregisterEvents();
     }
 }

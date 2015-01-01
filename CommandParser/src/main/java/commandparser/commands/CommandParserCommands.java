@@ -3,7 +3,7 @@ package commandparser.commands;
 import commandparser.CommandHandler;
 import commandparser.CommandParser;
 import commandparser.data.Shortcut;
-import starbounddata.chat.ChatReceiveChannel;
+import starbounddata.types.chat.Mode;
 import starnubserver.StarNub;
 import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.plugins.Command;
@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.util.*;
 
 public class CommandParserCommands extends Command {
-
-//    private CommandHandler COMMAND_HANDLER;
 
     public CommandParserCommands(String PLUGIN_NAME, HashSet<String> COMMANDS, HashSet<String> MAIN_ARGS, HashMap<String, Integer> CUSTOM_SPLIT, String COMMAND_CLASS, String COMMAND_NAME, int CAN_USE, String DESCRIPTION) {
         super(PLUGIN_NAME, COMMANDS, MAIN_ARGS, CUSTOM_SPLIT, COMMAND_CLASS, COMMAND_NAME, CAN_USE, DESCRIPTION);
@@ -187,6 +185,6 @@ public class CommandParserCommands extends Command {
     }
 
     private void sendMessage(PlayerSession playerSession, String message) {
-        playerSession.sendChatMessage(getPLUGIN_NAME(), ChatReceiveChannel.UNIVERSE, message);
+        playerSession.sendChatMessage(getPLUGIN_NAME(), Mode.BROADCAST, message);
     }
 }

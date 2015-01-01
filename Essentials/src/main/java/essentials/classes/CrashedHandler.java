@@ -7,9 +7,11 @@ import starnubserver.cache.wrappers.PlayerUUIDCacheWrapper;
 import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.events.events.StarNubEvent;
 import starnubserver.events.starnub.StarNubEventHandler;
+import starnubserver.events.starnub.StarNubEventSubscription;
 import starnubserver.resources.files.PluginConfiguration;
 import utilities.cache.objects.BooleanCache;
 import utilities.cache.objects.TimeCache;
+import utilities.events.Priority;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -17,14 +19,25 @@ import java.util.concurrent.TimeUnit;
 public class CrashedHandler extends StarNubEventHandler {
 
     private final PluginConfiguration CONFIG;
-    private final PlayerUUIDCacheWrapper PLAYER_UUID_CACHE = new PlayerUUIDCacheWrapper("Essentials", "Essentials - Crash Notification", true);
+    private final PlayerUUIDCacheWrapper PLAYER_UUID_CACHE = new PlayerUUIDCacheWrapper("Essentials", "Essentials - Crash Notification", true, TimeUnit.SECONDS, 0, 0);
+    private final StarNubEventSubscription RESTART_LISTENER;
 
     public CrashedHandler(PluginConfiguration CONFIG) {
         this.CONFIG = CONFIG;
+        RESTART_LISTENER = new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Essentials_Auto_Restart_Complete", new StarNubEventHandler() {
+            @Override
+            public void onEvent(StarNubEvent starNubEvent) {
+                PLAYER_UUID_CACHE.cachePurge();
+            }
+        });
     }
 
     public PlayerUUIDCacheWrapper getPLAYER_UUID_CACHE() {
         return PLAYER_UUID_CACHE;
+    }
+
+    public void unregisterEvents() {
+        RESTART_LISTENER.removeRegistration();
     }
 
     @Override
@@ -42,4 +55,6 @@ public class CrashedHandler extends StarNubEventHandler {
         }
         PLAYER_UUID_CACHE.addCache(uuid, new BooleanCache(false));
     }
+
+
 }
