@@ -1,39 +1,69 @@
 {
   "monitor": {
-    "process_crash": true,
-    "tcp_responsivness": true,
-  }
+    "enabled": true,
+    "start_on_load": true, # Starts the server when StarNub has finished starting up
+    "interval": 30, # Interval in seconds to check for the server process and its responsivness
+    "process_crash": true, # Will restart on crash
+    "responsivness": {
+      "tcp_query": true, # Will restart on unresponsiveness
+      "tries": 12, # Number of queries, Queries are conducted in 10 seconds intervals
+    }
+    "crashed_notification": {
+        "color": "crimson",
+        "message": "It appears the server crashed."
+    }
+  },
   "auto_restart": {
     "enabled": true,
     "timer": 240, # Minutes
     "notifcation": {
       "enabled": true,
       "times": [60, 45, 30, 15, 10, 5, 1], # Minutes
-      "mesage": "Starbound will restart in %i",
+      "mesage": 'Starbound will restart in %i minutes.',
+      "color": "default", # Use the default server chat color
     }
-  }
+  },
   "motd": {
       "enabled": true,
-      "type": static, #Options: static, rotating, random
+      "type": static, # Options: static, rotating, random
+      "color": "default", # Use the default server chat color
       "messages": [
-      "Welcome to Free Universe powered by StarNub (Updated: 10 October), this server is Modded, please visit www.free-universe.com for more details. There are currently //INSERT FORMATER// + " player(s) online. This server tool is a work in progress, some commands are not available yet.",
-      "Test Message 1",
-      "Test Message 2",
-      "Test Message 3",
+      'Welcome to Free Universe powered by StarNub (Updated: 10 October), this server is Modded, please visit www.free-universe.com for more details. There are currently {player-count} player(s) online. This server tool is a work in progress, some commands are not available yet.',
+      'Test Message 1',
+      'Test Message 2',
+      'Test Message 3'
       ],
-  }
+  },
   "server_broadcast": {
     "enabled": true,
     "broadcast": [
-      {"interval": 15, "message": "Don't forget this is a modded server! Download the modpack at http://www.free-universe.com/sbm and don't forget to step by the teamspeak to chat once in a while: ts3.free-universe.com"}
-      {"interval": 16, "message": "We made some recent changes, if you experience frequent connection loss, please post on the forums and search out "Frequent Connection Lost". http://www.free-universe.com/"}
-
+      {"interval": 15, "color": "default", "message": 'Don''t forget this is a modded server! Download the modpack at www.free-universe.com/sbm and don''t forget to step by the teamspeak to chat once in a while: ts3.free-universe.com'},
+      {"interval": 16, "color": "default", "message": 'We made some recent changes, if you experience frequent connection loss, please post on the forums and search out "Frequent Connection Lost". www.free-universe.com'}
     ],
-  }
+  },
   "random_broadcast": {
     "enabled": true,
     "interval": 10,
     "message_pool": [],
+  },
+  "player_messages": {
+    "enabled": true,
+    "pvp": {
+      "channel": local,  # Options: local or broadcast
+      "enabled": {
+        "color": "#DC143C",
+        "message": "%s is now in PVP mode.",
+        },
+      "disabled": {
+        "color": "#00FF00",
+        "message": "%s has left PVP mode.",
+        }
+    },
+    "leave_join": {
+      "delay": 3,  # Seconds
+      "name_color": true,
+      "join_message": "%s has joined the server.",
+      "leave_message": "%s has left the server."
+    }
   }
-"player_join_leave_message": true,
 }
