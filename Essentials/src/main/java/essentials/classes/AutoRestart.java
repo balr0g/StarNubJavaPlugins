@@ -9,7 +9,7 @@ import starnubserver.StarNubTask;
 import starnubserver.events.events.StarNubEvent;
 import starnubserver.events.starnub.StarNubEventHandler;
 import starnubserver.events.starnub.StarNubEventSubscription;
-import starnubserver.resources.files.PluginConfiguration;
+import starnubserver.plugins.resources.PluginConfiguration;
 import utilities.concurrent.thread.ThreadSleep;
 import utilities.events.Priority;
 import utilities.events.types.ObjectEvent;

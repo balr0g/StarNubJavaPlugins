@@ -22,9 +22,9 @@ import starnubserver.events.starnub.StarNubEventSubscription;
 import starnubserver.plugins.JavaPlugin;
 import starnubserver.plugins.generic.CommandInfo;
 import starnubserver.plugins.generic.PluginDetails;
+import starnubserver.plugins.resources.PluginConfiguration;
 import starnubserver.plugins.resources.PluginRunnables;
 import starnubserver.plugins.resources.YAMLFiles;
-import starnubserver.resources.files.PluginConfiguration;
 import utilities.events.Priority;
 import utilities.exceptions.CollectionDoesNotExistException;
 

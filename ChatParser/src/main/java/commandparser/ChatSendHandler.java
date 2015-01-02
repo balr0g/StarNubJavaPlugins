@@ -10,7 +10,7 @@ import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.events.events.StarNubEvent;
 import starnubserver.events.events.StarNubEventTwo;
 import starnubserver.events.packet.PacketEventHandler;
-import starnubserver.resources.files.PluginConfiguration;
+import starnubserver.plugins.resources.PluginConfiguration;
 import utilities.cache.objects.BooleanCache;
 import utilities.cache.objects.TimeCache;
 

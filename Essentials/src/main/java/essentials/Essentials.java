@@ -22,9 +22,9 @@ import essentials.classes.*;
 import starnubserver.plugins.JavaPlugin;
 import starnubserver.plugins.generic.CommandInfo;
 import starnubserver.plugins.generic.PluginDetails;
+import starnubserver.plugins.resources.PluginConfiguration;
 import starnubserver.plugins.resources.PluginRunnables;
 import starnubserver.plugins.resources.YAMLFiles;
-import starnubserver.resources.files.PluginConfiguration;
 
 import java.io.File;
 
@@ -51,9 +51,9 @@ public final class Essentials extends JavaPlugin {
         if ((boolean) getCONFIGURATION().getNestedValue("motd", "enabled")) {
             motd = new Motd(getCONFIGURATION());
         }
-        if ((boolean) getCONFIGURATION().getNestedValue("server_broadcast", "enabled")) {
-            broadcaster = new Broadcaster(getCONFIGURATION());
-        }
+
+        broadcaster = new Broadcaster(getCONFIGURATION());
+
         if ((boolean) getCONFIGURATION().getNestedValue("player_messages", "enabled")) {
             playerMessages = new PlayerMessages(getCONFIGURATION());
         }

@@ -1,31 +1,100 @@
 package essentials.classes;
 
+import io.netty.channel.ChannelHandlerContext;
+import starbounddata.types.chat.Mode;
+import starbounddata.types.color.Colors;
+import starnubserver.StarNubTask;
+import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.events.starnub.StarNubEventHandler;
 import starnubserver.events.starnub.StarNubEventSubscription;
-import starnubserver.resources.files.PluginConfiguration;
+import starnubserver.plugins.resources.PluginConfiguration;
+import starnubserver.resources.StringTokens;
 import utilities.events.Priority;
 import utilities.events.types.ObjectEvent;
+import utilities.numbers.RandomNumber;
+
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 public class Motd {
 
-    final PluginConfiguration CONFIG;
-    final StarNubEventSubscription playerConnected;
+    private final PluginConfiguration CONFIG;
+    private final StarNubEventSubscription PLAYER_CONNECTED;
+    private final StarNubEventSubscription MOTD_TASK_CANCEL;
+    private final ConcurrentHashMap<ChannelHandlerContext, StarNubTask> MOTD_CACHE = new ConcurrentHashMap<>();
+    private volatile int rotatingIndex = 0;
 
     public Motd(PluginConfiguration CONFIG) {
         this.CONFIG = CONFIG;
-        playerConnected = new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Player_Connected", new StarNubEventHandler() {
+        boolean isMotd = (boolean) CONFIG.getNestedValue("motd", "enabled");
+        if (isMotd) {
+            PLAYER_CONNECTED = setMotdMessage();
+            MOTD_TASK_CANCEL = motdTaskCancel();
+        } else {
+            PLAYER_CONNECTED = null;
+            MOTD_TASK_CANCEL = null;
+        }
+
+    }
+
+    private StarNubEventSubscription setMotdMessage() {
+        return new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Player_Connected", new StarNubEventHandler() {
             @Override
             public void onEvent(ObjectEvent starNubEvent) {
-
-
+                PlayerSession playerSession = (PlayerSession) starNubEvent.getEVENT_DATA();
+                String type = (String) CONFIG.getNestedValue("motd", "type");
+                String color = Colors.validate((String) CONFIG.getNestedValue("motd", "color"));
+                List<String> messages = (List<String>) CONFIG.getNestedValue("motd", "messages");
+                if (messages.size() > 0) {
+                    String stringMotd = "";
+                    if (type.equalsIgnoreCase("static")) {
+                        stringMotd = messages.get(0);
+                    } else if (type.equalsIgnoreCase("rotating")) {
+                        stringMotd = messages.get(rotatingIndex);
+                        rotatingIndex++;
+                        if (rotatingIndex >= messages.size()) {
+                            rotatingIndex = 0;
+                        }
+                    } else if (type.equalsIgnoreCase("random")) {
+                        int randomInt = RandomNumber.randInt(0, messages.size() - 1);
+                        stringMotd = messages.get(randomInt);
+                    }
+                    String replacedTokensMotd = StringTokens.replaceTokens(stringMotd);
+                    playerMessage(playerSession, color + replacedTokensMotd);
+                }
             }
         });
     }
 
-
-    public void unregisterEventsTask() {
-
+    private StarNubEventSubscription motdTaskCancel() {
+        return new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Player_Disconnected", new StarNubEventHandler() {
+            @Override
+            public void onEvent(ObjectEvent objectEvent) {
+                PlayerSession playerSession = (PlayerSession) objectEvent.getEVENT_DATA();
+                ChannelHandlerContext clientCtx = playerSession.getCONNECTION().getCLIENT_CTX();
+                StarNubTask starNubTask = MOTD_CACHE.remove(clientCtx);
+                if (starNubTask != null) {
+                    starNubTask.removeTask();
+                }
+            }
+        });
     }
 
+    private void playerMessage(PlayerSession playerSession, String motd) {
+        ChannelHandlerContext clientCtx = playerSession.getCONNECTION().getCLIENT_CTX();
+        String cleanName = playerSession.getPlayerCharacter().getCleanName();
+        StarNubTask motdTask = new StarNubTask("Essentials", "Essentials - Player MOTD - " + cleanName, 5, TimeUnit.SECONDS, () -> playerSession.sendChatMessage("Essentials", Mode.BROADCAST, motd));
+        MOTD_CACHE.put(clientCtx, motdTask);
+        new StarNubTask("Essentials", "Essentials - Player MOTD Cache Removal" + cleanName, 6, TimeUnit.SECONDS, () -> {
+            MOTD_CACHE.remove(clientCtx);
+        });
+    }
 
+    public void unregisterEventsTask() {
+        if (PLAYER_CONNECTED != null) {
+            PLAYER_CONNECTED.removeRegistration();
+            MOTD_TASK_CANCEL.removeRegistration();
+        }
+    }
 }

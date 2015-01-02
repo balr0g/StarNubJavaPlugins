@@ -5,7 +5,7 @@ import starnubserver.StarNubTask;
 import starnubserver.events.events.StarNubEvent;
 import starnubserver.events.starnub.StarNubEventHandler;
 import starnubserver.events.starnub.StarNubEventSubscription;
-import starnubserver.resources.files.PluginConfiguration;
+import starnubserver.plugins.resources.PluginConfiguration;
 import starnubserver.servers.starbound.StarboundServer;
 import utilities.cache.objects.BooleanCache;
 import utilities.cache.objects.TimeCache;
