@@ -1,8 +1,8 @@
 package essentials.classes;
 
-import starnubserver.events.events.StarNubEvent;
 import starnubserver.events.starnub.StarNubEventHandler;
 import starnubserver.resources.files.PluginConfiguration;
+import utilities.events.types.ObjectEvent;
 
 public class PlayerMessages extends StarNubEventHandler {
 
@@ -14,7 +14,7 @@ public class PlayerMessages extends StarNubEventHandler {
     }
 
     @Override
-    public void onEvent(StarNubEvent starNubEvent) {
+    public void onEvent(ObjectEvent starNubEvent) {
 
     }
 

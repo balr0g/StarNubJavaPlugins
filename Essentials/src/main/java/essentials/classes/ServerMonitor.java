@@ -10,6 +10,7 @@ import starnubserver.servers.starbound.StarboundServer;
 import utilities.cache.objects.BooleanCache;
 import utilities.cache.objects.TimeCache;
 import utilities.events.Priority;
+import utilities.events.types.ObjectEvent;
 import utilities.file.simplejson.parser.ParseException;
 
 import java.io.IOException;
@@ -41,9 +42,22 @@ public class ServerMonitor {
             STARNUB_STARTED = null;
         }
 
-        STARBOUND_STARTED = new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Starbound_Status_Online", new StarNubEventHandler() {
+        STARBOUND_STARTED = starboundStartedListener();
+    }
+
+    private StarNubEventSubscription startStarnubStartedListener() {
+        return new StarNubEventSubscription("Essentials", Priority.MEDIUM, "StarNub_Startup_Complete", new StarNubEventHandler() {
             @Override
-            public void onEvent(StarNubEvent starNubEvent) {
+            public void onEvent(ObjectEvent starNubEvent) {
+                startServer();
+            }
+        });
+    }
+
+    private StarNubEventSubscription starboundStartedListener() {
+        return new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Starbound_Status_Online", new StarNubEventHandler() {
+            @Override
+            public void onEvent(ObjectEvent starNubEvent) {
                 int interval = (int) CONFIG.getNestedValue("monitor", "interval");
                 boolean processCheck = (boolean) CONFIG.getNestedValue("monitor", "process_crash");
                 if (processCheck) {
@@ -51,7 +65,6 @@ public class ServerMonitor {
                 } else {
                     PROCESS_CHECK = null;
                 }
-
                 boolean responsiveness = (boolean) CONFIG.getNestedValue("monitor", "responsiveness", "tcp_query");
                 if (responsiveness) {
                     int tries = (int) CONFIG.getNestedValue("monitor", "responsiveness", "tries");
@@ -63,13 +76,12 @@ public class ServerMonitor {
         });
     }
 
-    private StarNubEventSubscription startStarnubStartedListener() {
-        return new StarNubEventSubscription("Essentials", Priority.MEDIUM, "StarNub_Startup_Complete", new StarNubEventHandler() {
-            @Override
-            public void onEvent(StarNubEvent starNubEvent) {
-                startServer();
-            }
-        });
+    private void startServer() {
+        try {
+            StarNub.getStarboundServer().start();
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private StarNubTask processCheck(int interval) {
@@ -84,7 +96,7 @@ public class ServerMonitor {
     }
 
     private StarNubTask responsiveness(int interval, int tries) {
-        return new StarNubTask("Essentials", "Essentials - Starbound Process Check", true, interval + 2, interval + 2, TimeUnit.SECONDS, () -> {
+        return new StarNubTask("Essentials", "Essentials - Starbound Responsive Check", true, interval + 2, interval + 2, TimeUnit.SECONDS, () -> {
             StarboundServer starboundServer = StarNub.getStarboundServer();
             boolean responsive = starboundServer.isResponsive(tries);
             if (!responsive) {
@@ -94,18 +106,10 @@ public class ServerMonitor {
         });
     }
 
-    private void startServer() {
-        try {
-            StarNub.getStarboundServer().start();
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void serverCrash() {
-        new StarNubEvent("Essentials_Server_Crash", this);
         PROCESS_CHECK.removeTask();
         QUERY_CHECK.removeTask();
+        new StarNubEvent("Essentials_Server_Crash", this);
         ConcurrentHashMap<UUID, TimeCache> cacheMap = CRASH_HANDLER.getPLAYER_UUID_CACHE().getCACHE_MAP();
         for (TimeCache timeCache : cacheMap.values()) {
             BooleanCache booleanCache = (BooleanCache) timeCache;
@@ -150,6 +154,7 @@ public class ServerMonitor {
     public void unregisterEventsTask() {
         PLAYER_JOIN_CRASH_HANDLER.removeRegistration();
         STARNUB_STARTED.removeRegistration();
+        STARBOUND_STARTED.removeRegistration();
         PROCESS_CHECK.removeTask();
         QUERY_CHECK.removeTask();
         CRASH_HANDLER.unregisterEvents();

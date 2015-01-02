@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import starbounddata.types.chat.Mode;
 import starnubdata.generic.CanUse;
 import starnubserver.connections.player.session.PlayerSession;
-import starnubserver.events.events.StarNubEvent;
 import starnubserver.events.events.StarNubEventTwo;
 import starnubserver.events.starnub.StarNubEventHandler;
 import starnubserver.events.starnub.StarNubEventSubscription;
@@ -20,6 +19,7 @@ import starnubserver.resources.files.PluginConfiguration;
 import utilities.connectivity.connection.Connection;
 import utilities.connectivity.connection.ProxyConnection;
 import utilities.events.Priority;
+import utilities.events.types.ObjectEvent;
 import utilities.exceptions.CollectionDoesNotExistException;
 
 import java.io.IOException;
@@ -42,19 +42,19 @@ public class CommandHandler extends StarNubEventHandler {
         SHORTCUTS = files.getPluginYamlWrapper("shortcuts.yml");
         YAML_RELOAD = new StarNubEventSubscription("CommandParser", Priority.MEDIUM, "YAMLWrapper_Reloaded_CommandParser_shortcuts.yml", new StarNubEventHandler() {
             @Override
-            public void onEvent(StarNubEvent starNubEvent) {
+            public void onEvent(ObjectEvent starNubEvent) {
                 shortcutCacheReload();
             }
         });
         YAML_DUMP = new StarNubEventSubscription("CommandParser", Priority.MEDIUM, "YAMLWrapper_Dumped_CommandParser_shortcuts.yml", new StarNubEventHandler() {
             @Override
-            public void onEvent(StarNubEvent starNubEvent) {
+            public void onEvent(ObjectEvent starNubEvent) {
                 shortcutCacheReload();
             }
         });
         PLUGIN_LOAD = new StarNubEventSubscription("CommandParser", Priority.MEDIUM, "StarNub_Plugin_Loaded", new StarNubEventHandler() {
             @Override
-            public void onEvent(StarNubEvent starNubEvent) {
+            public void onEvent(ObjectEvent starNubEvent) {
                 JavaPlugin javaPlugin = (JavaPlugin) starNubEvent.getEVENT_DATA();
                 try {
                     autoShortcutAdd(javaPlugin);
@@ -213,7 +213,7 @@ public class CommandHandler extends StarNubEventHandler {
     }
 
     @Override
-    public void onEvent(StarNubEvent starNubEvent) {
+    public void onEvent(ObjectEvent starNubEvent) {
         StarNubEventTwo starNubEventTwo = (StarNubEventTwo) starNubEvent;
         PlayerSession playerSession = (PlayerSession) starNubEventTwo.getEVENT_DATA();
         String commandString = (String) starNubEventTwo.getEVENT_DATA_2();

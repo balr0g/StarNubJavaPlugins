@@ -12,6 +12,7 @@ import starnubserver.events.starnub.StarNubEventSubscription;
 import starnubserver.resources.files.PluginConfiguration;
 import utilities.concurrent.thread.ThreadSleep;
 import utilities.events.Priority;
+import utilities.events.types.ObjectEvent;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,21 +32,21 @@ public class AutoRestart extends HashSet<StarNubTask> {
 
         this.CRASH_LISTENER = new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Essentials_Server_Crash", new StarNubEventHandler() {
             @Override
-            public void onEvent(StarNubEvent starNubEvent) {
+            public void onEvent(ObjectEvent starNubEvent) {
                 clearTask();
             }
         });
 
         this.RESTART_LISTENER = new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Starbound_Status_Restarting", new StarNubEventHandler() {
             @Override
-            public void onEvent(StarNubEvent starNubEvent) {
+            public void onEvent(ObjectEvent starNubEvent) {
                 clearTask();
             }
         });
 
         this.ONLINE_LISTENER = new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Starbound_Status_Online", new StarNubEventHandler() {
             @Override
-            public void onEvent(StarNubEvent starNubEvent) {
+            public void onEvent(ObjectEvent starNubEvent) {
                 StarNub.getStarboundServer().setRestarting(false);
                 registerRestart();
             }
