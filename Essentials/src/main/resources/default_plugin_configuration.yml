@@ -9,8 +9,8 @@
       "tries": 12, # Number of queries, Queries are conducted in 10 seconds intervals
     },
     "crashed_notification": {
-        "color": "crimson",
-        "message": "It appears the server crashed."
+        "color": 'crimson',
+        "message": 'It appears the server crashed.'
     }
   },
   "auto_restart": {
@@ -19,14 +19,14 @@
     "notification": {
       "enabled": true,
       "times": [60, 45, 30, 15, 10, 5, 1], # Minutes
-      "message": 'Starbound will restart in %i minutes.',
-      "color": "default", # Use the default server chat color
+      "message": 'Starbound will restart in %d minutes.',
+      "color": 'default', # Use the default server chat color
     }
   },
   "motd": {
       "enabled": true,
       "type": static, # Options: static, rotating, random
-      "color": "default", # Use the default server chat color
+      "color": '{b}', # Use the default server chat color
       "messages": [
       'Welcome to Free Universe powered by StarNub (Updated: 10 October), this server is Modded, please visit www.free-universe.com for more details. There are currently {player-count} player(s) online. This server tool is a work in progress, some commands are not available yet.',
       'Test Message 1',
@@ -34,18 +34,20 @@
       'Test Message 3'
       ],
   },
-  "server_broadcast": {
-    "enabled": true,
-    "broadcast": [    # Interval Minutes
-      {"interval": 15, "color": "default", "message": 'Don''t forget this is a modded server! Download the modpack at www.free-universe.com/sbm and don''t forget to step by the teamspeak to chat once in a while: ts3.free-universe.com'},
-      {"interval": 16, "color": "default", "message": 'We made some recent changes, if you experience frequent connection loss, please post on the forums and search out "Frequent Connection Lost". www.free-universe.com'}
-    ],
-  },
-  "random_broadcast": {
-    "enabled": true,
-    "interval": 10,
-    "color": "default",
-    "message_pool": ['testicals', 'poop', 'motherLover'],
+  "broadcast":{
+    "static_broadcast": {
+      "enabled": true,
+      "broadcast": [    # Interval Minutes
+        {"interval": 15, "color": 'default', "message": 'Don''t forget this is a modded server! Download the modpack at www.free-universe.com/sbm and don''t forget to step by the teamspeak to chat once in a while: ts3.free-universe.com'},
+        {"interval": 16, "color": 'default', "message": 'We made some recent changes, if you experience frequent connection loss, please post on the forums and search out "Frequent Connection Lost". www.free-universe.com'}
+      ],
+    },
+    "random_broadcast": {
+      "enabled": true,
+      "interval": 10,
+      "color": 'default',
+      "message_pool": ['testicals', 'poop', 'motherLover'],
+    }
   },
   "player_messages": {
     "enabled": true,
@@ -55,12 +57,12 @@
       "name_color": true, # Show players name color
       "mode": {
         "enabled": {
-          "color": "#DC143C",
-          "message": "%s is now in PVP mode.",
+          "color": '#DC143C',
+          "message": '%s is now in PVP mode.',
         },
         "disabled": {
-          "color": "#00FF00",
-          "message": "%s has left PVP mode.",
+          "color": '#00FF00',
+          "message": '%s has left PVP mode.',
         }
       }
     },
@@ -69,9 +71,14 @@
       "delay": 3,  # Seconds - This will delay the join message, if the player disconnectes before this, no message is sent
       "name_color": true, # Show players name color
       "message": {
-         "color": "default",
-         "connect": "%s has joined the server.",
-         "disconnect": "%s has left the server."
+         "color": 'default',
+         "connect": '%s has joined the server.',
+         "disconnect": '%s has left the server.'
+      },
+      "unsubscribe": {
+         "color": 'default',
+         "unsubscribe": 'You will no longer receive Player Join/Leave messages.',
+         "subscribe": 'You will now receive Player Join/Leave messages'
       }
     }
   }

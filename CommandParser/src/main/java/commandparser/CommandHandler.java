@@ -34,12 +34,14 @@ public class CommandHandler extends StarNubEventHandler {
     private final StarNubEventSubscription YAML_RELOAD;
     private final StarNubEventSubscription YAML_DUMP;
     private final StarNubEventSubscription PLUGIN_LOAD;
+    private final StarNubEventSubscription STARNUB_START_COMPLETE;
     private final PluginYAMLWrapper SHORTCUTS;
     private final ConcurrentHashMap<String, String> SHORTCUT_CACHE;
 
     public CommandHandler(PluginConfiguration configuration, YAMLFiles files) throws IOException, CollectionDoesNotExistException {
         CONFIG = configuration;
         SHORTCUTS = files.getPluginYamlWrapper("shortcuts.yml");
+        SHORTCUT_CACHE = new ConcurrentHashMap<>();
         YAML_RELOAD = new StarNubEventSubscription("CommandParser", Priority.MEDIUM, "YAMLWrapper_Reloaded_CommandParser_shortcuts.yml", new StarNubEventHandler() {
             @Override
             public void onEvent(ObjectEvent starNubEvent) {
@@ -63,11 +65,17 @@ public class CommandHandler extends StarNubEventHandler {
                 }
             }
         });
-        SHORTCUT_CACHE = new ConcurrentHashMap<>();
-        boolean autoShortcut = (boolean) CONFIG.getValue("auto_shortcuts");
-        if (autoShortcut) {
-            autoShortcut();
-        }
+        STARNUB_START_COMPLETE = new StarNubEventSubscription("CommandParser", Priority.MEDIUM, "StarNub_Startup_Complete", new StarNubEventHandler() {
+            @Override
+            public void onEvent(ObjectEvent starNubEvent) {
+                try {
+                    autoPurgeShortcuts();
+                    autoShortcut();
+                } catch (IOException | CollectionDoesNotExistException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         shortcutCacheReload();
     }
 
@@ -100,6 +108,18 @@ public class CommandHandler extends StarNubEventHandler {
         shortcutCacheReload();
     }
 
+    private void autoPurgeShortcuts() throws IOException {
+        Map<String, Object> data = SHORTCUTS.getDATA();
+        if (data != null) {
+            for (String key : data.keySet()) {
+                Plugin plugin = PluginManager.getInstance().resolveLoadedPlugin(key, false);
+                if (plugin == null) {
+                    SHORTCUTS.removeValue(key);
+                }
+            }
+        }
+    }
+
     private void autoShortcut() throws IOException, CollectionDoesNotExistException {
         HashSet<Plugin> loadedPlugins = PluginManager.getInstance().getAllLoadedPlugins();
         for (Plugin plugin : loadedPlugins) {
@@ -114,7 +134,6 @@ public class CommandHandler extends StarNubEventHandler {
                 SHORTCUTS.removeValue(dataStringKey);
             }
         }
-
     }
 
     public HashSet<String> getAllShortcuts() {
@@ -288,23 +307,29 @@ public class CommandHandler extends StarNubEventHandler {
             }
         }
 
-        String main_arg = "";
+        String main_arg = null;
         String args[] = null;
+        boolean hasPermission = false;
         if (argsList.size() > 0) {
             main_arg = argsList.get(0);
             args = argsList.toArray(new String[argsList.size()]);
+            hasPermission = playerSession.hasPermission(commandNameOrAlias, exactCommand, main_arg, true);
+
         } else {
             args = new String[0];
             fullPermission = false;
+            hasPermission = playerSession.hasPermission(commandNameOrAlias, exactCommand, true);
         }
-        boolean hasPermission = playerSession.hasPermission(commandNameOrAlias, exactCommand, main_arg, true);
+
         if (!hasPermission) {
             String failedCommand = exactCommand;
+            String permissionString = commandNameOrAlias + "." + exactCommand;
             if (fullPermission) {
                 failedCommand = failedCommand + " " + main_arg;
+                permissionString = permissionString + "." + main_arg;
             }
             new StarNubEventTwo("Player_Command_Failed_Permissions", playerSession, commandString);
-            sendChatMessage(playerSession, "You do not have permission to use " + pluginName + "'s command \"" + failedCommand + "\". Permission required: \"" + commandNameOrAlias + "." + exactCommand + "." + main_arg + "\".");
+            sendChatMessage(playerSession, "You do not have permission to use " + pluginName + "'s command \"" + failedCommand + "\". Permission required: \"" + permissionString + "\".");
             return;
         }
 

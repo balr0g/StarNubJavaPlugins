@@ -40,6 +40,10 @@ public final class Essentials extends JavaPlugin {
         super(NAME, FILE, MAIN_CLASS, PLUGIN_DETAILS, CONFIGURATION, FILES, COMMAND_INFO, PLUGIN_RUNNABLES);
     }
 
+    public PlayerMessages getPlayerMessages() {
+        return playerMessages;
+    }
+
     @Override
     public void onPluginEnable() {
         if ((boolean) getCONFIGURATION().getNestedValue("monitor", "enabled")) {

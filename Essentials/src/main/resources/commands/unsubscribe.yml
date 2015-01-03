@@ -1,0 +1,7 @@
+commands: ['joinleave']
+main_args: []
+custom_split: {}
+class: essentials.commands.Unsubscribe
+can_use: 2
+description: |-
+    -

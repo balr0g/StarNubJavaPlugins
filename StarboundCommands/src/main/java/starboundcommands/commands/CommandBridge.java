@@ -1,7 +1,7 @@
 package starboundcommands.commands;
 
 
-import starbounddata.chat.ChatSendChannel;
+import starbounddata.types.chat.ChatSendMode;
 import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.plugins.Command;
 
@@ -20,6 +20,6 @@ public class CommandBridge extends Command {
         for (String arg : args) {
             commandRebuild = commandRebuild + " " + arg;
         }
-        playerSession.sendServerChatMessage(ChatSendChannel.UNIVERSE, commandRebuild);
+        playerSession.sendServerChatMessage(ChatSendMode.BROADCAST, commandRebuild);
     }
 }

@@ -5,6 +5,7 @@ import starbounddata.types.color.Colors;
 import starnubserver.StarNubTask;
 import starnubserver.cache.wrappers.PlayerUUIDCacheWrapper;
 import starnubserver.connections.player.session.PlayerSession;
+import starnubserver.events.events.DisconnectData;
 import starnubserver.events.starnub.StarNubEventHandler;
 import starnubserver.events.starnub.StarNubEventSubscription;
 import starnubserver.plugins.resources.PluginConfiguration;
@@ -36,7 +37,8 @@ public class CrashedHandler extends StarNubEventHandler {
             @Override
             public void onEvent(ObjectEvent objectEvent) {
                 StarNubTask starNubTask = new StarNubTask("Essentials", "Essentials - Disconnect Cache Removal", 120, TimeUnit.SECONDS, () -> {
-                    PlayerSession playerSession = (PlayerSession) objectEvent.getEVENT_DATA();
+                    DisconnectData disconnectData = (DisconnectData) objectEvent.getEVENT_DATA();
+                    PlayerSession playerSession = disconnectData.getPLAYER_SESSION();
                     UUID uuid = playerSession.getPlayerCharacter().getUuid();
                     PLAYER_UUID_CACHE.removeCache(uuid);
                 });

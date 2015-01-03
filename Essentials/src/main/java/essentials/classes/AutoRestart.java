@@ -1,5 +1,6 @@
 package essentials.classes;
 
+import io.netty.channel.ChannelHandlerContext;
 import starbounddata.packets.chat.ChatReceivePacket;
 import starbounddata.types.chat.Mode;
 import starbounddata.types.color.Colors;
@@ -61,7 +62,7 @@ public class AutoRestart extends HashSet<StarNubTask> {
     private void registerRestart() {
         int timer = (int) CONFIG.getNestedValue("auto_restart", "timer");
         this.add(
-                new StarNubTask("Essentials", "Essentials - Auto Restart Task", true, timer, timer, TimeUnit.MINUTES, () -> {
+                new StarNubTask("Essentials", "Essentials - Auto Restart Task - Restart Execution - " + timer, timer, TimeUnit.MINUTES, () -> {
                     StarNub.getStarboundServer().setRestarting(true);
                     StarNub.getConnections().getCONNECTED_PLAYERS().disconnectAllPlayers(DisconnectReason.RESTARTING);
                     SERVER_MONITOR.getCRASH_HANDLER().getPLAYER_UUID_CACHE().cachePurge();
@@ -69,7 +70,6 @@ public class AutoRestart extends HashSet<StarNubTask> {
                     StarNub.getStarboundServer().restart();
                     new StarNubEvent("Essentials_Auto_Restart_Complete", this);
                 }));
-
         boolean notification = (boolean) CONFIG.getNestedValue("auto_restart", "notification", "enabled");
         if (notification) {
             String color = Colors.validate((String) CONFIG.getNestedValue("auto_restart", "notification", "color"));
@@ -79,10 +79,13 @@ public class AutoRestart extends HashSet<StarNubTask> {
             for (Integer time : times) {
                 int eventTime = timer - time;
                 this.add(
-                        new StarNubTask("Essentials", "Essentials - Auto Restart Task - Message - " + eventTime, true, eventTime, eventTime, TimeUnit.MINUTES, () -> {
-                            String formattedMessage = String.format(coloredMessage, eventTime);
-                            new ChatReceivePacket(null, Mode.BROADCAST, "Essentials", 0, "Essentials", formattedMessage);
-                            new StarNubEvent("Essentials_Auto_Restart_In_" + eventTime, this);
+                        new StarNubTask("Essentials", "Essentials - Auto Restart Task - Notification Message - " + eventTime, eventTime, TimeUnit.MINUTES, () -> {
+                            String formattedMessage = String.format(coloredMessage, time);
+                            HashSet<ChannelHandlerContext> onlinePlayers = StarNub.getConnections().getCONNECTED_PLAYERS().getOnlinePlayersCtxs();
+                            if (onlinePlayers != null) {
+                                new ChatReceivePacket(null, Mode.BROADCAST, "Essentials", 0, "Essentials", formattedMessage).routeToGroupNoFlush(onlinePlayers);
+                            }
+                            new StarNubEvent("Essentials_Auto_Restart_In_" + time, this);
                         }));
             }
         }
