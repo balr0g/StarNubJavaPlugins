@@ -43,10 +43,14 @@ public class PlayerChatManagement {
                 ChatSendPacket chatSendPacket = (ChatSendPacket) starNubEventTwo.getEVENT_DATA_2();
                 String chatMessage = chatSendPacket.getMessage();
 
+                //Reapeat Seperate -// discard and event
+
+                //Spam Check
 
             }
         });
     }
+
 
     public void unregisterEventsTask() {
         PLAYER_CHAT_PARSE.removeRegistration();

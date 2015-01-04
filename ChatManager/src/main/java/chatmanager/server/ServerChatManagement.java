@@ -48,10 +48,19 @@ public class ServerChatManagement {
                 ChatReceivePacket chatReceivePacket = (ChatReceivePacket) starNubEventTwo.getEVENT_DATA_2();
                 String chatMessage = chatReceivePacket.getMessage();
                 boolean recycleChat = false;
+
+                /* PVP Message Modification or Replacement*/
                 boolean pvpReplacement = (boolean) CONFIG.getNestedValue("message_replacement", "pvp", "enabled");
                 if (pvpReplacement) {
-                    recycleChat = pvpReplacement(starNubEventTwo, playerSession, chatReceivePacket, chatMessage);
+                    recycleChat = pvpReplacement(playerSession, chatReceivePacket, chatMessage);
                 }
+
+                /* Nick name from server discard */
+                boolean notifyOfNickChanges = (boolean) CONFIG.getNestedValue("name_rules", "notify_on_nick_changes");
+                if (notifyOfNickChanges && chatMessage.contains("Nick changed to ")) {
+                    recycleChat = true;
+                }
+
                 if (recycleChat) {
                     starNubEventTwo.recycle();
                 } else {
@@ -61,7 +70,7 @@ public class ServerChatManagement {
         });
     }
 
-    private boolean pvpReplacement(StarNubEventTwo starNubEventTwo, PlayerSession playerSession, ChatReceivePacket chatReceivePacket, String chatMessage) {
+    private boolean pvpReplacement(PlayerSession playerSession, ChatReceivePacket chatReceivePacket, String chatMessage) {
         if (chatMessage.equals("PVP active") || chatMessage.equals("PVP inactive")) {
             return true;
         }

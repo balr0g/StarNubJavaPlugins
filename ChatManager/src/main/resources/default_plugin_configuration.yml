@@ -20,26 +20,26 @@
         }
     },
     "spam_filter": {
-        "word_fiter": {
+        "word_filter": {
             "enabled": true,
-            "replacment": {
-                "enabled": true,
-                "type": 'char', # char or word which will replace the filtered word
-                 "replacement": '*'
-            }
+            "replacement": '*' # '' for nothing, char or word which will replace the filtered word
         },
         "block": {
             "reapeat": {
                 "messages": true,
                 "characters": true
             },
+            "capitalization": {
+                "enabled": true,
+                "percentage": 50.0
+            },
             "color_chat": false
         },
-        "caps": {
-            "percentage": 50.0,
-        }
     },
     "name_rules": { #Set to true to allow, can be overriden with special permission
+        "enabled": true,
+        "auto_name_change": true,
+        "notify_on_nick_changes": true, # Notifies the server through broadcast chat that a Nick name has changed and to what
         "length_cap": 25,
         "color": true,
         "special_characters": false,
@@ -68,5 +68,21 @@
                 }
             }
         }
+    },
+    "chat": {
+        "settings": {
+            "remove": {
+                "starnub_account_delete": true, # Will delete all chat settings linked to this Account
+                "starnub_character_delete": true # Will delete all chat settings linked to this Character
+
+            }
+        }
+    },
+    "chat_rooms": {
+        "settings": {
+            "auto_purge": true,
+            "age": 30 # Purge after the chat room has been unused for this many days
+        }
+
     }
 }

@@ -18,6 +18,7 @@
 
 package chatmanager;
 
+import chatmanager.chat.ChatFilter;
 import chatmanager.player.PlayerChatManagement;
 import chatmanager.server.ServerChatManagement;
 import starnubserver.events.events.StarNubEvent;
@@ -38,11 +39,28 @@ import java.util.Map;
  */
 public final class ChatManager extends JavaPlugin {
 
-    private ServerChatManagement SERVER_CHAT_MANAGEMENT;
-    private PlayerChatManagement PLAYER_CHAT_MANAGEMENT;
+    private ServerChatManagement serverChatManagement;
+    private PlayerChatManagement playerChatManagement;
+
+    private PlayerManager playerManager;
+    private ChatRoomManager chatRoomManager;
+
+    private ChatFilter chatFilter;
 
     public ChatManager(String NAME, File FILE, String MAIN_CLASS, PluginDetails PLUGIN_DETAILS, PluginConfiguration CONFIGURATION, YAMLFiles FILES, CommandInfo COMMAND_INFO, PluginRunnables PLUGIN_RUNNABLES) {
         super(NAME, FILE, MAIN_CLASS, PLUGIN_DETAILS, CONFIGURATION, FILES, COMMAND_INFO, PLUGIN_RUNNABLES);
+    }
+
+    public PlayerManager getPlayerManager() {
+        return playerManager;
+    }
+
+    public ChatRoomManager getChatRoomManager() {
+        return chatRoomManager;
+    }
+
+    public ChatFilter getChatFilter() {
+        return chatFilter;
     }
 
     @Override
@@ -59,18 +77,19 @@ public final class ChatManager extends JavaPlugin {
         boolean starnubHandleServerChat = whoHandlesServerChat.equalsIgnoreCase("starnub");
         String whoHandlesPlayerChat = (String) getCONFIGURATION().getNestedValue("chat_handling", "handler", "from_player");
         boolean starnubHandlePlayerChat = whoHandlesPlayerChat.equalsIgnoreCase("starnub");
-        SERVER_CHAT_MANAGEMENT = new ServerChatManagement(getCONFIGURATION(), starnubHandleServerChat);
-        PLAYER_CHAT_MANAGEMENT = new PlayerChatManagement(getCONFIGURATION(), starnubHandlePlayerChat);
+        serverChatManagement = new ServerChatManagement(getCONFIGURATION(), starnubHandleServerChat);
+        playerChatManagement = new PlayerChatManagement(getCONFIGURATION(), starnubHandlePlayerChat);
+        playerManager = new PlayerManager(getCONFIGURATION(), this);
+        chatRoomManager = new ChatRoomManager(getCONFIGURATION(), this);
+        chatFilter = new ChatFilter(getCONFIGURATION(), this);
     }
 
     @Override
     public void onPluginDisable() {
-        if (SERVER_CHAT_MANAGEMENT != null) {
-            SERVER_CHAT_MANAGEMENT.unregisterEventsTask();
-        }
-        if (PLAYER_CHAT_MANAGEMENT != null) {
-            PLAYER_CHAT_MANAGEMENT.unregisterEventsTask();
-        }
+        serverChatManagement.unregisterEventsTask();
+        playerChatManagement.unregisterEventsTask();
+        playerManager.unregisterEventTask();
+        chatRoomManager.unregisterEventTask();
     }
 }
 

@@ -1,6 +1,9 @@
 commands: ['w', 'r']
 main_args: []
-custom_split: {}
+custom_split: {
+    w: 2,
+    r: 2
+}
 class: chatmanager.commands.Whisper
 can_use: 2
 description: |-
