@@ -35,6 +35,7 @@ public class CommandHandler extends StarNubEventHandler {
     private final StarNubEventSubscription YAML_DUMP;
     private final StarNubEventSubscription PLUGIN_LOAD;
     private final StarNubEventSubscription STARNUB_START_COMPLETE;
+    private final StarNubEventSubscription COMMAND_SHORTCUT_OVERIDE;
     private final PluginYAMLWrapper SHORTCUTS;
     private final ConcurrentHashMap<String, String> SHORTCUT_CACHE;
 
@@ -65,7 +66,7 @@ public class CommandHandler extends StarNubEventHandler {
                 }
             }
         });
-        STARNUB_START_COMPLETE = new StarNubEventSubscription("CommandParser", Priority.MEDIUM, "StarNub_Startup_Complete", new StarNubEventHandler() {
+        STARNUB_START_COMPLETE = new StarNubEventSubscription("CommandParser", Priority.CRITICAL, "StarNub_Startup_Complete", new StarNubEventHandler() {
             @Override
             public void onEvent(ObjectEvent starNubEvent) {
                 try {
@@ -77,6 +78,22 @@ public class CommandHandler extends StarNubEventHandler {
             }
         });
         shortcutCacheReload();
+
+        COMMAND_SHORTCUT_OVERIDE = new StarNubEventSubscription("CommandParser", Priority.MEDIUM, "Command_Shortcut_Override", new StarNubEventHandler() {
+            @Override
+            public void onEvent(ObjectEvent objectEvent) {
+                String string = (String) objectEvent.getEVENT_DATA();
+                String[] strings = string.split("\\.");
+                if (strings.length >= 2) {
+                    try {
+                        addShortcut(strings[1], strings[0], true);
+                        shortcutCacheReload();
+                    } catch (IOException | CollectionDoesNotExistException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     public void shortcutCacheReload() {
@@ -92,16 +109,17 @@ public class CommandHandler extends StarNubEventHandler {
     }
 
     private void autoShortcutAdd(Plugin plugin) throws IOException, CollectionDoesNotExistException {
-        HashSet<String> alreadyShortcuts = getAllShortcuts();
-        String pluginName = plugin.getNAME().toLowerCase();
         boolean hasCommands = plugin.hasCommands();
         if (hasCommands) {
-            if (!SHORTCUTS.hasKey(pluginName)) {
-                SHORTCUTS.createList(pluginName);
-                HashSet<Command> commands = plugin.getCOMMAND_INFO().getCOMMANDS();
-                for (Command command : commands) {
-                    HashSet<String> stringsCommands = command.getCOMMANDS();
-                    SHORTCUTS.addCollectionToCollectionUnique(stringsCommands, false, pluginName);
+            String commandsName = plugin.getCOMMAND_INFO().getCOMMANDS_NAME();
+            if (!SHORTCUTS.hasKey(commandsName)) {
+                SHORTCUTS.createList(commandsName);
+            }
+            HashSet<Command> commands = plugin.getCOMMAND_INFO().getCOMMANDS();
+            for (Command command : commands) {
+                HashSet<String> stringsCommands = command.getCOMMANDS();
+                for (String stringCommand : stringsCommands) {
+                    addShortcut(stringCommand, commandsName, false);
                 }
             }
         }
@@ -112,7 +130,7 @@ public class CommandHandler extends StarNubEventHandler {
         Map<String, Object> data = SHORTCUTS.getDATA();
         if (data != null) {
             for (String key : data.keySet()) {
-                Plugin plugin = PluginManager.getInstance().resolveLoadedPlugin(key, false);
+                Plugin plugin = PluginManager.getInstance().resolveLoadedPluginByCommand(key);
                 if (plugin == null) {
                     SHORTCUTS.removeValue(key);
                 }
@@ -126,7 +144,7 @@ public class CommandHandler extends StarNubEventHandler {
             autoShortcutAdd(plugin);
         }
         Map<String, Object> data = SHORTCUTS.getDATA();
-        /* Clean shortcuts of empty*/
+        /* Clean shortcuts if empty */
         for (Map.Entry<String, Object> dataEntry : data.entrySet()) {
             String dataStringKey = dataEntry.getKey();
             List<String> dataListValue = (List<String>) dataEntry.getValue();
@@ -136,14 +154,23 @@ public class CommandHandler extends StarNubEventHandler {
         }
     }
 
-    public HashSet<String> getAllShortcuts() {
+    private void addShortcut(String command, String commandName, boolean override) throws IOException, CollectionDoesNotExistException {
         Map<String, Object> data = SHORTCUTS.getDATA();
-        HashSet<String> alreadyShortcuts = new HashSet<>();
-        for (Object values : data.values()) {
-            List<String> shortcuts = (List<String>) values;
-            alreadyShortcuts.addAll(shortcuts);
+        boolean canAdd = true;
+        for (Object pluginsShortcuts : data.values()) {
+            List<String> pluginList = (List<String>) pluginsShortcuts;
+            if (pluginList.contains(command)) {
+                if (override) {
+                    pluginList.remove(command);
+                    break;
+                } else {
+                    canAdd = false;
+                }
+            }
         }
-        return alreadyShortcuts;
+        if (canAdd) {
+            SHORTCUTS.addToCollection(command, false, false, commandName);
+        }
     }
 
     public ConcurrentHashMap<String, String> getSHORTCUT_CACHE() {
@@ -164,6 +191,10 @@ public class CommandHandler extends StarNubEventHandler {
 
     public PluginYAMLWrapper getSHORTCUTS() {
         return SHORTCUTS;
+    }
+
+    public StarNubEventSubscription getSTARNUB_START_COMPLETE() {
+        return STARNUB_START_COMPLETE;
     }
 
     public Shortcut shortcutAdd(String pluginString, String commandString) throws IOException, CollectionDoesNotExistException {
@@ -194,6 +225,16 @@ public class CommandHandler extends StarNubEventHandler {
             }
         }
         return Shortcut.NO_COMMAND;
+    }
+
+    public HashSet<String> getAllShortcuts() {
+        Map<String, Object> data = SHORTCUTS.getDATA();
+        HashSet<String> alreadyShortcuts = new HashSet<>();
+        for (Object values : data.values()) {
+            List<String> shortcuts = (List<String>) values;
+            alreadyShortcuts.addAll(shortcuts);
+        }
+        return alreadyShortcuts;
     }
 
     public Shortcut removeShortcut(String pluginName, String commandString) throws IOException {

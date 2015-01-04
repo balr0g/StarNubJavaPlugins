@@ -1,0 +1,2 @@
+blacklist: ['server', 'starbound', 'starnub','administrator','moderator', 'admin', 'owner']
+whitelist: ['']

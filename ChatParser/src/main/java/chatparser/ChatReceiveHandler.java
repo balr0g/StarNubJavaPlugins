@@ -13,6 +13,7 @@ public class ChatReceiveHandler extends PacketEventHandler {
         ChatReceivePacket chatReceivePacket = (ChatReceivePacket) packet;
         ChatReceivePacket chatReceivePacketCopy = chatReceivePacket.copy();
         packet.recycle();
+        chatReceivePacketCopy.setFromName("Starbound");
         PlayerSession playerSession = PlayerSession.getPlayerSession(chatReceivePacketCopy);
         new StarNubEventTwo("Player_Chat_Parsed_From_Server", playerSession, chatReceivePacketCopy);
     }

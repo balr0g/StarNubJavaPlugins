@@ -1,11 +1,16 @@
 {
   "name": "ChatManager",
-  "class": "ChatManager",
+  "class": "chatmanager.ChatManager",
     "details": {
     "languages": ['english'],
     "version": 1.0,
     "description": "None",
-    "dependencies": [],
+    "dependencies": [
+        {
+          ChatParser: [1.0, 1.1]
+        }
+    ],
+    "load_first": ['CommandParser'],
     "author": "Underbalanced",
     "url": "http://www.starnub.org"
   },

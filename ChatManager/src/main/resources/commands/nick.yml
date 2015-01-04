@@ -1,0 +1,7 @@
+commands: ['nick']
+main_args: []
+custom_split: {}
+class: chatmanager.commands.Nick
+can_use: 2
+description: |-
+    -

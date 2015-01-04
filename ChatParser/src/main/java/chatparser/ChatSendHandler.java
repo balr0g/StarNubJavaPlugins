@@ -104,6 +104,6 @@ public class ChatSendHandler extends PacketEventHandler {
     }
 
     private void sendChatMessage(PlayerSession playerSession, String message) {
-        playerSession.sendChatMessage("CommandParser", Mode.BROADCAST, message);
+        playerSession.sendChatMessage("ServerName", Mode.BROADCAST, message);
     }
 }

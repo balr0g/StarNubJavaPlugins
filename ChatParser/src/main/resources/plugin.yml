@@ -6,6 +6,7 @@
     "version": 1.1,
     "description": "None",
     "dependencies": [],
+    "load_first": [],
     "author": "Underbalanced",
     "url": "http://www.starnub.org"
   },

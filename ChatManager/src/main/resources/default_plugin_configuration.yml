@@ -1,32 +1,72 @@
 {
-    colors:{
-        "server":{
-            name: "white",
-            chat: "white"
+    "chat_handling": {
+        "handler": {
+            "from_server": 'starnub', # starnub or starbound can handle server chat, if you select starbound the message replacment is nullified
+            "from_player": 'starnub' # starnub or starbound can handle player chat, if you select starbound the player chat handling is nullliedied and that covers most options in this configuration
+        }
+    },
+    "command_overrides": {
+        "w": true, # Have this plugin handle /w - this will provide enhanced whispering
+        "nick": true # Have this plugin handle /nick - this will provide enhanced nick name changing protection
+    },
+    "colors": {
+        "server": {
+            name: 'white',
+            chat: 'white'
         },
-        "global":{
-            name: #FFFF00,
-            chat: #FFFF00
+        "global": {
+            "name": '#FFFF00',
+            "chat": '#FFFF00'
         }
     },
-    global_rate_limit:{
-        messages: 3000,
-        commands: 1000
-    },
-    block:{
-        repeat:{
-            messages: true,
-            characters: true
+    "spam_filter": {
+        "word_fiter": {
+            "enabled": true,
+            "replacment": {
+                "enabled": true,
+                "type": 'char', # char or word which will replace the filtered word
+                 "replacement": '*'
+            }
+        },
+        "block": {
+            "reapeat": {
+                "messages": true,
+                "characters": true
+            },
+            "color_chat": false
+        },
+        "caps": {
+            "percentage": 50.0,
         }
-        caps:{
-            caps: true,
-            percentage: 50.0,
+    },
+    "name_rules": { #Set to true to allow, can be overriden with special permission
+        "length_cap": 25,
+        "color": true,
+        "special_characters": false,
+        "spaces": {
+            "single": true,
+            "multi_space": false
+        },
+        "use": {
+            word_filter: true,
+            illegal_nicks: true
         }
     },
-    word_filter:{
-        enabled: true,
-    },
-    reply_messages:{
-        spam: "Woah! Slow down your spamming the server."
+    "message_replacement": {
+        "pvp": {
+            "enabled": true,
+            "channel": local,  # Options: local or broadcast
+            "name_color": true, # Show players name color
+            "mode": {
+                "enabled": {
+                "color": '#DC143C',
+                "message": '%s is now in PVP mode.',
+                },
+                "disabled": {
+                "color": '#00FF00',
+                "message": '%s has left PVP mode.',
+                }
+            }
+        }
     }
 }

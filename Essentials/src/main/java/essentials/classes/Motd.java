@@ -70,7 +70,7 @@ public class Motd {
     private void playerMessage(PlayerSession playerSession, String motd) {
         ChannelHandlerContext clientCtx = playerSession.getCONNECTION().getCLIENT_CTX();
         String cleanName = playerSession.getPlayerCharacter().getCleanName();
-        StarNubTask motdTask = new StarNubTask("Essentials", "Essentials - Player MOTD - " + cleanName, 5, TimeUnit.SECONDS, () -> playerSession.sendChatMessage("Essentials", Mode.BROADCAST, motd));
+        StarNubTask motdTask = new StarNubTask("Essentials", "Essentials - Player MOTD - " + cleanName, 5, TimeUnit.SECONDS, () -> playerSession.sendChatMessage("ServerName", Mode.BROADCAST, motd));
         MOTD_TASK.registerTask(clientCtx, motdTask);
     }
 

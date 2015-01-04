@@ -10,7 +10,6 @@ import starnubserver.cache.wrappers.PlayerAutoCancelTask;
 import starnubserver.cache.wrappers.PlayerCtxCacheWrapper;
 import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.events.events.DisconnectData;
-import starnubserver.events.events.StarNubEventTwo;
 import starnubserver.events.starnub.StarNubEventHandler;
 import starnubserver.events.starnub.StarNubEventSubscription;
 import starnubserver.plugins.resources.PluginConfiguration;
@@ -26,7 +25,6 @@ public class PlayerMessages {
 
     private final PluginConfiguration CONFIG;
     private final PlayerCtxCacheWrapper UNSUBSCRIBED_JOIN_LEAVE = new PlayerCtxCacheWrapper("Essentials", "Essentials - Unsubscribe - Join - Leave", true, TimeUnit.SECONDS, 0, 0);
-    private final StarNubEventSubscription PLAYER_MESSAGES_FROM_SERVER;
     private final StarNubEventSubscription PLAYER_CONNECTED;
     private final StarNubEventSubscription PLAYER_DISCONNECTED;
     private final PlayerAutoCancelTask JOIN_TASK;
@@ -43,13 +41,6 @@ public class PlayerMessages {
             PLAYER_CONNECTED = null;
             PLAYER_DISCONNECTED = null;
             JOIN_TASK = null;
-        }
-
-        boolean pvpMessage = (boolean) CONFIG.getNestedValue("player_messages", "pvp", "enabled");
-        if (pvpMessage) {
-            PLAYER_MESSAGES_FROM_SERVER = parseChatMessage();
-        } else {
-            PLAYER_MESSAGES_FROM_SERVER = null;
         }
     }
 
@@ -76,7 +67,8 @@ public class PlayerMessages {
                     HashSet<ChannelHandlerContext> playersCtxs = StarNub.getConnections().getCONNECTED_PLAYERS().getOnlinePlayersCtxs();
                     HashSet<ChannelHandlerContext> doNotSendList = UNSUBSCRIBED_JOIN_LEAVE.getCacheKeyList();
                     doNotSendList.add(clientCtx);
-                    ChatReceivePacket chatReceivePacket = new ChatReceivePacket(null, Mode.BROADCAST, "Essentials", 0, "Essentials", chatColor + completeMessage);
+                    String serverName = (String) StarNub.getConfiguration().getNestedValue("starnub_info", "server_name");
+                    ChatReceivePacket chatReceivePacket = new ChatReceivePacket(null, Mode.BROADCAST, "Essentials", 0, serverName, chatColor + completeMessage);
                     chatReceivePacket.routeToGroupNoFlush(playersCtxs, doNotSendList);
                     StarNub.getLogger().cInfoPrint("Essentials", playerNameConsole + " has connected. (IP: " + playerSession.getSessionIpString() + ")");
                 });
@@ -109,52 +101,10 @@ public class PlayerMessages {
                     HashSet<ChannelHandlerContext> playersCtxs = StarNub.getConnections().getCONNECTED_PLAYERS().getOnlinePlayersCtxs();
                     HashSet<ChannelHandlerContext> doNotSendList = UNSUBSCRIBED_JOIN_LEAVE.getCacheKeyList();
                     doNotSendList.add(clientCtx);
-                    ChatReceivePacket chatReceivePacket = new ChatReceivePacket(null, Mode.BROADCAST, "Essentials", 0, "Essentials", chatColor + completeMessage);
+                    String serverName = (String) StarNub.getConfiguration().getNestedValue("starnub_info", "server_name");
+                    ChatReceivePacket chatReceivePacket = new ChatReceivePacket(null, Mode.BROADCAST, "Essentials", 0, serverName, chatColor + completeMessage);
                     chatReceivePacket.routeToGroupNoFlush(playersCtxs, doNotSendList);
                     StarNub.getLogger().cInfoPrint("Essentials", playerNameConsole + " has disconnected. (IP: " + playerSession.getSessionIpString() + ")");
-                }
-            }
-        });
-    }
-    //messages not purging if player logs out
-
-    private StarNubEventSubscription parseChatMessage() {
-        return new StarNubEventSubscription("StarNub", Priority.CRITICAL, "Player_Chat_Parsed_From_Server", new StarNubEventHandler() {
-            @Override
-            public void onEvent(ObjectEvent objectEvent) {
-                StarNubEventTwo starNubEventTwo = (StarNubEventTwo) objectEvent;
-                PlayerSession playerSession = (PlayerSession) starNubEventTwo.getEVENT_DATA();
-                ChatReceivePacket chatReceivePacket = (ChatReceivePacket) starNubEventTwo.getEVENT_DATA_2();
-                String chatMessage = chatReceivePacket.getMessage();
-
-                if (chatMessage.equals("PVP active") || chatMessage.equals("PVP inactive")) {
-                    starNubEventTwo.recycle();
-                } else if (chatMessage.contains(" is now PVP")) {
-                    String playerNameConsole = playerSession.getCleanNickName();
-                    String playerName = playerSession.getGameName();
-                    boolean nameColor = (boolean) CONFIG.getNestedValue("player_messages", "pvp", "name_color");
-                    if (!nameColor) {
-                        playerName = StringUtilities.removeColors(playerName);
-                    }
-                    String unvalidatedColor = (String) CONFIG.getNestedValue("player_messages", "pvp", "mode", "enabled", "color");
-                    String chatColor = Colors.validate(unvalidatedColor);
-                    String unformattedMessage = (String) CONFIG.getNestedValue("player_messages", "pvp", "mode", "enabled", "message");
-                    String formattedMessage = String.format(unformattedMessage, playerName + chatColor);
-                    String completeMessage = StringTokens.replaceTokens(formattedMessage);
-                    chatReceivePacket.setMessage(completeMessage);
-                } else if (chatMessage.contains(" is a big wimp and is no longer PVP")) {
-                    String playerNameConsole = playerSession.getCleanNickName();
-                    String playerName = playerSession.getGameName();
-                    boolean nameColor = (boolean) CONFIG.getNestedValue("player_messages", "pvp", "name_color");
-                    if (!nameColor) {
-                        playerName = StringUtilities.removeColors(playerName);
-                    }
-                    String unvalidatedColor = (String) CONFIG.getNestedValue("player_messages", "pvp", "mode", "disabled", "color");
-                    String chatColor = Colors.validate(unvalidatedColor);
-                    String unformattedMessage = (String) CONFIG.getNestedValue("player_messages", "pvp", "mode", "disabled", "message");
-                    String formattedMessage = String.format(unformattedMessage, playerName + chatColor);
-                    String completeMessage = StringTokens.replaceTokens(formattedMessage);
-                    chatReceivePacket.setMessage(completeMessage);
                 }
             }
         });
@@ -167,6 +117,5 @@ public class PlayerMessages {
     public void unregisterEventsTask() {
         PLAYER_CONNECTED.removeRegistration();
         PLAYER_DISCONNECTED.removeRegistration();
-        PLAYER_MESSAGES_FROM_SERVER.removeRegistration();
     }
 }

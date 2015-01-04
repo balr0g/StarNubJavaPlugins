@@ -1,0 +1,7 @@
+commands: ['filter']
+main_args: []
+custom_split: {}
+class: chatmanager.commands.Filter
+can_use: 2
+description: |-
+    -

@@ -40,7 +40,7 @@ public class Broadcaster extends HashSet<StarNubTask> {
             new StarNubTask("Essentials", "Essentials - Broadcast", true, interval, interval, TimeUnit.MINUTES, () -> {
                 HashSet<ChannelHandlerContext> playersCtxs = StarNub.getConnections().getCONNECTED_PLAYERS().getOnlinePlayersCtxs();
                 if (!playersCtxs.isEmpty()) {
-                    ChatReceivePacket chatReceivePacket = new ChatReceivePacket(null, Mode.BROADCAST, "Essentials", 0, "Essentials", color + message);
+                    ChatReceivePacket chatReceivePacket = new ChatReceivePacket(null, Mode.BROADCAST, "ServerName", 0, "Essentials", color + message);
                     chatReceivePacket.routeToGroupNoFlush(playersCtxs);
                 }
             });
@@ -57,7 +57,7 @@ public class Broadcaster extends HashSet<StarNubTask> {
                 int randInt = RandomNumber.randInt(0, message.size() - 1);
                 String randomMessage = message.get(randInt);
                 String randomMessageReplacedTokens = StringTokens.replaceTokens(randomMessage);
-                ChatReceivePacket chatReceivePacket = new ChatReceivePacket(null, Mode.BROADCAST, "Essentials", 0, "Essentials", color + randomMessageReplacedTokens);
+                ChatReceivePacket chatReceivePacket = new ChatReceivePacket(null, Mode.BROADCAST, "ServerName", 0, "Essentials", color + randomMessageReplacedTokens);
                 chatReceivePacket.routeToGroupNoFlush(playersCtxs);
             }
         });

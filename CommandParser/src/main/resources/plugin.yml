@@ -8,6 +8,7 @@
     "dependencies": [
        {ChatParser: [1.0, 1.1]}
        ],
+    "load_first": [],
     "author": "Underbalanced",
     "url": "http://www.starnub.org"
   },

@@ -18,25 +18,61 @@
 
 package chatmanager;
 
+import chatmanager.player.PlayerChatManagement;
+import chatmanager.server.ServerChatManagement;
+import starnubserver.events.events.StarNubEvent;
+import starnubserver.plugins.JavaPlugin;
+import starnubserver.plugins.generic.CommandInfo;
+import starnubserver.plugins.generic.PluginDetails;
+import starnubserver.plugins.resources.PluginConfiguration;
+import starnubserver.plugins.resources.PluginRunnables;
+import starnubserver.plugins.resources.YAMLFiles;
 
-import org.starnub.plugins.Plugin;
+import java.io.File;
+import java.util.Map;
 
 /**
  *
  * @author Daniel (Underbalanced) (www.StarNub.org)
  * @since 1.0
  */
-public final class ChatManager extends Plugin {
+public final class ChatManager extends JavaPlugin {
+
+    private ServerChatManagement SERVER_CHAT_MANAGEMENT;
+    private PlayerChatManagement PLAYER_CHAT_MANAGEMENT;
+
+    public ChatManager(String NAME, File FILE, String MAIN_CLASS, PluginDetails PLUGIN_DETAILS, PluginConfiguration CONFIGURATION, YAMLFiles FILES, CommandInfo COMMAND_INFO, PluginRunnables PLUGIN_RUNNABLES) {
+        super(NAME, FILE, MAIN_CLASS, PLUGIN_DETAILS, CONFIGURATION, FILES, COMMAND_INFO, PLUGIN_RUNNABLES);
+    }
 
     @Override
     public void onPluginEnable() {
-        
+        Map<String, Object> commandOverrides = (Map<String, Object>) getCONFIGURATION().getNestedValue("command_overrides");
+        for (Map.Entry<String, Object> objectEntry : commandOverrides.entrySet()) {
+            String commandOverride = objectEntry.getKey();
+            boolean override = (boolean) objectEntry.getValue();
+            if (override) {
+                new StarNubEvent("Command_Shortcut_Override", "chatman." + commandOverride);
+            }
+        }
+        String whoHandlesServerChat = (String) getCONFIGURATION().getNestedValue("chat_handling", "handler", "from_server");
+        boolean starnubHandleServerChat = whoHandlesServerChat.equalsIgnoreCase("starnub");
+        String whoHandlesPlayerChat = (String) getCONFIGURATION().getNestedValue("chat_handling", "handler", "from_player");
+        boolean starnubHandlePlayerChat = whoHandlesPlayerChat.equalsIgnoreCase("starnub");
+        SERVER_CHAT_MANAGEMENT = new ServerChatManagement(getCONFIGURATION(), starnubHandleServerChat);
+        PLAYER_CHAT_MANAGEMENT = new PlayerChatManagement(getCONFIGURATION(), starnubHandlePlayerChat);
     }
 
     @Override
     public void onPluginDisable() {
-
+        if (SERVER_CHAT_MANAGEMENT != null) {
+            SERVER_CHAT_MANAGEMENT.unregisterEventsTask();
+        }
+        if (PLAYER_CHAT_MANAGEMENT != null) {
+            PLAYER_CHAT_MANAGEMENT.unregisterEventsTask();
+        }
     }
-
-  
 }
+
+
+

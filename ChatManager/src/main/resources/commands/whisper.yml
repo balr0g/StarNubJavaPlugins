@@ -1,0 +1,7 @@
+commands: ['w', 'r']
+main_args: []
+custom_split: {}
+class: chatmanager.commands.Whisper
+can_use: 2
+description: |-
+    -

@@ -73,7 +73,7 @@ public class CrashedHandler extends StarNubEventHandler {
             if (booleanCache.isBool()) {
                 String color = Colors.validate((String) CONFIG.getNestedValue("monitor", "crashed_notification", "color"));
                 String message = (String) CONFIG.getNestedValue("monitor", "crashed_notification", "message");
-                new StarNubTask("Essentials", "Essentials - Server Crash - Notification - " + uuid.toString(), 5, TimeUnit.SECONDS, () -> playerSession.sendChatMessage("StarNub", Mode.BROADCAST, color + message));
+                new StarNubTask("Essentials", "Essentials - Server Crash - Notification - " + uuid.toString(), 5, TimeUnit.SECONDS, () -> playerSession.sendChatMessage("ServerName", Mode.BROADCAST, color + message));
             }
         }
         PLAYER_UUID_CACHE.addCache(uuid, new BooleanCache(false));

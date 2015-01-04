@@ -46,7 +46,7 @@ public class ServerMonitor {
     }
 
     private StarNubEventSubscription startStarnubStartedListener() {
-        return new StarNubEventSubscription("Essentials", Priority.MEDIUM, "StarNub_Startup_Complete", new StarNubEventHandler() {
+        return new StarNubEventSubscription("Essentials", Priority.NONE, "StarNub_Startup_Complete", new StarNubEventHandler() {
             @Override
             public void onEvent(ObjectEvent starNubEvent) {
                 startServer();

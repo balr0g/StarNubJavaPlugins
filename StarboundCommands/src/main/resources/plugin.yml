@@ -2,10 +2,12 @@
     "name": "StarboundCommands",
     "class": "starboundcommands.StarboundCommands",
     "details": {
+        "live_update": true,
         "languages": ['english'],
         "version": 1.0,
         "description": "None",
         "dependencies": [],
+        "load_first": [],
         "author": "Underbalanced",
         "url": "http://www.starnub.org"
     },

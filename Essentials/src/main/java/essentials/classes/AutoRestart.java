@@ -83,7 +83,7 @@ public class AutoRestart extends HashSet<StarNubTask> {
                             String formattedMessage = String.format(coloredMessage, time);
                             HashSet<ChannelHandlerContext> onlinePlayers = StarNub.getConnections().getCONNECTED_PLAYERS().getOnlinePlayersCtxs();
                             if (onlinePlayers != null) {
-                                new ChatReceivePacket(null, Mode.BROADCAST, "Essentials", 0, "Essentials", formattedMessage).routeToGroupNoFlush(onlinePlayers);
+                                new ChatReceivePacket(null, Mode.BROADCAST, "Essentials", 0, "ServerName", formattedMessage).routeToGroupNoFlush(onlinePlayers);
                             }
                             new StarNubEvent("Essentials_Auto_Restart_In_" + time, this);
                         }));

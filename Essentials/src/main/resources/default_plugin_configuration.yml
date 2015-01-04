@@ -51,21 +51,6 @@
   },
   "player_messages": {
     "enabled": true,
-    "pvp": {
-      "enabled": true,
-      "channel": local,  # Options: local or broadcast
-      "name_color": true, # Show players name color
-      "mode": {
-        "enabled": {
-          "color": '#DC143C',
-          "message": '%s is now in PVP mode.',
-        },
-        "disabled": {
-          "color": '#00FF00',
-          "message": '%s has left PVP mode.',
-        }
-      }
-    },
     "connect_disconnect": {
       "enabled": true,
       "delay": 3,  # Seconds - This will delay the join message, if the player disconnectes before this, no message is sent
@@ -78,7 +63,7 @@
       "unsubscribe": {
          "color": 'default',
          "unsubscribe": 'You will no longer receive Player Join/Leave messages.',
-         "subscribe": 'You will now receive Player Join/Leave messages'
+         "subscribe": 'You will now receive Player Join/Leave messages.'
       }
     }
   }
