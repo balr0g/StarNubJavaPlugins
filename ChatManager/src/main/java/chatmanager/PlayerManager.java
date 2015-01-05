@@ -70,6 +70,10 @@ public class PlayerManager {
         return null;
     }
 
+    public ConcurrentHashMap<ChannelHandlerContext, ChatSession> getCONNECTED_PLAYERS() {
+        return CONNECTED_PLAYERS;
+    }
+
     public void unregisterEventTask() {
         PLAYER_CONNECT.removeRegistration();
         PLAYER_DISCONNECT.removeRegistration();

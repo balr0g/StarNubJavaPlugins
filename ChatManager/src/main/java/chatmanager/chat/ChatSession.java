@@ -20,5 +20,19 @@ public class ChatSession {
         this.CHAT_SETTINGS = CHAT_SETTINGS;
     }
 
+    public PlayerSession getPLAYER_SESSION() {
+        return PLAYER_SESSION;
+    }
 
+    public ChatSettings getCHAT_SETTINGS() {
+        return CHAT_SETTINGS;
+    }
+
+    public ConcurrentHashMap<String, ChatRoom> getCHAT_ROOMS() {
+        return CHAT_ROOMS;
+    }
+
+    public ConcurrentHashMap<UUID, ChatIgnores> getCHAT_IGNORES() {
+        return CHAT_IGNORES;
+    }
 }

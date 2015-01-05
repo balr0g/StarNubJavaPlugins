@@ -30,7 +30,7 @@ public class ChatFilter {
 
     ///////////     CHAT FILTER     ///////////
 
-    private String filterChat(PlayerSession playerSession, String chatMessage) {
+    public String filterChat(PlayerSession playerSession, String chatMessage) {
         boolean bypassChatFilter = playerSession.hasPermission("chatman", "bypass", "chat", true);
         if (!bypassChatFilter) {
             chatMessage = wordFilter(playerSession, chatMessage);
@@ -98,7 +98,7 @@ public class ChatFilter {
 
     ///////////     NAME FILTER     ///////////
 
-    private void nameVerificationAndChange(PlayerSession playerSession, String nickName) {
+    public void nameVerificationAndChange(PlayerSession playerSession, String nickName) {
         boolean nameRules = (boolean) CONFIG.getNestedValue("name_rules", "enabled");
         if (nameRules && !playerSession.hasPermission("chatman", "bypass", "name", true)) {
             if (nickName == null || nickName.isEmpty()) {
@@ -126,7 +126,7 @@ public class ChatFilter {
         }
     }
 
-    private String nameFilter(PlayerSession playerSession, String name) {
+    public String nameFilter(PlayerSession playerSession, String name) {
         boolean filterColor = (boolean) CONFIG.getNestedValue("name_rules", "color");
         if (filterColor && !playerSession.hasPermission("chatman", "bypass", "name_color", true)) {
             name = StringUtilities.removeColors(name);

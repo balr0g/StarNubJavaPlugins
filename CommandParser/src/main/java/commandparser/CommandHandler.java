@@ -310,6 +310,7 @@ public class CommandHandler extends StarNubEventHandler {
             return;
         }
 
+        /* Splits are number of splits on spaces , I.E /r hi how are you (split on 2) = [hi, how are you] */
         HashMap<String, Integer> customSplit = command.getCUSTOM_SPLIT();
         boolean fullPermission = true;
         if (customSplit.containsKey(exactCommand)) {
