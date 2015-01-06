@@ -27,7 +27,7 @@ public class WhisperSettings extends Command {
         ChatSession chatSession = PLAYER_MANAGER.getCONNECTED_PLAYERS().get(clientCTX);
         switch (command) {
             case "whisperon": {
-                chatSession.getCHAT_SETTINGS().receievWhispers();
+                chatSession.getCHAT_SETTINGS().receiveWhispers();
                 sendChatMessage(clientCTX, "Whispering Enabled: You will now receive whispers.");
                 break;
             }

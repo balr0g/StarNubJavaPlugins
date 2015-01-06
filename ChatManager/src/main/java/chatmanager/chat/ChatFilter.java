@@ -119,7 +119,7 @@ public class ChatFilter {
                         HashSet<ChannelHandlerContext> onlinePlayers = StarNub.getConnections().getCONNECTED_PLAYERS().getOnlinePlayersCtxs();
                         String nickChanged = originalNick + " has changed their Nickname to " + newNickName;
                         String serverName = (String) StarNub.getConfiguration().getNestedValue("starnub_info", "server_name");
-                        new ChatReceivePacket(null, Mode.BROADCAST, "ChatManager", 0, serverName, nickChanged);
+                        new ChatReceivePacket(Mode.BROADCAST, "ChatManager", 0, serverName, nickChanged).routeToGroupNoFlush(onlinePlayers);
                     }
                 }
             }

@@ -1,7 +1,7 @@
 commands: ['nick']
 main_args: []
 custom_split: {
-    nick: 2
+    nick: 1
 }
 class: chatmanager.commands.Nick
 can_use: 2

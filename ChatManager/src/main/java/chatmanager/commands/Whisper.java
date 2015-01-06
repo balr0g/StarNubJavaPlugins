@@ -3,7 +3,7 @@ package chatmanager.commands;
 import chatmanager.ChatManager;
 import chatmanager.PlayerManager;
 import chatmanager.chat.ChatSession;
-import chatmanager.chat.settings.ChatSettings;
+import chatmanager.chat.settings.ChatSetting;
 import io.netty.channel.ChannelHandlerContext;
 import starbounddata.packets.chat.ChatReceivePacket;
 import starbounddata.types.chat.Mode;
@@ -73,13 +73,13 @@ public class Whisper extends Command {
     }
 
     private void handleWhisper(ChatManager chatManager, ChatSession whisperOrigination, ChatSession whisperDestination, String chatMessage) {
-        ChatSettings woChatSettings = whisperOrigination.getCHAT_SETTINGS();
+        ChatSetting woChatSetting = whisperOrigination.getCHAT_SETTINGS();
         ChannelHandlerContext woCTX = whisperOrigination.getPLAYER_SESSION().getCONNECTION().getCLIENT_CTX();
-        ChatSettings wdChatSettings = whisperDestination.getCHAT_SETTINGS();
+        ChatSetting wdChatSetting = whisperDestination.getCHAT_SETTINGS();
         ChannelHandlerContext wdCTX = whisperDestination.getPLAYER_SESSION().getCONNECTION().getCLIENT_CTX();
 
-        boolean woIsAccepting = woChatSettings.isIgnoreWhispers();
-        boolean wdIsAccepting = wdChatSettings.isIgnoreWhispers();
+        boolean woIsAccepting = woChatSetting.isIgnoreWhispers();
+        boolean wdIsAccepting = wdChatSetting.isIgnoreWhispers();
         if (!woIsAccepting) {
             sendChatMessage(woCTX, "You currently have whispers disabled, you must enable whispers to be able to whisper.");
             return;
@@ -88,8 +88,8 @@ public class Whisper extends Command {
             return;
         }
 
-        boolean woIsMuted = woChatSettings.isMuted();
-        boolean wdIsMuted = wdChatSettings.isMuted();
+        boolean woIsMuted = woChatSetting.isMuted();
+        boolean wdIsMuted = wdChatSetting.isMuted();
         if (woIsMuted) {
             sendChatMessage(woCTX, "You are currently muted and cannot send chat messages.");
             return;
