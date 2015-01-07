@@ -2,8 +2,6 @@ package chatmanager.commands;
 
 import chatmanager.ChatManager;
 import io.netty.channel.ChannelHandlerContext;
-import starbounddata.packets.chat.ChatReceivePacket;
-import starbounddata.types.chat.Mode;
 import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.plugins.Command;
 
@@ -23,7 +21,7 @@ public class Nick extends Command {
         int length = args.length;
         switch (length) {
             case 0: {
-                sendChatMessage(clientCTX, "You did not provide a new nick name to change to.");
+                sendChatMessage(playerSession, "You did not provide a new nick name to change to.");
                 break;
             }
             case 1: {
@@ -33,7 +31,7 @@ public class Nick extends Command {
         }
     }
 
-    private void sendChatMessage(ChannelHandlerContext clientCTX, String chatMessage) {
-        new ChatReceivePacket(clientCTX, Mode.BROADCAST, "ChatManager", 0, "ChatManager", chatMessage).routeToDestination();
+    private void sendChatMessage(PlayerSession playerSession, String chatMessage) {
+        playerSession.sendBroadcastMessageToClient("ChatManager", chatMessage);
     }
 }

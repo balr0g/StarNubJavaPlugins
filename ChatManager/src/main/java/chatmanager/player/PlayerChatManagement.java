@@ -44,7 +44,7 @@ public class PlayerChatManagement {
                 String chatMessage = chatSendPacket.getMessage();
 
                 //Reapeat Seperate -// discard and event
-
+                //Check mute on log in
                 //Spam Check
 
             }

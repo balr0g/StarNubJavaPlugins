@@ -45,8 +45,8 @@ public class PlayerManager {
             @Override
             public void run() {
                 for (ChatSession chatSession : CONNECTED_PLAYERS.values()) {
-                    ChatSetting chatSetting = chatSession.getCHAT_SETTINGS();
-                    long expireDate = chatSetting.getMuteExpire().getMillis();
+                    ChatSetting chatSetting = chatSession.getCHAT_SETTING();
+                    long expireDate = chatSetting.getMuted().getMuteExpire().getMillis();
                     if (expireDate != 0 && expireDate > DateTime.now().getMillis()) {
                         chatSetting.unMute();
                     }

@@ -14,16 +14,14 @@ public class ChatManagerEntry {
     private final static ChatManagerEntries CHAT_MANAGER_ENTRIES_DB = ChatManagerEntries.getInstance();
 
     /* COLUMN NAMES */
-    private final static String STAFF_ENTRY_ID_COLUMN = "STAFF_ENTRY_ID";
+    private final static String CHAT_MANAGER_ENTRY_COLUMN = "CHAT_MANAGER_ENTRY";
     private final static String STARNUB_ID_COLUMN = "STARNUB_ID";
     private final static String DESCRIPTION_COLUMN = "DESCRIPTION";
 
-    @DatabaseField(dataType = DataType.INTEGER, generatedId = true, columnName = STAFF_ENTRY_ID_COLUMN)
+    @DatabaseField(dataType = DataType.INTEGER, generatedId = true, columnName = CHAT_MANAGER_ENTRY_COLUMN)
     private volatile int staffEntryId;
-
     @DatabaseField(foreign = true, columnName = STARNUB_ID_COLUMN)
     private volatile Account account;
-
     @DatabaseField(dataType = DataType.STRING, columnName = DESCRIPTION_COLUMN)
     private volatile String description;
 
@@ -38,14 +36,11 @@ public class ChatManagerEntry {
      *
      * @param account     Account representing the staff members account
      * @param description String representing the description for this staff entry
-     * @param createEntry boolean representing if a database entry should be made
      */
-    public ChatManagerEntry(Account account, String description, boolean createEntry) {
+    public ChatManagerEntry(Account account, String description) {
         this.account = account;
         this.description = description;
-        if (createEntry) {
-            CHAT_MANAGER_ENTRIES_DB.createOrUpdate(this);
-        }
+        CHAT_MANAGER_ENTRIES_DB.create(this);
     }
 
     /* DB Methods */
@@ -63,7 +58,7 @@ public class ChatManagerEntry {
     }
 
     public static List<ChatManagerEntry> getStaffEntryByStaffEntry(ChatManagerEntry chatManagerEntry) {
-        return CHAT_MANAGER_ENTRIES_DB.getAllExact(STAFF_ENTRY_ID_COLUMN, chatManagerEntry);
+        return CHAT_MANAGER_ENTRIES_DB.getAllExact(CHAT_MANAGER_ENTRY_COLUMN, chatManagerEntry);
     }
 
     public void deleteFromDatabase() {
@@ -73,6 +68,5 @@ public class ChatManagerEntry {
     public static void deleteFromDatabase(ChatManagerEntry chatManagerEntry) {
         CHAT_MANAGER_ENTRIES_DB.delete(chatManagerEntry);
     }
-
 
 }

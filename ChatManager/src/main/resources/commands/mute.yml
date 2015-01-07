@@ -1,5 +1,5 @@
 commands: ['mute']
-main_args: ['info', 'add', 'remove']
+main_args: ['info', 'add', 'addoffline', 'remove', 'example']
 custom_split: {
 }
 class: chatmanager.commands.Mute

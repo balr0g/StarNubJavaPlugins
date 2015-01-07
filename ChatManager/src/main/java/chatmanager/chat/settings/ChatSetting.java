@@ -1,6 +1,8 @@
 package chatmanager.chat.settings;
 
 import chatmanager.chat.chatroom.ChatRoom;
+import chatmanager.chat.misc.ChatManagerEntry;
+import chatmanager.chat.misc.Muted;
 import chatmanager.database.ChatSettings;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
@@ -21,8 +23,7 @@ public class ChatSetting {
     private final static String STARNUB_ID_COLUMN = "STARNUB_ID";
     private final static String STARNUB_ACCOUNT_NAME_COLUMN = "STARNUB_ACCOUNT_NAME";
     private final static String DEFAULT_CHAT_ROOM_ID_COLUMN = "DEFAULT_CHAT_ROOM_ID";
-    private final static String IS_MUTED_COLUMN = "IS_MUTED";
-    private final static String MUTE_EXPIRE_COLUMN = "MUTE_EXPIRE";
+    private final static String MUTED_COLUMN = "MUTED_ID";
     private final static String IS_IGNORE_WHISPERS_COLUMN = "IS_IGNORE_WHISPERS";
 
     @DatabaseField(generatedId = true, columnName = CHAT_SETTINGS_ID_COLUMN)
@@ -31,18 +32,31 @@ public class ChatSetting {
     @DatabaseField(dataType = DataType.UUID, columnName = CHARACTER_UUID_COLUMN)
     private UUID characterUuid;
     @DatabaseField(foreign = true, columnName = STARNUB_ID_COLUMN)
-    private Account starnubAccount;
+    private Account starnubAccountId;
     /* If has account */
     @DatabaseField(dataType = DataType.STRING, columnName = STARNUB_ACCOUNT_NAME_COLUMN)
     private String accountName;
     @DatabaseField(foreign = true, columnName = DEFAULT_CHAT_ROOM_ID_COLUMN)
     private ChatRoom defaultChat;
-    @DatabaseField(dataType = DataType.BOOLEAN, columnName = IS_MUTED_COLUMN)
-    private boolean isMuted;
-    @DatabaseField(dataType = DataType.DATE_TIME, columnName = MUTE_EXPIRE_COLUMN)
-    private DateTime muteExpire;
+    @DatabaseField(foreign = true, columnName = MUTED_COLUMN)
+    private Muted muted;
     @DatabaseField(dataType = DataType.BOOLEAN, columnName = IS_IGNORE_WHISPERS_COLUMN)
     private boolean ignoreWhispers;
+
+    /**
+     * Constructor for database purposes
+     */
+    public ChatSetting() {
+    }
+
+    public ChatSetting(UUID characterUuid, Account starnubAccountId, String accountName, ChatRoom defaultChat, Muted muted, boolean ignoreWhispers) {
+        this.characterUuid = characterUuid;
+        this.starnubAccountId = starnubAccountId;
+        this.accountName = accountName;
+        this.defaultChat = defaultChat;
+        this.muted = muted;
+        this.ignoreWhispers = ignoreWhispers;
+    }
 
     public int getChatSettingsId() {
         return chatSettingsId;
@@ -60,12 +74,12 @@ public class ChatSetting {
         this.characterUuid = characterUuid;
     }
 
-    public Account getStarnubAccount() {
-        return starnubAccount;
+    public Account getStarnubAccountId() {
+        return starnubAccountId;
     }
 
-    public void setStarnubAccount(Account starnubAccount) {
-        this.starnubAccount = starnubAccount;
+    public void setStarnubAccountId(Account starnubAccountId) {
+        this.starnubAccountId = starnubAccountId;
     }
 
     public String getAccountName() {
@@ -84,28 +98,29 @@ public class ChatSetting {
         this.defaultChat = defaultChat;
     }
 
+    public Muted getMuted() {
+        return muted;
+    }
+
     public boolean isMuted() {
-        return isMuted;
+        return muted != null;
+    }
+
+    public void mute(Account staffAccount, DateTime expireDate, String reason) {
+        if (muted != null) {
+            ChatManagerEntry chatManagerEntry = new ChatManagerEntry(staffAccount, reason);
+            this.muted = new Muted(true, expireDate, chatManagerEntry);
+            CHAT_SETTINGS_DB.update(this);
+        }
     }
 
     public void unMute() {
-        this.isMuted = false;
-        this.muteExpire = null;
+        if (muted != null) {
+            this.muted.deleteFromDatabase();
+            this.muted = null;
+            CHAT_SETTINGS_DB.update(this);
+        }
     }
-
-    public void mute(DateTime length) {
-        this.isMuted = true;
-        this.muteExpire = length;
-    }
-
-    public DateTime getMuteExpire() {
-        return muteExpire;
-    }
-
-    public void setMuteExpire(DateTime muteExpire) {
-        this.muteExpire = muteExpire;
-    }
-
     public boolean isIgnoreWhispers() {
         return ignoreWhispers;
     }
@@ -116,5 +131,29 @@ public class ChatSetting {
 
     public void receiveWhispers() {
         this.ignoreWhispers = false;
+    }
+
+    public ChatSetting getByStarnubId() {
+        return getByStarnubId(this.starnubAccountId);
+    }
+
+    public static ChatSetting getByStarnubId(Account starnubId) {
+        return CHAT_SETTINGS_DB.getFirstSimilar(STARNUB_ID_COLUMN, starnubId);
+    }
+
+    public ChatSetting getByUuid() {
+        return getByUuid(this.characterUuid);
+    }
+
+    public static ChatSetting getByUuid(UUID uuid) {
+        return CHAT_SETTINGS_DB.getFirstSimilar(CHARACTER_UUID_COLUMN, uuid);
+    }
+
+    public void deleteFromDatabase() {
+        deleteFromDatabase(this);
+    }
+
+    public static void deleteFromDatabase(ChatSetting chatSetting) {
+        CHAT_SETTINGS_DB.delete(chatSetting);
     }
 }

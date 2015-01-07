@@ -22,6 +22,18 @@ public class ChatRoomSubscription {
     @DatabaseField(foreign = true, columnName = CHAT_ROOM_ID_COLUMN)
     private ChatRoom chatRoom;
 
+    /**
+     * Constructor for database purposes
+     */
+    public ChatRoomSubscription() {
+    }
+//Remove from chat room method
 
-    //Remove from chat room method
+    public void deleteFromDatabase() {
+        deleteFromDatabase(this);
+    }
+
+    public static void deleteFromDatabase(ChatRoomSubscription chatRoomSubscription) {
+        CHAT_ROOM_SUBSCRIPTIONS_DB.delete(chatRoomSubscription);
+    }
 }

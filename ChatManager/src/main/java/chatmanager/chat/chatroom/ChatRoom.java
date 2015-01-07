@@ -45,7 +45,24 @@ public class ChatRoom {
     private String password;
     @DatabaseField(dataType = DataType.STRING, columnName = INFORMATION_COLUMN)
     private String info;
-    private boolean temporary;
+
+    /**
+     * Constructor for database purposes
+     */
+    public ChatRoom() {
+    }
+
+    public ChatRoom(String chatRoomName, String alias, ChatSetting roomCreatorStarnubId, DateTime lastUsed, boolean neverPurge, String nameColor, String chatColor, String password, String info) {
+        this.chatRoomName = chatRoomName;
+        this.alias = alias;
+        this.roomCreatorStarnubId = roomCreatorStarnubId;
+        this.lastUsed = lastUsed;
+        this.neverPurge = neverPurge;
+        this.nameColor = nameColor;
+        this.chatColor = chatColor;
+        this.password = password;
+        this.info = info;//Update time on db load
+    }
 
     public String getChatRoomName() {
         return chatRoomName;
@@ -119,15 +136,15 @@ public class ChatRoom {
         this.info = info;
     }
 
-    public boolean isTemporary() {
-        return temporary;
-    }
-
-    public void setTemporary(boolean temporary) {
-        this.temporary = temporary;
-    }
-
     public ConcurrentHashMap<ChannelHandlerContext, ChatSession> getPLAYERS() {
         return PLAYERS;
+    }
+
+    public void deleteFromDatabase() {
+        deleteFromDatabase(this);
+    }
+
+    public static void deleteFromDatabase(ChatRoom chatRoom) {
+        CHAT_ROOMS_DB.delete(chatRoom);
     }
 }

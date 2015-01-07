@@ -23,27 +23,38 @@ public class ChatIgnore {
     @DatabaseField(dataType = DataType.UUID, columnName = IGNORED_UUID_COLUMN)
     private UUID ignored;
 
-    public int getChatIgnoreId() {
-        return chatIgnoreId;
+    /**
+     * Constructor for database purposes
+     */
+    public ChatIgnore() {
     }
 
-    public void setChatIgnoreId(int chatIgnoreId) {
-        this.chatIgnoreId = chatIgnoreId;
+    public ChatIgnore(UUID ignoreOwnerUuid, UUID ignored) {
+        this.ignoreOwnerUuid = ignoreOwnerUuid;
+        this.ignored = ignored;
+        ChatIgnore chatIgnore = CHAT_IGNORES_DB.getFirstExact(IGNORED_UUID_COLUMN, ignored);
+        if (chatIgnore == null) {
+            CHAT_IGNORES_DB.createOrUpdate(this);
+        }
+    }
+
+    public int getChatIgnoreId() {
+        return chatIgnoreId;
     }
 
     public UUID getIgnoreOwnerUuid() {
         return ignoreOwnerUuid;
     }
 
-    public void setIgnoreOwnerUuid(UUID ignoreOwnerUuid) {
-        this.ignoreOwnerUuid = ignoreOwnerUuid;
-    }
-
     public UUID getIgnored() {
         return ignored;
     }
 
-    public void setIgnored(UUID ignored) {
-        this.ignored = ignored;
+    public void deleteFromDatabase() {
+        deleteFromDatabase(this);
+    }
+
+    public static void deleteFromDatabase(ChatIgnore chatIgnore) {
+        CHAT_IGNORES_DB.delete(chatIgnore);
     }
 }

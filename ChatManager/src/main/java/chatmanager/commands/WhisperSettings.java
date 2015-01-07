@@ -4,8 +4,6 @@ import chatmanager.ChatManager;
 import chatmanager.PlayerManager;
 import chatmanager.chat.ChatSession;
 import io.netty.channel.ChannelHandlerContext;
-import starbounddata.packets.chat.ChatReceivePacket;
-import starbounddata.types.chat.Mode;
 import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.plugins.Command;
 
@@ -27,19 +25,19 @@ public class WhisperSettings extends Command {
         ChatSession chatSession = PLAYER_MANAGER.getCONNECTED_PLAYERS().get(clientCTX);
         switch (command) {
             case "whisperon": {
-                chatSession.getCHAT_SETTINGS().receiveWhispers();
-                sendChatMessage(clientCTX, "Whispering Enabled: You will now receive whispers.");
+                chatSession.getCHAT_SETTING().receiveWhispers();
+                sendChatMessage(playerSession, "Whispering Enabled: You will now receive whispers.");
                 break;
             }
             case "whisperoff": {
-                chatSession.getCHAT_SETTINGS().ignoreWhispers();
-                sendChatMessage(clientCTX, "Whispering Disabled: You will no longer received whispers.");
+                chatSession.getCHAT_SETTING().ignoreWhispers();
+                sendChatMessage(playerSession, "Whispering Disabled: You will no longer received whispers.");
                 break;
             }
         }
     }
 
-    private void sendChatMessage(ChannelHandlerContext clientCTX, String chatMessage) {
-        new ChatReceivePacket(clientCTX, Mode.BROADCAST, "ChatManager", 0, "ChatManager", chatMessage).routeToDestination();
+    private void sendChatMessage(PlayerSession playerSession, String chatMessage) {
+        playerSession.sendBroadcastMessageToClient("ChatManager", chatMessage);
     }
 }
