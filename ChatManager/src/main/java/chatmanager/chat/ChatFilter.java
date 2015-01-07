@@ -2,8 +2,6 @@ package chatmanager.chat;
 
 import chatmanager.ChatManager;
 import io.netty.channel.ChannelHandlerContext;
-import starbounddata.packets.chat.ChatReceivePacket;
-import starbounddata.types.chat.Mode;
 import starnubserver.StarNub;
 import starnubserver.cache.wrappers.PlayerCtxCacheWrapper;
 import starnubserver.connections.player.session.PlayerSession;
@@ -12,7 +10,6 @@ import starnubserver.plugins.resources.PluginConfiguration;
 import starnubserver.plugins.resources.PluginYAMLWrapper;
 import utilities.strings.StringUtilities;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -116,10 +113,9 @@ public class ChatFilter {
                     new StarNubEvent("Player_Nickname_Changed", playerSession);
                     boolean notifyServerOfNickChange = (boolean) CONFIG.getNestedValue("name_rules", "notify_on_nick_changes");
                     if (notifyServerOfNickChange) {
-                        HashSet<ChannelHandlerContext> onlinePlayers = StarNub.getConnections().getCONNECTED_PLAYERS().getOnlinePlayersCtxs();
                         String nickChanged = originalNick + " has changed their Nickname to " + newNickName;
                         String serverName = (String) StarNub.getConfiguration().getNestedValue("starnub_info", "server_name");
-                        new ChatReceivePacket(Mode.BROADCAST, "ChatManager", 0, serverName, nickChanged).routeToGroupNoFlush(onlinePlayers);
+                        PlayerSession.sendChatBroadcastToClientsAll(serverName, nickChanged);
                     }
                 }
             }

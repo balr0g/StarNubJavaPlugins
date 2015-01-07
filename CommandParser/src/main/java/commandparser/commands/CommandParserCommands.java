@@ -3,7 +3,6 @@ package commandparser.commands;
 import commandparser.CommandHandler;
 import commandparser.CommandParser;
 import commandparser.data.Shortcut;
-import starbounddata.types.chat.Mode;
 import starnubserver.StarNub;
 import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.plugins.Command;
@@ -185,6 +184,6 @@ public class CommandParserCommands extends Command {
     }
 
     private void sendMessage(PlayerSession playerSession, String message) {
-        playerSession.sendChatMessage(getPLUGIN_NAME(), Mode.BROADCAST, message);
+        playerSession.sendBroadcastMessageToClient(getPLUGIN_NAME(), message);
     }
 }

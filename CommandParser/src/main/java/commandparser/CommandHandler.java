@@ -2,7 +2,6 @@ package commandparser;
 
 import commandparser.data.Shortcut;
 import org.apache.commons.lang3.StringUtils;
-import starbounddata.types.chat.Mode;
 import starnubdata.generic.CanUse;
 import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.events.events.StarNubEventTwo;
@@ -314,8 +313,10 @@ public class CommandHandler extends StarNubEventHandler {
         HashMap<String, Integer> customSplit = command.getCUSTOM_SPLIT();
         boolean fullPermission = true;
         if (customSplit.containsKey(exactCommand)) {
+            System.out.println(argsList);
             argsList.clear();
-            Collections.addAll(argsList, StringUtils.stripAll(commandString.split(" ", customSplit.get(exactCommand))));
+            Collections.addAll(argsList, StringUtils.stripAll(commandString.split(" ", customSplit.get(exactCommand) + 2)));
+            System.out.println(argsList);
             fullPermission = false;
         }
 
@@ -363,7 +364,7 @@ public class CommandHandler extends StarNubEventHandler {
             hasPermission = playerSession.hasPermission(commandNameOrAlias, exactCommand, true);
         }
 
-        if (!hasPermission) {
+        if (!hasPermission) { // URGENT-FIX - Permission is being checked if a player uses a argument that does not exist
             String failedCommand = exactCommand;
             String permissionString = commandNameOrAlias + "." + exactCommand;
             if (fullPermission) {
@@ -380,6 +381,6 @@ public class CommandHandler extends StarNubEventHandler {
     }
 
     private void sendChatMessage(PlayerSession playerSession, String message) {
-        playerSession.sendChatMessage("CommandParser", Mode.BROADCAST, message);
+        playerSession.sendBroadcastMessageToClient("CommandParser", message);
     }
 }

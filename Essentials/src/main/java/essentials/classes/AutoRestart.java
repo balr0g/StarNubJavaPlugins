@@ -1,12 +1,10 @@
 package essentials.classes;
 
-import io.netty.channel.ChannelHandlerContext;
-import starbounddata.packets.chat.ChatReceivePacket;
-import starbounddata.types.chat.Mode;
 import starbounddata.types.color.Colors;
 import starnubdata.generic.DisconnectReason;
 import starnubserver.StarNub;
 import starnubserver.StarNubTask;
+import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.events.events.StarNubEvent;
 import starnubserver.events.starnub.StarNubEventHandler;
 import starnubserver.events.starnub.StarNubEventSubscription;
@@ -81,10 +79,8 @@ public class AutoRestart extends HashSet<StarNubTask> {
                 this.add(
                         new StarNubTask("Essentials", "Essentials - Auto Restart Task - Notification Message - " + eventTime, eventTime, TimeUnit.MINUTES, () -> {
                             String formattedMessage = String.format(coloredMessage, time);
-                            HashSet<ChannelHandlerContext> onlinePlayers = StarNub.getConnections().getCONNECTED_PLAYERS().getOnlinePlayersCtxs();
-                            if (onlinePlayers != null) {
-                                new ChatReceivePacket(null, Mode.BROADCAST, "Essentials", 0, "ServerName", formattedMessage).routeToGroupNoFlush(onlinePlayers);
-                            }
+                            String serverName = (String) StarNub.getConfiguration().getNestedValue("starnub_info", "server_name");
+                            PlayerSession.sendChatBroadcastToClientsAll(serverName, formattedMessage);
                             new StarNubEvent("Essentials_Auto_Restart_In_" + time, this);
                         }));
             }

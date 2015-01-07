@@ -3,7 +3,6 @@ package commandparser;
 import io.netty.channel.ChannelHandlerContext;
 import starbounddata.packets.Packet;
 import starbounddata.packets.chat.ChatSendPacket;
-import starbounddata.types.chat.Mode;
 import starnubserver.cache.wrappers.PermissionCacheWrapper;
 import starnubserver.cache.wrappers.PlayerCtxCacheWrapper;
 import starnubserver.connections.player.session.PlayerSession;
@@ -45,7 +44,7 @@ public class ChatSendHandler extends PacketEventHandler {
         BooleanCache cache = (BooleanCache) CHAT_PERMISSION.getCache(clientCtx);
         if (!cache.isBool()) {
             if (cache.isPastDesignatedTimeRefreshTimeNowIfPast(5000)) {
-                playerSession.sendChatMessage("StarNub", Mode.BROADCAST, "You do not have permission to chat. Permission required: \"commandparser.chat\".");
+                playerSession.sendBroadcastMessageToClient("StarNub", "You do not have permission to chat. Permission required: \"commandparser.chat\".");
                 new StarNubEvent("Player_Chat_Failed_No_Permission_Client", playerSession);
                 return;
             }
@@ -63,7 +62,7 @@ public class ChatSendHandler extends PacketEventHandler {
             boolean isPast = timeCache.isPastDesignatedTimeRefreshTimeNowIfPast(chatRate);
             if (!isPast) {
                 String chatSpamMessage = (String) CONFIG.getValue("spam_message_chat");
-                playerSession.sendChatMessage("StarNub", Mode.BROADCAST, chatSpamMessage);
+                playerSession.sendBroadcastMessageToClient("StarNub", chatSpamMessage);
                 new StarNubEvent("Player_Chat_Failed_Spam_Client", playerSession);
                 return;
             }
@@ -77,7 +76,7 @@ public class ChatSendHandler extends PacketEventHandler {
         BooleanCache cache = (BooleanCache) COMMAND_PERMISSION.getCache(clientCtx);
         if (!cache.isBool()) {
             if (cache.isPastDesignatedTimeRefreshTimeNowIfPast(5000)) {
-                playerSession.sendChatMessage("StarNub", Mode.BROADCAST, "You do not have permission to use commands. Permission required: \"commandparser.command\".");
+                playerSession.sendBroadcastMessageToClient("StarNub", "You do not have permission to use commands. Permission required: \"commandparser.command\".");
                 new StarNubEvent("Player_Command_Failed_No_Permission_Client", playerSession);
                 return;
             }
@@ -95,7 +94,7 @@ public class ChatSendHandler extends PacketEventHandler {
             boolean isPast = timeCache.isPastDesignatedTimeRefreshTimeNowIfPast(commandRate);
             if (!isPast) {
                 String chatSpamMessage = (String) CONFIG.getValue("spam_message_command");
-                playerSession.sendChatMessage("StarNub", Mode.BROADCAST, chatSpamMessage);
+                playerSession.sendBroadcastMessageToClient("StarNub", chatSpamMessage);
                 new StarNubEvent("Player_Command_Failed_Spam_Client", playerSession);
                 return;
             }

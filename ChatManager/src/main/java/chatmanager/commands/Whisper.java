@@ -11,6 +11,7 @@ import starnubserver.cache.wrappers.PlayerCtxCacheWrapper;
 import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.plugins.Command;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
@@ -31,6 +32,7 @@ public class Whisper extends Command {
         PlayerManager PLAYER_MANAGER = CHAT_MANAGER.getPlayerManager();
         ChannelHandlerContext clientCTX = playerSession.getCONNECTION().getCLIENT_CTX();
         int argsLen = args.length;
+        System.out.println(Arrays.toString(args));
         switch (command) {
             case "w": {
                 switch (argsLen) {
@@ -87,8 +89,8 @@ public class Whisper extends Command {
             return;
         }
 
-        boolean woIsMuted = woChatSetting.getMuted().isMuted();
-        boolean wdIsMuted = wdChatSetting.getMuted().isMuted();
+        boolean woIsMuted = woChatSetting.getMuted() != null;
+        boolean wdIsMuted = wdChatSetting.getMuted() != null;
         if (woIsMuted) {
             sendChatMessage(woPlayerSession, "You are currently muted and cannot send chat messages.");
             return;

@@ -35,6 +35,7 @@ public final class Essentials extends JavaPlugin {
     private Motd motd;
     private Broadcaster broadcaster;
     private PlayerMessages playerMessages;
+    private UptimeTracker uptimeTracker;
 
     public Essentials(String NAME, File FILE, String MAIN_CLASS, PluginDetails PLUGIN_DETAILS, PluginConfiguration CONFIGURATION, YAMLFiles FILES, CommandInfo COMMAND_INFO, PluginRunnables PLUGIN_RUNNABLES) {
         super(NAME, FILE, MAIN_CLASS, PLUGIN_DETAILS, CONFIGURATION, FILES, COMMAND_INFO, PLUGIN_RUNNABLES);
@@ -42,6 +43,10 @@ public final class Essentials extends JavaPlugin {
 
     public PlayerMessages getPlayerMessages() {
         return playerMessages;
+    }
+
+    public UptimeTracker getUptimeTracker() {
+        return uptimeTracker;
     }
 
     @Override
@@ -61,6 +66,7 @@ public final class Essentials extends JavaPlugin {
         if ((boolean) getCONFIGURATION().getNestedValue("player_messages", "enabled")) {
             playerMessages = new PlayerMessages(getCONFIGURATION());
         }
+        uptimeTracker = new UptimeTracker();
     }
 
     @Override
@@ -70,5 +76,6 @@ public final class Essentials extends JavaPlugin {
         motd.unregisterEventsTask();
         broadcaster.unregisterEventsTask();
         playerMessages.unregisterEventsTask();
+        uptimeTracker.unregisterEventsTask();
     }
 }

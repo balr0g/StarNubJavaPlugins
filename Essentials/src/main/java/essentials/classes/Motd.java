@@ -1,7 +1,6 @@
 package essentials.classes;
 
 import io.netty.channel.ChannelHandlerContext;
-import starbounddata.types.chat.Mode;
 import starbounddata.types.color.Colors;
 import starnubserver.StarNubTask;
 import starnubserver.cache.wrappers.PlayerAutoCancelTask;
@@ -70,7 +69,7 @@ public class Motd {
     private void playerMessage(PlayerSession playerSession, String motd) {
         ChannelHandlerContext clientCtx = playerSession.getCONNECTION().getCLIENT_CTX();
         String cleanName = playerSession.getPlayerCharacter().getCleanName();
-        StarNubTask motdTask = new StarNubTask("Essentials", "Essentials - Player MOTD - " + cleanName, 5, TimeUnit.SECONDS, () -> playerSession.sendChatMessage("ServerName", Mode.BROADCAST, motd));
+        StarNubTask motdTask = new StarNubTask("Essentials", "Essentials - Player MOTD - " + cleanName, 5, TimeUnit.SECONDS, () -> playerSession.sendBroadcastMessageToClient("ServerName", motd));
         MOTD_TASK.registerTask(clientCtx, motdTask);
     }
 

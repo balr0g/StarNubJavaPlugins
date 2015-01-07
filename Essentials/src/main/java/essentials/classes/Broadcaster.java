@@ -1,11 +1,8 @@
 package essentials.classes;
 
-import io.netty.channel.ChannelHandlerContext;
-import starbounddata.packets.chat.ChatReceivePacket;
-import starbounddata.types.chat.Mode;
 import starbounddata.types.color.Colors;
-import starnubserver.StarNub;
 import starnubserver.StarNubTask;
+import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.plugins.resources.PluginConfiguration;
 import starnubserver.resources.StringTokens;
 import utilities.numbers.RandomNumber;
@@ -38,11 +35,7 @@ public class Broadcaster extends HashSet<StarNubTask> {
             String color = Colors.validate((String) broadcastMap.get("color"));
             String message = (String) broadcastMap.get("message");
             new StarNubTask("Essentials", "Essentials - Broadcast", true, interval, interval, TimeUnit.MINUTES, () -> {
-                HashSet<ChannelHandlerContext> playersCtxs = StarNub.getConnections().getCONNECTED_PLAYERS().getOnlinePlayersCtxs();
-                if (!playersCtxs.isEmpty()) {
-                    ChatReceivePacket chatReceivePacket = new ChatReceivePacket(null, Mode.BROADCAST, "ServerName", 0, "Essentials", color + message);
-                    chatReceivePacket.routeToGroupNoFlush(playersCtxs);
-                }
+                PlayerSession.sendChatBroadcastToClientsAll("Essentials", color + message);
             });
         }
     }
@@ -52,14 +45,10 @@ public class Broadcaster extends HashSet<StarNubTask> {
         String color = Colors.validate((String) CONFIG.getNestedValue("broadcast", "random_broadcast", "color"));
         List<String> message = (List<String>) CONFIG.getNestedValue("broadcast", "random_broadcast", "message_pool");
         new StarNubTask("Essentials", "Essentials - Random Broadcast", true, interval, interval, TimeUnit.MINUTES, () -> {
-            HashSet<ChannelHandlerContext> playersCtxs = StarNub.getConnections().getCONNECTED_PLAYERS().getOnlinePlayersCtxs();
-            if (!playersCtxs.isEmpty()) {
-                int randInt = RandomNumber.randInt(0, message.size() - 1);
-                String randomMessage = message.get(randInt);
-                String randomMessageReplacedTokens = StringTokens.replaceTokens(randomMessage);
-                ChatReceivePacket chatReceivePacket = new ChatReceivePacket(null, Mode.BROADCAST, "ServerName", 0, "Essentials", color + randomMessageReplacedTokens);
-                chatReceivePacket.routeToGroupNoFlush(playersCtxs);
-            }
+            int randInt = RandomNumber.randInt(0, message.size() - 1);
+            String randomMessage = message.get(randInt);
+            String randomMessageReplacedTokens = StringTokens.replaceTokens(randomMessage);
+            PlayerSession.sendChatBroadcastToClientsAll("Essentials", color + randomMessageReplacedTokens);
         });
 
     }

@@ -179,7 +179,7 @@ public class Mute extends Command {
     private void muteExamples(PlayerSession playerSession) {
         sendChatMessage(playerSession, "To mute someone you must supply arguments \"/mute add {playerId} {length} {reason}\"");
         sendChatMessage(playerSession, "Example 1 (Temporary): /mute add 5 1y2m3w4d5h6min \"For spamming profanity\"");
-        sendChatMessage(playerSession, "Example 2 (Temporary): /mute add {player-name} 24h30min \"For spamming profanity\"");
-        sendChatMessage(playerSession, "Example 3 (Permanent): /mute add {player-name} \"For spamming profanity\"");
+        sendChatMessage(playerSession, "Example 2 (Temporary): /mute add {playerId} 24h30min \"For spamming profanity\"");
+        sendChatMessage(playerSession, "Example 3 (Permanent): /mute add {playerId} \"For spamming profanity\"");
     }
 }

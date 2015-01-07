@@ -3,7 +3,6 @@ package chatparser;
 import io.netty.channel.ChannelHandlerContext;
 import starbounddata.packets.Packet;
 import starbounddata.packets.chat.ChatSendPacket;
-import starbounddata.types.chat.Mode;
 import starnubserver.cache.wrappers.PermissionCacheWrapper;
 import starnubserver.cache.wrappers.PlayerCtxCacheWrapper;
 import starnubserver.connections.player.session.PlayerSession;
@@ -104,6 +103,6 @@ public class ChatSendHandler extends PacketEventHandler {
     }
 
     private void sendChatMessage(PlayerSession playerSession, String message) {
-        playerSession.sendChatMessage("ServerName", Mode.BROADCAST, message);
+        playerSession.sendBroadcastMessageToClient("ChatParser", message);
     }
 }

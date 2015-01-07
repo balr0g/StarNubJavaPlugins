@@ -1,0 +1,7 @@
+commands: ['uptime']
+main_args: ['starbound', 'starnub']
+custom_split: {}
+class: essentials.commands.Unsubscribe
+can_use: 2
+description: |-
+    -

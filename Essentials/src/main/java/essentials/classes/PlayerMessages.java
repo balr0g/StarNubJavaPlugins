@@ -1,11 +1,10 @@
 package essentials.classes;
 
 import io.netty.channel.ChannelHandlerContext;
-import starbounddata.packets.chat.ChatReceivePacket;
-import starbounddata.types.chat.Mode;
 import starbounddata.types.color.Colors;
 import starnubserver.StarNub;
 import starnubserver.StarNubTask;
+import starnubserver.cache.objects.PlayerSessionCache;
 import starnubserver.cache.wrappers.PlayerAutoCancelTask;
 import starnubserver.cache.wrappers.PlayerCtxCacheWrapper;
 import starnubserver.connections.player.session.PlayerSession;
@@ -64,15 +63,13 @@ public class PlayerMessages {
                 String completeMessage = StringTokens.replaceTokens(formattedMessage);
 
                 StarNubTask playerJoinTask = new StarNubTask("Essentials", "Essentials - Send - Player - " + playerNameConsole + " - Has Connected Message", delay, TimeUnit.SECONDS, () -> {
-                    HashSet<ChannelHandlerContext> playersCtxs = StarNub.getConnections().getCONNECTED_PLAYERS().getOnlinePlayersCtxs();
-                    HashSet<ChannelHandlerContext> doNotSendList = UNSUBSCRIBED_JOIN_LEAVE.getCacheKeyList();
-                    doNotSendList.add(clientCtx);
+                    HashSet<PlayerSession> doNotSendList = new HashSet<>();
+                    doNotSendList.add(playerSession);// URGENT-FIX - Ignores not being added , BUT WORKS ON LEAVE AND JOIN IGNORES
+                    UNSUBSCRIBED_JOIN_LEAVE.getCACHE_MAP().values().stream().forEach(e -> doNotSendList.add(((PlayerSessionCache) e).getPlayerSession()));
                     String serverName = (String) StarNub.getConfiguration().getNestedValue("starnub_info", "server_name");
-                    ChatReceivePacket chatReceivePacket = new ChatReceivePacket(null, Mode.BROADCAST, "Essentials", 0, serverName, chatColor + completeMessage);
-                    chatReceivePacket.routeToGroupNoFlush(playersCtxs, doNotSendList);
+                    PlayerSession.sendChatBroadcastToClientsAll(serverName, doNotSendList, chatColor + completeMessage);
                     StarNub.getLogger().cInfoPrint("Essentials", playerNameConsole + " has connected. (IP: " + playerSession.getSessionIpString() + ")");
                 });
-
                 JOIN_TASK.registerTask(clientCtx, playerJoinTask);
             }
         });
@@ -98,12 +95,11 @@ public class PlayerMessages {
                     String unformattedMessage = (String) CONFIG.getNestedValue("player_messages", "connect_disconnect", "message", "disconnect");
                     String formattedMessage = String.format(unformattedMessage, playerName + chatColor);
                     String completeMessage = StringTokens.replaceTokens(formattedMessage);
-                    HashSet<ChannelHandlerContext> playersCtxs = StarNub.getConnections().getCONNECTED_PLAYERS().getOnlinePlayersCtxs();
-                    HashSet<ChannelHandlerContext> doNotSendList = UNSUBSCRIBED_JOIN_LEAVE.getCacheKeyList();
-                    doNotSendList.add(clientCtx);
+                    HashSet<PlayerSession> doNotSendList = new HashSet<>();
+                    doNotSendList.add(playerSession);
+                    UNSUBSCRIBED_JOIN_LEAVE.getCACHE_MAP().values().stream().forEach(e -> doNotSendList.add(((PlayerSessionCache) e).getPlayerSession()));
                     String serverName = (String) StarNub.getConfiguration().getNestedValue("starnub_info", "server_name");
-                    ChatReceivePacket chatReceivePacket = new ChatReceivePacket(null, Mode.BROADCAST, "Essentials", 0, serverName, chatColor + completeMessage);
-                    chatReceivePacket.routeToGroupNoFlush(playersCtxs, doNotSendList);
+                    PlayerSession.sendChatBroadcastToClientsAll(serverName, doNotSendList, chatColor + completeMessage);
                     StarNub.getLogger().cInfoPrint("Essentials", playerNameConsole + " has disconnected. (IP: " + playerSession.getSessionIpString() + ")");
                 }
             }

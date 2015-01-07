@@ -1,8 +1,6 @@
 package chatmanager.server;
 
 import starbounddata.packets.chat.ChatReceivePacket;
-import starbounddata.packets.chat.ChatSendPacket;
-import starbounddata.types.chat.ChatSendMode;
 import starbounddata.types.color.Colors;
 import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.events.events.StarNubEventTwo;
@@ -98,7 +96,7 @@ public class ServerChatManagement {
                 String formattedMessage = String.format(unformattedMessage, playerName + chatColor);
                 String completeMessage = StringTokens.replaceTokens(formattedMessage);
                 if (isLocal) {
-                    new ChatSendPacket(chatReceivePacket.getSENDER_CTX(), ChatSendMode.LOCAL, completeMessage).routeToDestination();
+                    playerSession.sendLocalMessageToServer("ChatManager", completeMessage);
                 } else {
                     chatReceivePacket.setMessage(completeMessage);
                     chatReceivePacket.routeToDestination();

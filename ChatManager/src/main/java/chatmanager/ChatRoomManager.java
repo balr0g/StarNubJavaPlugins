@@ -29,13 +29,13 @@ public class ChatRoomManager {
     }
 
     private StarNubTask chatRoomPurger() {
-        boolean autoPurge = (boolean) CONFIG.getNestedValue("chat_rooms", "auto_purge");
+        boolean autoPurge = (boolean) CONFIG.getNestedValue("chat_rooms", "settings", "auto_purge");
         if (!autoPurge) {
             return null;
         } else {
             return new StarNubTask("ChatManager", "ChatManager - ChatRooms - DB Auto Purge", true, 2, 2, TimeUnit.HOURS, () -> {
                 List<ChatRoom> chatRooms = ChatRooms.getInstance().getAll();
-                int ageDays = (int) CONFIG.getNestedValue("chat_rooms", "age");
+                int ageDays = (int) CONFIG.getNestedValue("chat_rooms", "settings", "age");
                 for (ChatRoom chatRoom : chatRooms) {
                     boolean neverPurge = chatRoom.isNeverPurge();
                     if (!neverPurge) {

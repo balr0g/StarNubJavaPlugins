@@ -2,8 +2,8 @@ package essentials.commands;
 
 import essentials.Essentials;
 import io.netty.channel.ChannelHandlerContext;
-import starbounddata.types.chat.Mode;
 import starbounddata.types.color.Colors;
+import starnubserver.cache.objects.PlayerSessionCache;
 import starnubserver.cache.wrappers.PlayerCtxCacheWrapper;
 import starnubserver.connections.player.session.PlayerSession;
 import starnubserver.plugins.Command;
@@ -29,7 +29,7 @@ public class Unsubscribe extends Command {
         String chatColor = Colors.validate(colorUnvalidated);
         TimeCache cache = joinLeave.getCache(clientCtx);
         if (cache == null) {
-            joinLeave.addCache(clientCtx, new TimeCache());
+            joinLeave.addCache(clientCtx, new PlayerSessionCache(playerSession));
             String unsubMessage = chatColor + CONFIG.getNestedValue("player_messages", "connect_disconnect", "unsubscribe", "unsubscribe");
             sendMessage(playerSession, unsubMessage);
         } else {
@@ -40,6 +40,6 @@ public class Unsubscribe extends Command {
     }
 
     private void sendMessage(PlayerSession playerSession, String message) {
-        playerSession.sendChatMessage(getPLUGIN_NAME(), Mode.BROADCAST, message);
+        playerSession.sendBroadcastMessageToClient(getPLUGIN_NAME(), message);
     }
 }

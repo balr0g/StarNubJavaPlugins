@@ -20,7 +20,7 @@ package starnubcommands;
 
 import org.codehome.utilities.files.JarResourceToDisk;
 import org.starnub.StarNub;
-import org.starnub.plugins.Plugin;
+import starnubserver.plugins.JavaPlugin;
 
 /**
  * Empty class as this plugin is a Starnub Commands Plugin
@@ -28,7 +28,7 @@ import org.starnub.plugins.Plugin;
  * @author Daniel (Underbalanced) (www.StarNub.org)
  * @since 1.0
  */
-public final class StarNubCommands extends Plugin {
+public final class StarNubCommands extends JavaPlugin {
 
     public final String pluginName = getClass().getName();
     public volatile String serverName;
@@ -44,16 +44,16 @@ public final class StarNubCommands extends Plugin {
     public void onPluginDisable() {
     }
 
-    private void setCaches(){
-
-    }
-
     private void registerCustomSplit() {
         StarNub.getCommandSender().registerCustomSplitCount("StarNubCommands", new String[] {"kick"}, 2);
     }
 
     private void registerNoCommandDelivery() {
-        StarNub.getMessageSender().registerNoCommandDelivery("StarNubCommands", new String[] {"kick", "online", "who", "online"});
+        StarNub.getMessageSender().registerNoCommandDelivery("StarNubCommands", new String[]{"kick", "online", "who", "online"});
+    }
+
+    private void setCaches() {
+
     }
 
     public void setCommandHelpInfo(){
