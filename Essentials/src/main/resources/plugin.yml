@@ -1,6 +1,6 @@
 {
   "name": "Essentials",
-  "class": "essentials.Essentials",
+  "class": "org.starnub.essentials.Essentials",
   "details": {
     "live_update": true,
     "languages": ['English'],

@@ -1,6 +1,6 @@
 {
     "name": "StarboundCommands",
-    "class": "starboundcommands.StarboundCommands",
+    "class": "org.starnub.starboundcommands.StarboundCommands",
     "details": {
         "live_update": true,
         "languages": ['english'],

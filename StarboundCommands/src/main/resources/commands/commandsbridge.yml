@@ -31,7 +31,7 @@ commands: ['globalalert',
            ]
 main_args: []
 custom_split: {}
-class: starboundcommands.commands.CommandBridge
+class: org.starnub.starboundcommands.commands.CommandBridge
 can_use: 0
 description: |-
  - NOTE: These command are forwarded to the Starbound server.

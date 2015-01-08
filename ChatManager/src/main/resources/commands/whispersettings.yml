@@ -2,7 +2,7 @@ commands: ['whisperon', 'whisperoff']
 main_args: []
 custom_split: {
 }
-class: chatmanager.commands.WhisperSettings
+class: org.starnub.chatmanager.commands.WhisperSettings
 can_use: 2
 description: |-
     -

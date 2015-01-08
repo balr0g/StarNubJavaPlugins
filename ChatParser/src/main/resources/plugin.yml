@@ -1,6 +1,6 @@
 {
   "name": "ChatParser",
-  "class": "chatparser.ChatParser",
+  "class": "org.starnub.chatparser.ChatParser",
   "details": {
     "languages": ['english'],
     "version": 1.1,

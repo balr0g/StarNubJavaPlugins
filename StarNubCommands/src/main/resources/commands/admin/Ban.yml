@@ -1,6 +1,6 @@
 commands: ['ban', 'tban']
 main_args: ['None']
-class: org.starnub.starnubcommands.commands.admin.Ban
+class: org.starnub.Ban
 can_use: 3
 description: |-
     This is an exampleplugin command called mute.

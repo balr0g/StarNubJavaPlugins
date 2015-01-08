@@ -4,7 +4,7 @@ custom_split: {
     w: 2,
     r: 2
 }
-class: chatmanager.commands.Whisper
+class: org.starnub.chatmanager.commands.Whisper
 can_use: 2
 description: |-
     -

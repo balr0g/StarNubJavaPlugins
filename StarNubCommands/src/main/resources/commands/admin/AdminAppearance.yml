@@ -1,6 +1,6 @@
 commands: ['appear']
 main_args: ['offline', 'online']
-class: org.starnub.starnubcommands.commands.admin.AdminAppearance
+class: org.starnub.AdminAppearance
 can_use: 3
 description: |-
     -

@@ -1,6 +1,6 @@
 {
   "name": "CommandParser",
-  "class": "commandparser.CommandParser",
+  "class": "org.starnub.commandparser.CommandParser",
   "details": {
     "languages": ['english'],
     "version": 1.0,

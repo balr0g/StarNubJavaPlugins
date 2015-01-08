@@ -1,6 +1,6 @@
 commands: ['kick']
 main_args: ['None']
-class: org.starnub.starnubcommands.commands.admin.Kick
+class: org.starnub.Kick
 can_use: 3
 description: |-
     This command will cause a player to disconnect and record this

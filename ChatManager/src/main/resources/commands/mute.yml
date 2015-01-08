@@ -2,7 +2,7 @@ commands: ['mute']
 main_args: ['info', 'add', 'addoffline', 'remove', 'example']
 custom_split: {
 }
-class: chatmanager.commands.Mute
+class: org.starnub.chatmanager.commands.Mute
 can_use: 2
 description: |-
     -

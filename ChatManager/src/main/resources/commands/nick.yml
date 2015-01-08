@@ -3,7 +3,7 @@ main_args: []
 custom_split: {
     nick: 1
 }
-class: chatmanager.commands.Nick
+class: org.starnub.chatmanager.commands.Nick
 can_use: 2
 description: |-
     -

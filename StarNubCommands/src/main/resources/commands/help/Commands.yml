@@ -1,5 +1,5 @@
 commands: ['commands']
 main_args: ['commands']
-class: org.starnub.starnubcommands.commands.help.Commands
+class: org.starnub.Commands
 can_use: 3
 description: |-

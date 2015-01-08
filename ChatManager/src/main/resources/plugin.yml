@@ -1,6 +1,6 @@
 {
   "name": "ChatManager",
-  "class": "chatmanager.ChatManager",
+  "class": "org.starnub.chatmanager.ChatManager",
     "details": {
     "languages": ['english'],
     "version": 1.0,

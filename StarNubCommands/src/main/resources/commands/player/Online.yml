@@ -1,5 +1,5 @@
 commands: ['online', 'players', 'who']
 main_args: ['None']
-class: org.starnub.starnubcommands.commands.player.Online
+class: org.starnub.Online
 can_use: 3
 description: |-
