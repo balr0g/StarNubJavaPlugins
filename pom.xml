@@ -19,7 +19,7 @@
         <module>ChatParser</module>
     </modules>
 
-    <name>starnubplugins</name>
+    <name>StarNubPlugins</name>
     <url>http://www.starnub.org</url>
     <description>StarNub is a set of libraries and tools for Starbound Servers.</description>
     <organization>

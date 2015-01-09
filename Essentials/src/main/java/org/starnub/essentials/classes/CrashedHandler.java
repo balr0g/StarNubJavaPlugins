@@ -1,5 +1,6 @@
 package org.starnub.essentials.classes;
 
+import org.starnub.starbounddata.types.color.Colors;
 import org.starnub.starnubserver.StarNubTask;
 import org.starnub.starnubserver.cache.wrappers.PlayerUUIDCacheWrapper;
 import org.starnub.starnubserver.connections.player.session.PlayerSession;
@@ -7,11 +8,10 @@ import org.starnub.starnubserver.events.events.DisconnectData;
 import org.starnub.starnubserver.events.starnub.StarNubEventHandler;
 import org.starnub.starnubserver.events.starnub.StarNubEventSubscription;
 import org.starnub.starnubserver.plugins.resources.PluginConfiguration;
-import starbounddata.types.color.Colors;
-import utilities.cache.objects.BooleanCache;
-import utilities.cache.objects.TimeCache;
-import utilities.events.Priority;
-import utilities.events.types.ObjectEvent;
+import org.starnub.utilities.cache.objects.BooleanCache;
+import org.starnub.utilities.cache.objects.TimeCache;
+import org.starnub.utilities.events.Priority;
+import org.starnub.utilities.events.types.ObjectEvent;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;

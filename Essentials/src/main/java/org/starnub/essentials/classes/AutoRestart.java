@@ -1,5 +1,7 @@
 package org.starnub.essentials.classes;
 
+import org.starnub.starbounddata.types.color.Colors;
+import org.starnub.starnubdata.generic.DisconnectReason;
 import org.starnub.starnubserver.StarNub;
 import org.starnub.starnubserver.StarNubTask;
 import org.starnub.starnubserver.connections.player.session.PlayerSession;
@@ -7,11 +9,9 @@ import org.starnub.starnubserver.events.events.StarNubEvent;
 import org.starnub.starnubserver.events.starnub.StarNubEventHandler;
 import org.starnub.starnubserver.events.starnub.StarNubEventSubscription;
 import org.starnub.starnubserver.plugins.resources.PluginConfiguration;
-import starbounddata.types.color.Colors;
-import starnubdata.generic.DisconnectReason;
-import utilities.concurrent.thread.ThreadSleep;
-import utilities.events.Priority;
-import utilities.events.types.ObjectEvent;
+import org.starnub.utilities.concurrent.thread.ThreadSleep;
+import org.starnub.utilities.events.Priority;
+import org.starnub.utilities.events.types.ObjectEvent;
 
 import java.util.HashSet;
 import java.util.List;
@@ -53,7 +53,7 @@ public class AutoRestart extends HashSet<StarNubTask> {
     }
 
     public void clearTask() {
-        this.forEach(starnubserver.StarNubTask::removeTask);
+        this.forEach(StarNubTask::removeTask);
         this.clear();
     }
 
@@ -88,7 +88,7 @@ public class AutoRestart extends HashSet<StarNubTask> {
     }
 
     public void unregisterEventsTask() {
-        this.forEach(starnubserver.StarNubTask::removeTask);
+        this.forEach(StarNubTask::removeTask);
         CRASH_LISTENER.removeRegistration();
         RESTART_LISTENER.removeRegistration();
         ONLINE_LISTENER.removeRegistration();

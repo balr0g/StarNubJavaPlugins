@@ -1,6 +1,7 @@
 package org.starnub.essentials.classes;
 
 import io.netty.channel.ChannelHandlerContext;
+import org.starnub.starbounddata.types.color.Colors;
 import org.starnub.starnubserver.StarNub;
 import org.starnub.starnubserver.StarNubTask;
 import org.starnub.starnubserver.cache.objects.PlayerSessionCache;
@@ -12,10 +13,9 @@ import org.starnub.starnubserver.events.starnub.StarNubEventHandler;
 import org.starnub.starnubserver.events.starnub.StarNubEventSubscription;
 import org.starnub.starnubserver.plugins.resources.PluginConfiguration;
 import org.starnub.starnubserver.resources.StringTokens;
-import starbounddata.types.color.Colors;
-import utilities.events.Priority;
-import utilities.events.types.ObjectEvent;
-import utilities.strings.StringUtilities;
+import org.starnub.utilities.events.Priority;
+import org.starnub.utilities.events.types.ObjectEvent;
+import org.starnub.utilities.strings.StringUtilities;
 
 import java.util.HashSet;
 import java.util.concurrent.TimeUnit;

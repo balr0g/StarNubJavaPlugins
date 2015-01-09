@@ -2,8 +2,8 @@ package org.starnub.essentials.classes;
 
 import org.starnub.starnubserver.events.starnub.StarNubEventHandler;
 import org.starnub.starnubserver.events.starnub.StarNubEventSubscription;
-import utilities.events.Priority;
-import utilities.events.types.ObjectEvent;
+import org.starnub.utilities.events.Priority;
+import org.starnub.utilities.events.types.ObjectEvent;
 
 public class UptimeTracker {
 

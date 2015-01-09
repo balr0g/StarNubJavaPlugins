@@ -4,7 +4,6 @@ import org.starnub.essentials.Essentials;
 import org.starnub.essentials.classes.UptimeTracker;
 import org.starnub.starnubserver.connections.player.session.PlayerSession;
 import org.starnub.starnubserver.plugins.Command;
-import utilities.time.DateAndTimes;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,7 +29,7 @@ public class Uptime extends Command {
             } else if (arg.equals("starnub")) {
                 uptime = uptimeTracker.getStarnubUptime();
             }
-            String formattedTime = DateAndTimes.getPeriodFormattedFromMilliseconds(uptime, "-", "-", "-", "-", "-", "-", "-");
+//            String formattedTime = DateAndTimes.getPeriodFormattedFromMilliseconds(uptime, "-", "-", "-", "-", "-", "-", "-");
         }
     }
 }
