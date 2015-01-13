@@ -1,0 +1,10 @@
+{
+    "type": 'static', # Options: static, rotating, random
+    "color": '{b}', # Use the default server chat color
+    "messages": [
+    'Welcome to Free Universe powered by StarNub (Updated: 10 October), this server is Modded, please visit www.free-universe.com for more details. There are currently {player-count} player(s) online. This server tool is a work in progress, some commands are not available yet.',
+    'Test Message 1',
+    'Test Message 2',
+    'Test Message 3'
+    ],
+}
