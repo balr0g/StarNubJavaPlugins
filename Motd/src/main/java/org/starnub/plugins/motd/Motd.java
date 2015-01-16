@@ -38,9 +38,9 @@ public class Motd extends Plugin {
                 PlayerSession playerSession = (PlayerSession) objectEvent.getEVENT_DATA();
                 boolean doNotSend = playerSession.hasPermission("starnub", "motd", "ignore", true);
                 if (!doNotSend) {
-                    String type = (String) configuration.getNestedValue("type");
-                    String color = Colors.validate((String) configuration.getNestedValue("color"));
-                    List<String> messages = (List<String>) configuration.getNestedValue("messages");
+                    String type = (String) configuration.getValue("type");
+                    String color = Colors.validate((String) configuration.getValue("color"));
+                    List<String> messages = (List<String>) configuration.getValue("messages");
                     if (messages.size() > 0) {
                         String stringMotd = "";
                         if (type.equalsIgnoreCase("static")) {
