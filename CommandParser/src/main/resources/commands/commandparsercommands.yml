@@ -1,7 +1,0 @@
-commands: ['shortcuts']
-main_args: ['reload', 'add', 'remove', 'swap', 'get']
-custom_split: {}
-class: org.starnub.commandparser.commands.CommandParserCommands
-can_use: 2
-description: |-
-    -

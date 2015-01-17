@@ -20,39 +20,24 @@ package org.starnub.chatparser;
 
 import org.starnub.starbounddata.packets.chat.ChatReceivePacket;
 import org.starnub.starbounddata.packets.chat.ChatSendPacket;
-import org.starnub.starnubserver.events.packet.PacketEventSubscription;
-import org.starnub.starnubserver.plugins.JavaPlugin;
-import org.starnub.starnubserver.plugins.generic.CommandInfo;
-import org.starnub.starnubserver.plugins.generic.PluginDetails;
-import org.starnub.starnubserver.plugins.resources.PluginConfiguration;
-import org.starnub.starnubserver.plugins.resources.PluginRunnables;
-import org.starnub.starnubserver.plugins.resources.YAMLFiles;
+import org.starnub.starnubserver.pluggable.Plugin;
 import org.starnub.utilities.events.Priority;
 
-import java.io.File;
-
-/**
- * @author Daniel (Underbalanced) (www.StarNub.org)
- * @since 1.0
- */
-public final class ChatParser extends JavaPlugin {
-
-    private PacketEventSubscription chatSentHandler;
-    private PacketEventSubscription chatReceiveHandler;
-
-    public ChatParser(String NAME, File FILE, String MAIN_CLASS, PluginDetails PLUGIN_DETAILS, PluginConfiguration CONFIGURATION, YAMLFiles FILES, CommandInfo COMMAND_INFO, PluginRunnables PLUGIN_RUNNABLES) {
-        super(NAME, FILE, MAIN_CLASS, PLUGIN_DETAILS, CONFIGURATION, FILES, COMMAND_INFO, PLUGIN_RUNNABLES);
-    }
+public final class ChatParser extends Plugin {
 
     @Override
     public void onPluginEnable() {
-        chatSentHandler = new PacketEventSubscription("StarNub", Priority.CRITICAL, ChatSendPacket.class, new ChatSendHandler(getCONFIGURATION()));
-        chatReceiveHandler = new PacketEventSubscription("StarNub", Priority.CRITICAL, ChatReceivePacket.class, new ChatReceiveHandler());
+        /* Do not need to do anything since the Plugin Manager will call register for us and submit our event listeners */
     }
 
     @Override
     public void onPluginDisable() {
-        chatSentHandler.removeRegistration();
-        chatReceiveHandler.removeRegistration();
+        /* No clean up required, since StarNub will unregister our events for us */
+    }
+
+    @Override
+    public void register() {
+        newPacketEventSubscription(Priority.CRITICAL, ChatSendPacket.class, new ChatSendHandler(configuration));
+        newPacketEventSubscription(Priority.CRITICAL, ChatReceivePacket.class, new ChatReceiveHandler());
     }
 }

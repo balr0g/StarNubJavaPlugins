@@ -1,0 +1,12 @@
+{
+  'owner': 'StarNub',
+  'name': 'CommandParser',
+  'version': 1.0,
+  'class': 'org.starnub.commandparser.CommandParser',
+  'has_configuration': false,
+  'dependancies': [],
+  'additional_permissions': [],
+  'author': 'Underbalanced',
+  'url': 'http://www.starnub.org',
+  'description': 'This will subscribe to StarNub Command Sent events and parse the command, then execute it.'
+}

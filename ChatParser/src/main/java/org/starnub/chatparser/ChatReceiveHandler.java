@@ -1,10 +1,10 @@
 package org.starnub.chatparser;
 
+import org.starnub.starbounddata.packets.Packet;
+import org.starnub.starbounddata.packets.chat.ChatReceivePacket;
 import org.starnub.starnubserver.connections.player.session.PlayerSession;
 import org.starnub.starnubserver.events.events.StarNubEventTwo;
 import org.starnub.starnubserver.events.packet.PacketEventHandler;
-import starbounddata.packets.Packet;
-import starbounddata.packets.chat.ChatReceivePacket;
 
 public class ChatReceiveHandler extends PacketEventHandler {
 

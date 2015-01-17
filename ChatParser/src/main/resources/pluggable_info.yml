@@ -1,0 +1,15 @@
+{
+  'owner': 'StarNub',
+  'name': 'ChatParser',
+  'version': 1.0,
+  'class': 'org.starnub.chatparser.ChatParser',
+  'has_configuration': true,
+  'dependancies': [],
+  'additional_permissions': ['commandparser.chat',
+                             'commandparser.chat.#',
+                             'commandparser.command',
+                             'commandparser.command.#'],
+  'author': 'Underbalanced',
+  'url': 'http://www.starnub.org',
+  'description': 'This will parse Starbounds chat and recycle the packet allowing it to be resused by StarNub while creating StarNub Chat Events. If these events are not handled then the chat simply gets discarded'
+}
