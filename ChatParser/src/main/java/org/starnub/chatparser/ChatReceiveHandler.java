@@ -6,7 +6,7 @@ import org.starnub.starnubserver.connections.player.session.PlayerSession;
 import org.starnub.starnubserver.events.events.StarNubEventTwo;
 import org.starnub.starnubserver.events.packet.PacketEventHandler;
 
-public class ChatReceiveHandler extends PacketEventHandler {
+public class ChatReceiveHandler implements PacketEventHandler {
 
     @Override
     public void onEvent(Packet packet) {

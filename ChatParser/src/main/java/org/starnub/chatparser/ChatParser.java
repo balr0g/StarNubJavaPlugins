@@ -26,17 +26,17 @@ import org.starnub.utilities.events.Priority;
 public final class ChatParser extends Plugin {
 
     @Override
-    public void onPluginEnable() {
+    public void onEnable() {
         /* Do not need to do anything since the Plugin Manager will call register for us and submit our event listeners */
     }
 
     @Override
-    public void onPluginDisable() {
+    public void onDisable() {
         /* No clean up required, since StarNub will unregister our events for us */
     }
 
     @Override
-    public void register() {
+    public void onRegister() {
         newPacketEventSubscription(Priority.CRITICAL, ChatSendPacket.class, new ChatSendHandler(configuration));
         newPacketEventSubscription(Priority.CRITICAL, ChatReceivePacket.class, new ChatReceiveHandler());
     }

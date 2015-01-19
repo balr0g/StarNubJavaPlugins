@@ -13,13 +13,13 @@ import org.starnub.starnubserver.pluggable.resources.PluginConfiguration;
 import org.starnub.utilities.cache.objects.BooleanCache;
 import org.starnub.utilities.cache.objects.TimeCache;
 
-public class ChatSendHandler extends PacketEventHandler {
+public class ChatSendHandler implements PacketEventHandler {
 
     private final PluginConfiguration CONFIG;
     private final PlayerCtxCacheWrapper CTX_CACHE_CHAT = new PlayerCtxCacheWrapper("StarNub", "StarNub - Chat Parser - Chat Rate", true);
-    private final PermissionCacheWrapper CHAT_PERMISSION = new PermissionCacheWrapper("ChatParser", "chatparser.chat");
+    private final PermissionCacheWrapper CHAT_PERMISSION = new PermissionCacheWrapper("ChatParser", "starnub.chatparser.chat");
     private final PlayerCtxCacheWrapper CTX_CACHE_COMMAND = new PlayerCtxCacheWrapper("StarNub", "StarNub - Chat Parser - Command Rate", true);
-    private final PermissionCacheWrapper COMMAND_PERMISSION = new PermissionCacheWrapper("ChatParser", "chatparser.command");
+    private final PermissionCacheWrapper COMMAND_PERMISSION = new PermissionCacheWrapper("ChatParser", "starnub.chatparser.command");
 
     public ChatSendHandler(PluginConfiguration configuration) {
         CONFIG = configuration;
@@ -44,7 +44,7 @@ public class ChatSendHandler extends PacketEventHandler {
         BooleanCache cache = (BooleanCache) CHAT_PERMISSION.getCache(clientCtx);
         if (!cache.isBool()) {
             if (cache.isPastDesignatedTimeRefreshTimeNowIfPast(5000)) {
-                sendChatMessage(playerSession, "You do not have permission to chat. Permission required: \"chatparser.chat\".");
+                sendChatMessage(playerSession, "You do not have permission to chat. Permission required: \"starnub.chatparser.chat\".");
                 new StarNubEvent("Player_Chat_Failed_No_Permission_Client", playerSession);
                 return;
             }
@@ -53,7 +53,7 @@ public class ChatSendHandler extends PacketEventHandler {
         if (timeCache == null) {
             CTX_CACHE_CHAT.addCache(clientCtx, new TimeCache());
         } else {
-            int chatRate = playerSession.getSpecificPermissionInteger("chatparser.chat");
+            int chatRate = playerSession.getSpecificPermissionInteger("starnub.chatparser_chat");
             if (chatRate < -10000) {
                 chatRate = (int) CONFIG.getValue("global_chat_rate");
             } else if (chatRate == -10000) {
@@ -76,7 +76,7 @@ public class ChatSendHandler extends PacketEventHandler {
         BooleanCache cache = (BooleanCache) COMMAND_PERMISSION.getCache(clientCtx);
         if (!cache.isBool()) {
             if (cache.isPastDesignatedTimeRefreshTimeNowIfPast(5000)) {
-                sendChatMessage(playerSession, "You do not have permission to use commands. Permission required: \"chatparser.command\".");
+                sendChatMessage(playerSession, "You do not have permission to use commands. Permission required: \"starnub.chatparser.command\".");
                 new StarNubEvent("Player_Command_Failed_No_Permission_Client", playerSession);
                 return;
             }
@@ -85,7 +85,7 @@ public class ChatSendHandler extends PacketEventHandler {
         if (timeCache == null) {
             CTX_CACHE_COMMAND.addCache(clientCtx, new TimeCache());
         } else {
-            int commandRate = playerSession.getSpecificPermissionInteger("chatparser.command");
+            int commandRate = playerSession.getSpecificPermissionInteger("starnub.chatparser_command");
             if (commandRate < -10000) {
                 commandRate = (int) CONFIG.getValue("global_command_rate");
             } else if (commandRate == -10000) {
