@@ -1,30 +1,12 @@
 {
-  "name": "ChatManager",
-  "class": "org.starnub.chatmanager.ChatManager",
-    "details": {
-    "languages": ['english'],
-    "version": 1.0,
-    "description": "None",
-    "dependencies": [
-        {
-          ChatParser: [1.0, 1.1]
-        }
-    ],
-    "load_first": ['CommandParser'],
-    "author": "Underbalanced",
-    "url": "http://www.starnub.org"
-  },
-  "configuration": true,
-  "commands": {
-    "has": true,
-    "name": "chatman",
-    "alias": "cm",
-
-  },
-  "runnables": {
-    "has": false,
-    "runnables": []
-  },
-  "additional_permissions": [''],
+  "owner": 'StarNub',
+  "name": 'ChatManager',
+  "version": 1.0,
+  "class": 'org.starnub.chatmanager.ChatManager',
+  "has_configuration": true,
+  "dependancies": ['ChatParser'],
+  "additional_permissions": ['starnub.motd.ignore'],
+  "author": 'Underbalanced',
+  "url": 'http://www.starnub.org',
+  "description": 'This will broadcast a MOTD to anyone who logs onto the server, based on the configuration set. This will ignore anyone with the ignore permission.'
 }
-

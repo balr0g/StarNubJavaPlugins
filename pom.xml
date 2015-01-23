@@ -17,6 +17,8 @@
         <module>NoCheats</module>
         <module>EnjinSync</module>
         <module>ChatParser</module>
+        <module>Motd</module>
+        <module>Broadcaster</module>
     </modules>
 
     <name>StarNubPlugins</name>
@@ -52,7 +54,7 @@
         <dependency>
             <groupId>org.starnub</groupId>
             <artifactId>starnub</artifactId>
-            <version>1.5-beta-SNAPSHOT</version>
+            <version>1.09-beta-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>

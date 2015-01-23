@@ -22,7 +22,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.starnub.starnubdata.generic.CanUse;
 import org.starnub.starnubserver.connections.player.session.PlayerSession;
 import org.starnub.starnubserver.events.events.StarNubEventTwo;
-import org.starnub.starnubserver.events.starnub.StarNubEventSubscription;
 import org.starnub.starnubserver.pluggable.Command;
 import org.starnub.starnubserver.pluggable.PluggableManager;
 import org.starnub.starnubserver.pluggable.Plugin;
@@ -52,7 +51,7 @@ public final class CommandParser extends Plugin {
 
     @Override
     public void onRegister() {
-        new StarNubEventSubscription("StarNub", Priority.CRITICAL, "Player_Command_Parsed_From_Client", this::handleCommand);
+        newStarNubEventSubscription(Priority.CRITICAL, "Player_Command_Parsed_From_Client", this::handleCommand);
     }
 
     private void handleCommand(ObjectEvent objectEvent) {

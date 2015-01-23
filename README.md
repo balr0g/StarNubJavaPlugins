@@ -1,7 +1,6 @@
-StarNubMain
+StarNub Java Plugins
 ===========
-Some code still needs refactoring and cleanup + documentation. This project is a highly efficient set of modules for running Starbound
-servers and additionally are the foot work for remote clients such as downloadable clients and android apps. Central (Global) banning. Ect Ect.
+Undergoing refactoring. More coming soon.
 
 Project Start Date: 
 - April 2014 - Invested time approximately 30-40 hours weekly to learning and coding
