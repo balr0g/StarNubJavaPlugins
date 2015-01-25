@@ -30,20 +30,17 @@ public class JoinLeaveBroadcast extends Plugin {
     public void onEnable() {
         this.UNSUBSCRIBED_JOIN_LEAVE = new PlayerCtxCacheWrapper(getRegistrationName(), "Essentials - Unsubscribe - Join - Leave", true, TimeUnit.SECONDS, 0, 0);
         this.JOIN_TASK = new PlayerAutoCancelTask(getRegistrationName(), "Join Messages");
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onRegister() {
         boolean leaveJoinBoolean = (boolean) getConfiguration().getNestedValue("enabled");
         if (leaveJoinBoolean) {
             newStarNubEventSubscription(Priority.MEDIUM, "Player_Connected", this::playerConnected);
             newStarNubEventSubscription(Priority.MEDIUM, "Player_Disconnected", this::playerDisconnected);
         }
+    }
+
+
+    @Override
+    public void onDisable() {
+
     }
 
     private void playerConnected(ObjectEvent objectEvent) {
@@ -61,7 +58,7 @@ public class JoinLeaveBroadcast extends Plugin {
         String unformattedMessage = (String) getConfiguration().getNestedValue("message", "connect");
         String formattedMessage = String.format(unformattedMessage, playerName + chatColor);
         String completeMessage = StringTokens.replaceTokens(formattedMessage);
-        StarNubTask playerJoinTask = newStarNubTask("Essentials - Send - Player - " + playerNameConsole + " - Has Connected Message", delay, TimeUnit.SECONDS, () -> {
+        StarNubTask playerJoinTask = newStarNubTask("JoinLeave - Send - Player - " + playerNameConsole + " - Has Connected Message", delay, TimeUnit.SECONDS, () -> {
             PlayerSession.sendChatBroadcastToClientsAllFiltered(
                     "ServerName",
                     chatColor + completeMessage,
@@ -70,10 +67,9 @@ public class JoinLeaveBroadcast extends Plugin {
                             PSPredicates.isCtxNotListed(UNSUBSCRIBED_JOIN_LEAVE.getCACHE_MAP()),
                             PSPredicates.doesNotHavePermission("starnub", "joinleave", "ignore", false))
             );
-            StarNub.getLogger().cInfoPrint("Essentials", playerNameConsole + " has connected. (IP: " + playerSession.getSessionIpString() + ")");
+            StarNub.getLogger().cInfoPrint("JoinLeave", playerNameConsole + " has connected. (IP: " + playerSession.getSessionIpString() + ")");
         });
         JOIN_TASK.registerTask(clientCtx, playerJoinTask);
-
     }
 
     private void playerDisconnected(ObjectEvent objectEvent) {
@@ -101,8 +97,7 @@ public class JoinLeaveBroadcast extends Plugin {
                             PSPredicates.isCtxNotListed(UNSUBSCRIBED_JOIN_LEAVE.getCACHE_MAP()),
                             PSPredicates.doesNotHavePermission("starnub", "joinleave", "ignore", false))
             );
-            StarNub.getLogger().cInfoPrint("Essentials", playerNameConsole + " has disconnected. (IP: " + playerSession.getSessionIpString() + ")");
+            StarNub.getLogger().cInfoPrint("JoinLeave", playerNameConsole + " has disconnected. (IP: " + playerSession.getSessionIpString() + ")");
         }
-
     }
 }

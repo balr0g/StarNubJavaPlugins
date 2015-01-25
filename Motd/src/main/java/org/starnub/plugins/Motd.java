@@ -21,15 +21,6 @@ public class Motd extends Plugin {
     @Override
     public void onEnable() {
         this.AUTO_CANCEL_MOTD_TASK = new PlayerAutoCancelTask(getRegistrationName(), "MOTD");
-    }
-
-    @Override
-    public void onDisable() {
-        /* No clean up required, since StarNub will deregister our events for us */
-    }
-
-    @Override
-    public void onRegister() {
         newStarNubEventSubscription(Priority.MEDIUM, "Player_Connected", objectEvent -> {
             PlayerSession playerSession = (PlayerSession) objectEvent.getEVENT_DATA();
             boolean doNotSend = playerSession.hasPermission("starnub", "motd", "ignore", false);
@@ -56,6 +47,11 @@ public class Motd extends Plugin {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDisable() {
+        /* No clean up required, since StarNub will deregister our events for us */
     }
 
     private void playerMessage(PlayerSession playerSession, String motd) {

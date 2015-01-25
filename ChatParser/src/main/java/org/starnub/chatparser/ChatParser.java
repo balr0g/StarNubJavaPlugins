@@ -46,17 +46,13 @@ public final class ChatParser extends Plugin {
         CHAT_PERMISSION = new PermissionCacheWrapper(getRegistrationName(), "starnub.chatparser.chat");
         CTX_CACHE_COMMAND = new PlayerCtxCacheWrapper(getRegistrationName(), "StarNub - Chat Parser - Command Rate", true);
         COMMAND_PERMISSION = new PermissionCacheWrapper(getRegistrationName(), "starnub.chatparser.command");
+        newPacketEventSubscription(Priority.CRITICAL, ChatSendPacket.class, this::chatSend);
+        newPacketEventSubscription(Priority.CRITICAL, ChatReceivePacket.class, this::chatReceive);
     }
 
     @Override
     public void onDisable() {
         /* No clean up required, since StarNub will unregister our events for us */
-    }
-
-    @Override
-    public void onRegister() {
-        newPacketEventSubscription(Priority.CRITICAL, ChatSendPacket.class, this::chatSend);
-        newPacketEventSubscription(Priority.CRITICAL, ChatReceivePacket.class, this::chatReceive);
     }
 
     public void chatReceive(Packet packet) {

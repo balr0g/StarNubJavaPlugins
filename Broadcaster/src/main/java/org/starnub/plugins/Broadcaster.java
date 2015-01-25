@@ -15,16 +15,6 @@ public class Broadcaster extends Plugin {
 
     @Override
     public void onEnable() {
-        /* Do not need to do anything since the Plugin Manager will call register for us and submit our event listeners */
-    }
-
-    @Override
-    public void onDisable() {
-        /* No clean up required, since StarNub will unregister our events for us */
-    }
-
-    @Override
-    public void onRegister() {
         boolean serverBroadcast = (boolean) getConfiguration().getNestedValue("static_broadcast", "enabled");
         if (serverBroadcast) {
             setBroadcastMessages();
@@ -33,6 +23,11 @@ public class Broadcaster extends Plugin {
         if (randomBroadcast) {
             setRandomBroadcastMessage();
         }
+    }
+
+    @Override
+    public void onDisable() {
+        /* No clean up required, since StarNub will unregister our events for us */
     }
 
     private void setBroadcastMessages() {

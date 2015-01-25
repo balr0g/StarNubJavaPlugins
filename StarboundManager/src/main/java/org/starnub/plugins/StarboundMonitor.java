@@ -28,15 +28,6 @@ public class StarboundMonitor extends Plugin {
         if ((boolean) getConfiguration().getNestedValue("auto_restart", "enabled")) {
             AUTO_RESTART = new AutoRestart(getConfiguration(), this);
         }
-    }
-
-    @Override
-    public void onDisable() {
-        /* No clean up required, since StarNub will deregister our events for us */
-    }
-
-    @Override
-    public void onRegister() {
         if (AUTO_RESTART != null) {
             newStarNubEventSubscription(Priority.MEDIUM, "Essentials_Server_Crash", starNubEvent -> AUTO_RESTART.clearTask());
             newStarNubEventSubscription(Priority.MEDIUM, "Starbound_Status_Restarting", starNubEvent -> AUTO_RESTART.clearTask());
@@ -63,5 +54,10 @@ public class StarboundMonitor extends Plugin {
             SERVER_MONITOR.startStarnubStartedListener();
         }
         SERVER_MONITOR.starboundStartedListener();
+    }
+
+    @Override
+    public void onDisable() {
+        /* No clean up required, since StarNub will deregister our events for us */
     }
 }

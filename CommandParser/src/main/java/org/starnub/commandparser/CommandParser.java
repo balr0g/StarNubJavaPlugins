@@ -41,17 +41,12 @@ public final class CommandParser extends Plugin {
 
     @Override
     public void onEnable() {
-        /* Do not need to do anything since the Plugin Manager will call register for us and submit our event listeners */
+        newStarNubEventSubscription(Priority.CRITICAL, "Player_Command_Parsed_From_Client", this::handleCommand);
     }
 
     @Override
     public void onDisable() {
         /* No clean up required, since StarNub will unregister our events for us */
-    }
-
-    @Override
-    public void onRegister() {
-        newStarNubEventSubscription(Priority.CRITICAL, "Player_Command_Parsed_From_Client", this::handleCommand);
     }
 
     private void handleCommand(ObjectEvent objectEvent) {

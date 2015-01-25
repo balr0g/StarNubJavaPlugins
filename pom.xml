@@ -17,7 +17,7 @@
         <module>Motd</module>
         <module>Broadcaster</module>
         <module>StarboundManager</module>
-        <module>JoinLeaveMessages</module>
+        <module>JoinLeaveBroadcast</module>
     </modules>
 
     <name>StarNubPlugins</name>
