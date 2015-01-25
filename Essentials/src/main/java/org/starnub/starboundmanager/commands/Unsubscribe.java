@@ -1,8 +1,8 @@
-package org.starnub.essentials.commands;
+package org.starnub.starboundmanager.commands;
 
 import io.netty.channel.ChannelHandlerContext;
-import org.starnub.essentials.Essentials;
 import org.starnub.starbounddata.types.color.Colors;
+import org.starnub.starboundmanager.Essentials;
 import org.starnub.starnubserver.cache.objects.PlayerSessionCache;
 import org.starnub.starnubserver.cache.wrappers.PlayerCtxCacheWrapper;
 import org.starnub.starnubserver.connections.player.session.PlayerSession;

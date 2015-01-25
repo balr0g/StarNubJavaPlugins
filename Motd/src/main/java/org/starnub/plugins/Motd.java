@@ -1,4 +1,4 @@
-package org.starnub.plugins.motd;
+package org.starnub.plugins;
 
 import io.netty.channel.ChannelHandlerContext;
 import org.starnub.starbounddata.types.color.Colors;
@@ -32,7 +32,7 @@ public class Motd extends Plugin {
     public void onRegister() {
         newStarNubEventSubscription(Priority.MEDIUM, "Player_Connected", objectEvent -> {
             PlayerSession playerSession = (PlayerSession) objectEvent.getEVENT_DATA();
-            boolean doNotSend = playerSession.hasPermission("starnub", "motd", "ignore", true);
+            boolean doNotSend = playerSession.hasPermission("starnub", "motd", "ignore", false);
             if (!doNotSend) {
                 String type1 = (String) getConfiguration().getValue("type");
                 String color = Colors.validate((String) getConfiguration().getValue("color"));
@@ -61,7 +61,7 @@ public class Motd extends Plugin {
     private void playerMessage(PlayerSession playerSession, String motd) {
         ChannelHandlerContext clientCtx = playerSession.getCONNECTION().getCLIENT_CTX();
         String cleanName = playerSession.getPlayerCharacter().getCleanName();
-        StarNubTask motdTask = new StarNubTask("Essentials", "StarNub - Player MOTD - " + cleanName, 5, TimeUnit.SECONDS, () -> playerSession.sendBroadcastMessageToClient("ServerName", motd));
+        StarNubTask motdTask = newStarNubTask("StarNub - Player MOTD - " + cleanName, 5, TimeUnit.SECONDS, () -> playerSession.sendBroadcastMessageToClient("ServerName", motd));
         AUTO_CANCEL_MOTD_TASK.registerTask(clientCtx, motdTask);
     }
 }

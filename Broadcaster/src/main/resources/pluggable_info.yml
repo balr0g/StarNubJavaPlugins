@@ -1,0 +1,12 @@
+{
+  'organization': 'StarNub',
+  'name': 'Broadcaster',
+  'version': 1.0,
+  'class': 'org.starnub.plugins.Broadcaster',
+  'unloadable': true,
+  'dependencies': [],
+  'additional_permissions': ['starnub.broadcast.ignore'],
+  'author': 'Underbalanced',
+  'url': 'http://www.starnub.org',
+  'description': 'This will broadcast message to anyone who is logged the server, based on the configuration set.'
+}

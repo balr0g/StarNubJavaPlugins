@@ -1,4 +1,4 @@
-package org.starnub.essentials.classes;
+package org.starnub.starboundmanager.classes;
 
 import org.starnub.starbounddata.types.color.Colors;
 import org.starnub.starnubserver.StarNubTask;

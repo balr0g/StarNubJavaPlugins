@@ -1,0 +1,26 @@
+{
+  "monitor": {
+    "enabled": true,
+    "start_on_load": true, # Starts the server when StarNub has finished starting up
+    "interval": 30, # Interval in seconds to check for the server process and its responsivness
+    "process_crash": true, # Will restart on crash
+    "responsiveness": {
+      "tcp_query": true, # Will restart on unresponsiveness
+      "tries": 12, # Number of queries, Queries are conducted in 10 seconds intervals
+    },
+    "crashed_notification": {
+        "color": 'crimson',
+        "message": 'It appears the Starbound Server crashed.'
+    }
+  },
+  "auto_restart": {
+    "enabled": true,
+    "timer": 240, # Minutes
+    "notification": {
+      "enabled": true,
+      "times": [60, 45, 30, 15, 10, 5, 1], # Minutes
+      "message": 'Starbound will restart in %d minutes.',
+      "color": 'default', # Use the default server chat color
+    }
+  },
+}

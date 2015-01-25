@@ -1,5 +1,5 @@
 {
-  'owner': 'StarNub',
+  'organization': 'StarNub',
   'name': 'CommandParser',
   'version': 1.0,
   'class': 'org.starnub.commandparser.CommandParser',

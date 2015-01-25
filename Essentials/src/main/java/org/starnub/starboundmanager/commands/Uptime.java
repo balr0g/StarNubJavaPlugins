@@ -1,7 +1,7 @@
-package org.starnub.essentials.commands;
+package org.starnub.starboundmanager.commands;
 
-import org.starnub.essentials.Essentials;
-import org.starnub.essentials.classes.UptimeTracker;
+import org.starnub.starboundmanager.Essentials;
+import org.starnub.starboundmanager.classes.UptimeTracker;
 import org.starnub.starnubserver.connections.player.session.PlayerSession;
 import org.starnub.starnubserver.plugins.Command;
 

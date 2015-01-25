@@ -1,12 +1,12 @@
 {
-  'owner': 'StarNub',
+  'organization': 'StarNub',
   'name': 'Motd',
   'version': 1.0,
-  'class': 'org.starnub.plugins.motd.Motd',
+  'class': 'Motd',
   'unloadable': true,
   'dependancies': [],
   'additional_permissions': ['starnub.motd.ignore'],
   'author': 'Underbalanced',
   'url': 'http://www.starnub.org',
-  'description': 'This will broadcast a MOTD to anyone who logs onto the server, based on the configuration set. This will ignore anyone with the ignore permission.'
+  'description': 'This will broadcast a MOTD to anyone who logs onto the server, based on the configuration set.'
 }

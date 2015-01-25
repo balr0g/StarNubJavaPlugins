@@ -1,4 +1,4 @@
-package org.starnub.essentials.classes;
+package org.starnub.starboundmanager.classes;
 
 import io.netty.channel.ChannelHandlerContext;
 import org.starnub.starbounddata.types.color.Colors;

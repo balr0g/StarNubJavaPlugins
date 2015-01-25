@@ -1,6 +1,6 @@
 {
   "name": "Essentials",
-  "class": "org.starnub.essentials.Essentials",
+  "class": "org.starnub.starboundmanageranager.Essentials",
   "details": {
     "live_update": true,
     "languages": ['English'],
@@ -14,7 +14,7 @@
   "configuration": true,
   "commands": {
     "has": true,
-    "name": "essentials",
+    "name": "starboundmanager",
     "alias": "es",
   },
   "runnables": {

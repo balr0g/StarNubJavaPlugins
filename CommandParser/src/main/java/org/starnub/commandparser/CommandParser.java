@@ -62,7 +62,7 @@ public final class CommandParser extends Plugin {
         List<String> argsList = new ArrayList<>();
         Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(fullCommandString);
         while (m.find()) {
-            argsList.add(m.group(1));
+            argsList.add(m.group(1).replace("\"", ""));
         }
 
         if (argsList.size() < 1) {
@@ -75,7 +75,7 @@ public final class CommandParser extends Plugin {
 
         if (command == null) {
             new StarNubEventTwo("Player_Command_Failed_No_Command", playerSession, fullCommandString);
-            sendChatMessage(playerSession, "Plugin name or alias \"" + commandString + "\" does not exist or is not loaded.");
+            sendChatMessage(playerSession, "Command named \"" + commandString + "\" does not exist or is not loaded.");
             return;
         }
 
@@ -119,12 +119,23 @@ public final class CommandParser extends Plugin {
             }
         }
 
-        String commandOwner = command.getDetails().getOWNER().toLowerCase();
+        String commandOwner = command.getDetails().getORGANIZATION().toLowerCase();
         String main_arg = null;
         String args[];
         boolean hasPermission;
         if (argsList.size() > 0) {
             main_arg = argsList.get(0);
+            boolean hasMainArg = false;
+            for (String arg : command.getMainArgs()) {
+                if (arg.equals(main_arg)) {
+                    hasMainArg = true;
+                    break;
+                }
+            }
+            if (!hasMainArg) {
+                sendChatMessage(playerSession, "Command named \"" + commandString + "\" does not have any main argument named \"" + main_arg + "\'.");
+                return;
+            }
             args = argsList.toArray(new String[argsList.size()]);
             hasPermission = playerSession.hasPermission(commandOwner, commandString, main_arg, true);
         } else {
@@ -141,10 +152,9 @@ public final class CommandParser extends Plugin {
                 permissionString = permissionString + "." + main_arg;
             }
             new StarNubEventTwo("Player_Command_Failed_Permissions", playerSession, fullCommandString);
-            sendChatMessage(playerSession, "You do not have permission to use the command \"" + failedCommand + "\"." + " Permission required: \"" + permissionString + "\".");
+            sendChatMessage(playerSession, "You do not have permission to use the command \"/" + failedCommand + "\"." + " Permission required: \"" + permissionString + "\".");
             return;
         }
-
         new StarNubEventTwo("Player_Command_Delivered_To_Plugin", playerSession, fullCommandString);
         command.onCommand(playerSession, commandString, args.length, args);
     }

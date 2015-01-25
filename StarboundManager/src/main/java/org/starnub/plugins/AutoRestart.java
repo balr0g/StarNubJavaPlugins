@@ -1,4 +1,4 @@
-package org.starnub.essentials.classes;
+package org.starnub.plugins;
 
 import org.starnub.starbounddata.types.color.Colors;
 import org.starnub.starnubdata.generic.DisconnectReason;
@@ -6,12 +6,9 @@ import org.starnub.starnubserver.StarNub;
 import org.starnub.starnubserver.StarNubTask;
 import org.starnub.starnubserver.connections.player.session.PlayerSession;
 import org.starnub.starnubserver.events.events.StarNubEvent;
-import org.starnub.starnubserver.events.starnub.StarNubEventHandler;
-import org.starnub.starnubserver.events.starnub.StarNubEventSubscription;
-import org.starnub.starnubserver.plugins.resources.PluginConfiguration;
+import org.starnub.starnubserver.pluggable.resources.PluggableConfiguration;
 import org.starnub.utilities.concurrent.thread.ThreadSleep;
 import org.starnub.utilities.events.Priority;
-import org.starnub.utilities.events.types.ObjectEvent;
 
 import java.util.HashSet;
 import java.util.List;
@@ -19,41 +16,22 @@ import java.util.concurrent.TimeUnit;
 
 public class AutoRestart extends HashSet<StarNubTask> {
 
-    private final PluginConfiguration CONFIG;
-    private final ServerMonitor SERVER_MONITOR;
-    private final StarNubEventSubscription CRASH_LISTENER;
-    private final StarNubEventSubscription RESTART_LISTENER;
-    private final StarNubEventSubscription ONLINE_LISTENER;
+    private final PluggableConfiguration CONFIG;
+    private final StarboundMonitor STARBOUND_MONITOR;
 
-    public AutoRestart(PluginConfiguration CONFIG, ServerMonitor serverMonitor) {
+    public AutoRestart(PluggableConfiguration CONFIG, StarboundMonitor STARBOUND_MONITOR) {
         this.CONFIG = CONFIG;
-        this.SERVER_MONITOR = serverMonitor;
-
-        this.CRASH_LISTENER = new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Essentials_Server_Crash", new StarNubEventHandler() {
-            @Override
-            public void onEvent(ObjectEvent starNubEvent) {
-                clearTask();
-            }
-        });
-
-        this.RESTART_LISTENER = new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Starbound_Status_Restarting", new StarNubEventHandler() {
-            @Override
-            public void onEvent(ObjectEvent starNubEvent) {
-                clearTask();
-            }
-        });
-
-        this.ONLINE_LISTENER = new StarNubEventSubscription("Essentials", Priority.MEDIUM, "Starbound_Status_Online", new StarNubEventHandler() {
-            @Override
-            public void onEvent(ObjectEvent starNubEvent) {
-                StarNub.getStarboundServer().setRestarting(false);
-                registerRestart();
-            }
+        this.STARBOUND_MONITOR = STARBOUND_MONITOR;
+        this.STARBOUND_MONITOR.newStarNubEventSubscription(Priority.MEDIUM, "Essentials_Server_Crash", starNubEvent -> clearTask());
+        this.STARBOUND_MONITOR.newStarNubEventSubscription(Priority.MEDIUM, "Starbound_Status_Restarting", starNubEvent -> clearTask());
+        this.STARBOUND_MONITOR.newStarNubEventSubscription(Priority.MEDIUM, "Starbound_Status_Online", starNubEvent -> {
+            StarNub.getStarboundServer().setRestarting(false);
+            registerRestart();
         });
     }
 
     public void clearTask() {
-        this.forEach(StarNubTask::removeTask);
+        this.forEach(StarNubTask::unregister);
         this.clear();
     }
 
@@ -63,7 +41,7 @@ public class AutoRestart extends HashSet<StarNubTask> {
                 new StarNubTask("Essentials", "Essentials - Auto Restart Task - Restart Execution - " + timer, timer, TimeUnit.MINUTES, () -> {
                     StarNub.getStarboundServer().setRestarting(true);
                     StarNub.getConnections().getCONNECTED_PLAYERS().disconnectAllPlayers(DisconnectReason.RESTARTING);
-                    SERVER_MONITOR.getCRASH_HANDLER().getPLAYER_UUID_CACHE().cachePurge();
+                    STARBOUND_MONITOR.getSERVER_MONITOR().getCRASH_HANDLER().getPLAYER_UUID_CACHE().cachePurge();
                     ThreadSleep.timerSeconds(60);
                     StarNub.getStarboundServer().restart();
                     new StarNubEvent("Essentials_Auto_Restart_Complete", this);
@@ -85,12 +63,5 @@ public class AutoRestart extends HashSet<StarNubTask> {
                         }));
             }
         }
-    }
-
-    public void unregisterEventsTask() {
-        this.forEach(StarNubTask::removeTask);
-        CRASH_LISTENER.removeRegistration();
-        RESTART_LISTENER.removeRegistration();
-        ONLINE_LISTENER.removeRegistration();
     }
 }

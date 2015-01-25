@@ -1,5 +1,5 @@
 {
-  'owner': 'StarNub',
+  'organization': 'StarNub',
   'name': 'ChatParser',
   'version': 1.0,
   'class': 'org.starnub.chatparser.ChatParser',

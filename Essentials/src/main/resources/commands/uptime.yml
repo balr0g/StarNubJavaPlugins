@@ -1,7 +1,0 @@
-commands: ['uptime']
-main_args: ['starbound', 'starnub']
-custom_split: {}
-class: Unsubscribe
-can_use: 2
-description: |-
-    -

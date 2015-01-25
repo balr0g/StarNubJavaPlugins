@@ -22,6 +22,7 @@ import io.netty.channel.ChannelHandlerContext;
 import org.starnub.starbounddata.packets.Packet;
 import org.starnub.starbounddata.packets.chat.ChatReceivePacket;
 import org.starnub.starbounddata.packets.chat.ChatSendPacket;
+import org.starnub.starbounddata.types.color.Colors;
 import org.starnub.starnubserver.cache.wrappers.PermissionCacheWrapper;
 import org.starnub.starnubserver.cache.wrappers.PlayerCtxCacheWrapper;
 import org.starnub.starnubserver.connections.player.session.PlayerSession;
@@ -70,6 +71,7 @@ public final class ChatParser extends Plugin {
         chatSendPacket.recycle();
         PlayerSession playerSession = PlayerSession.getPlayerSession(chatSendPacket);
         String chatMessage = chatSendPacket.getMessage();
+        chatMessage = Colors.shortcutReplacement(chatMessage);
         boolean command = chatMessage.startsWith("/");
         if (!command) {
             chatHandle(playerSession, chatSendPacket);

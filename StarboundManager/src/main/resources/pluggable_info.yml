@@ -1,0 +1,12 @@
+{
+  'organization': 'StarNub',
+  'name': 'StarboundMonitor',
+  'version': 1.0,
+  'class': 'org.starnub.plugins.StarboundMonitor',
+  'unloadable': true,
+  'dependencies': [],
+  'additional_permissions': [],
+  'author': 'Underbalanced',
+  'url': 'http://www.starnub.org',
+  'description': 'This will monitor the Starbound Server and keep it running. As well has a auto restarter'
+}

@@ -1,0 +1,15 @@
+{
+  "static_broadcast": {
+    "enabled": true,
+    "broadcast": [    # Interval Minutes
+      {"interval": 15, "color": 'default', "message": 'Don''t forget this is a modded server! Download the modpack at www.free-universe.com/sbm and don''t forget to step by the teamspeak to chat once in a while: ts3.free-universe.com'},
+      {"interval": 16, "color": 'default', "message": 'We made some recent changes, if you experience frequent connection loss, please post on the forums and search out "Frequent Connection Lost". www.free-universe.com'}
+    ],
+  },
+  "random_broadcast": {
+    "enabled": true,
+    "interval": 10,
+    "color": 'default',
+    "message_pool": ['testicals', 'poop', 'motherLover'],
+  }
+}

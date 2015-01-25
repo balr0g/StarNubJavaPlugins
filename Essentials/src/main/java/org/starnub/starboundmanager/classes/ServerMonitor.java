@@ -1,4 +1,4 @@
-package org.starnub.essentials.classes;
+package org.starnub.starboundmanager.classes;
 
 import org.starnub.starnubserver.StarNub;
 import org.starnub.starnubserver.StarNubTask;

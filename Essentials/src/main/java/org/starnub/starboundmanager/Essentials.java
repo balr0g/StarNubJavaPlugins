@@ -16,9 +16,11 @@
 * this StarNub Software.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.starnub.essentials;
+package org.starnub.starboundmanager;
 
-import org.starnub.essentials.classes.*;
+import org.starnub.starboundmanager.classes.AutoRestart;
+import org.starnub.starboundmanager.classes.PlayerMessages;
+import org.starnub.starboundmanager.classes.ServerMonitor;
 import org.starnub.starnubserver.plugins.JavaPlugin;
 import org.starnub.starnubserver.plugins.generic.CommandInfo;
 import org.starnub.starnubserver.plugins.generic.PluginDetails;
