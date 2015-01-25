@@ -19,7 +19,7 @@
     "notification": {
       "enabled": true,
       "times": [60, 45, 30, 15, 10, 5, 1], # Minutes
-      "message": 'Starbound will restart in %d minutes.',
+      "message": 'The Starbound Server will restart in %d minutes.',
       "color": 'default', # Use the default server chat color
     }
   },

@@ -35,14 +35,17 @@ import org.starnub.utilities.events.Priority;
 
 public final class ChatParser extends Plugin {
 
-    private final PlayerCtxCacheWrapper CTX_CACHE_CHAT = new PlayerCtxCacheWrapper("StarNub", "StarNub - Chat Parser - Chat Rate", true);
-    private final PermissionCacheWrapper CHAT_PERMISSION = new PermissionCacheWrapper("ChatParser", "starnub.chatparser.chat");
-    private final PlayerCtxCacheWrapper CTX_CACHE_COMMAND = new PlayerCtxCacheWrapper("StarNub", "StarNub - Chat Parser - Command Rate", true);
-    private final PermissionCacheWrapper COMMAND_PERMISSION = new PermissionCacheWrapper("ChatParser", "starnub.chatparser.command");
+    private PlayerCtxCacheWrapper CTX_CACHE_CHAT;
+    private PermissionCacheWrapper CHAT_PERMISSION;
+    private PlayerCtxCacheWrapper CTX_CACHE_COMMAND;
+    private PermissionCacheWrapper COMMAND_PERMISSION;
 
     @Override
     public void onEnable() {
-        /* Do not need to do anything since the Plugin Manager will call register for us and submit our event listeners */
+        CTX_CACHE_CHAT = new PlayerCtxCacheWrapper(getRegistrationName(), "StarNub - Chat Parser - Chat Rate", true);
+        CHAT_PERMISSION = new PermissionCacheWrapper(getRegistrationName(), "starnub.chatparser.chat");
+        CTX_CACHE_COMMAND = new PlayerCtxCacheWrapper(getRegistrationName(), "StarNub - Chat Parser - Command Rate", true);
+        COMMAND_PERMISSION = new PermissionCacheWrapper(getRegistrationName(), "starnub.chatparser.command");
     }
 
     @Override

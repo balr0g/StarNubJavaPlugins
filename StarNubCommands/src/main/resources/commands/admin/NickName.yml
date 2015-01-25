@@ -1,6 +1,0 @@
-commands: ['nickname']
-main_args: ['change']
-class: org.starnub.NickName
-can_use: 3
-description: |-
-    - nick change {playerIdentifier} {newName}

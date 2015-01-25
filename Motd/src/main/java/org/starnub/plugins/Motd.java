@@ -15,12 +15,12 @@ import java.util.concurrent.TimeUnit;
 
 public class Motd extends Plugin {
 
-    private final PlayerAutoCancelTask AUTO_CANCEL_MOTD_TASK = new PlayerAutoCancelTask("Essentials", "MOTD");
+    private PlayerAutoCancelTask AUTO_CANCEL_MOTD_TASK;
     private volatile int rotatingIndex = 0;
 
     @Override
     public void onEnable() {
-        /* Do not need to do anything since the Plugin Manager will call register for us and submit our event listener */
+        this.AUTO_CANCEL_MOTD_TASK = new PlayerAutoCancelTask(getRegistrationName(), "MOTD");
     }
 
     @Override

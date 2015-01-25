@@ -1,5 +1,0 @@
-commands: ['online', 'players', 'who']
-main_args: ['None']
-class: org.starnub.Online
-can_use: 3
-description: |-

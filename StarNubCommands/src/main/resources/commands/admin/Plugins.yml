@@ -1,5 +1,0 @@
-commands: ['plugin']
-main_args: ['load', 'loaded', 'unload', 'enable', 'disable', 'update']
-class: org.starnub.Plugins
-can_use: 3
-description: |-

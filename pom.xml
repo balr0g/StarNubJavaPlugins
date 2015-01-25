@@ -9,9 +9,6 @@
     <packaging>pom</packaging>
     <version>1.0</version>
     <modules>
-        <module>Essentials</module>
-        <module>StarNubCommands</module>
-        <module>StarboundCommands</module>
         <module>CommandParser</module>
         <module>ChatManager</module>
         <module>NoCheats</module>
@@ -20,6 +17,7 @@
         <module>Motd</module>
         <module>Broadcaster</module>
         <module>StarboundManager</module>
+        <module>JoinLeaveMessages</module>
     </modules>
 
     <name>StarNubPlugins</name>
@@ -50,6 +48,18 @@
             </releases>
         </repository>
     </repositories>
+
+    <!-- Deploy to remote repo -->
+    <distributionManagement>
+        <repository>
+            <id>internal</id>
+            <url>http://repo.starnub.org/repository/internal/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://repo.starnub.org/repository/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>

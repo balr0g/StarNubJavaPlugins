@@ -1,5 +1,0 @@
-commands: ['account']
-main_args: ['new', 'addchar', 'changepass', 'adminnew', 'adminaddchar']
-class: org.starnub.Accounts
-can_use: 3
-description: |-

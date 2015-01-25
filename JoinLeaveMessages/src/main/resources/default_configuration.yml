@@ -1,0 +1,10 @@
+{
+  "enabled": true,
+  "delay": 3,  # Seconds - This will delay the join message, if the player disconnectes before this, no message is sent
+  "name_color": true, # Show players name color
+  "message": {
+     "color": 'default',
+     "connect": '%s has joined the server.',
+     "disconnect": '%s has left the server.'
+  }
+}

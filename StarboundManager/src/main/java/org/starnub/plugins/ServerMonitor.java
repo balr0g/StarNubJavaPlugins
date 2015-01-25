@@ -1,12 +1,16 @@
 package org.starnub.plugins;
 
+import org.starnub.starbounddata.types.color.Colors;
 import org.starnub.starnubserver.StarNub;
+import org.starnub.starnubserver.cache.wrappers.PlayerUUIDCacheWrapper;
+import org.starnub.starnubserver.connections.player.session.PlayerSession;
 import org.starnub.starnubserver.events.events.StarNubEvent;
 import org.starnub.starnubserver.pluggable.resources.PluggableConfiguration;
 import org.starnub.starnubserver.servers.starbound.StarboundServer;
 import org.starnub.utilities.cache.objects.BooleanCache;
 import org.starnub.utilities.cache.objects.TimeCache;
 import org.starnub.utilities.events.Priority;
+import org.starnub.utilities.events.types.ObjectEvent;
 import org.starnub.utilities.file.simplejson.parser.ParseException;
 
 import java.io.IOException;
@@ -19,24 +23,31 @@ public class ServerMonitor {
 
     private final PluggableConfiguration CONFIG;
     private final StarboundMonitor STARBOUND_MONITOR;
-    private final CrashedHandler CRASH_HANDLER;
+    private final PlayerUUIDCacheWrapper PLAYER_UUID_CACHE;
 
     public ServerMonitor(PluggableConfiguration CONFIG, StarboundMonitor STARBOUND_MONITOR) {
         this.CONFIG = CONFIG;
         this.STARBOUND_MONITOR = STARBOUND_MONITOR;
-        CRASH_HANDLER = new CrashedHandler(CONFIG, STARBOUND_MONITOR);
-        STARBOUND_MONITOR.newStarNubEventSubscription(Priority.MEDIUM, "Player_Connected", CRASH_HANDLER);
-        if ((boolean) CONFIG.getNestedValue("monitor", "start_on_load")) {
-            startStarnubStartedListener();
-        }
-        starboundStartedListener();
+        this.PLAYER_UUID_CACHE = new PlayerUUIDCacheWrapper(STARBOUND_MONITOR.getRegistrationName(), "Essentials - Crash Notification", false, TimeUnit.SECONDS, 0, 0);
     }
 
-    private void startStarnubStartedListener() {
+    public PlayerUUIDCacheWrapper getPLAYER_UUID_CACHE() {
+        return PLAYER_UUID_CACHE;
+    }
+
+    protected void startStarnubStartedListener() {
         STARBOUND_MONITOR.newStarNubEventSubscription(Priority.NONE, "StarNub_Startup_Complete", starNubEvent -> startServer());
     }
 
-    private void starboundStartedListener() {
+    private void startServer() {
+        try {
+            StarNub.getStarboundServer().start();
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void starboundStartedListener() {
         STARBOUND_MONITOR.newStarNubEventSubscription(Priority.MEDIUM, "Starbound_Status_Online", starNubEvent -> {
             int interval = (int) CONFIG.getNestedValue("monitor", "interval");
             boolean processCheck = (boolean) CONFIG.getNestedValue("monitor", "process_crash");
@@ -49,14 +60,6 @@ public class ServerMonitor {
                 responsiveness(interval, tries);
             }
         });
-    }
-
-    private void startServer() {
-        try {
-            StarNub.getStarboundServer().start();
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     private void processCheck(int interval) {
@@ -83,7 +86,7 @@ public class ServerMonitor {
 
     private void serverCrash() {
         new StarNubEvent("Essentials_Server_Crash", this);
-        ConcurrentHashMap<UUID, TimeCache> cacheMap = CRASH_HANDLER.getPLAYER_UUID_CACHE().getCACHE_MAP();
+        ConcurrentHashMap<UUID, TimeCache> cacheMap = PLAYER_UUID_CACHE.getCACHE_MAP();
         for (TimeCache timeCache : cacheMap.values()) {
             BooleanCache booleanCache = (BooleanCache) timeCache;
             booleanCache.setBool(true);
@@ -106,7 +109,18 @@ public class ServerMonitor {
         });
     }
 
-    public CrashedHandler getCRASH_HANDLER() {
-        return CRASH_HANDLER;
+    public void crashCheck(ObjectEvent starNubEvent) {
+        PlayerSession playerSession = (PlayerSession) starNubEvent.getEVENT_DATA();
+        UUID uuid = playerSession.getPlayerCharacter().getUuid();
+        TimeCache cache = PLAYER_UUID_CACHE.removeCache(uuid);
+        if (cache != null) {
+            BooleanCache booleanCache = (BooleanCache) cache;
+            if (booleanCache.isBool()) {
+                String color = Colors.validate((String) CONFIG.getNestedValue("monitor", "crashed_notification", "color"));
+                String message = (String) CONFIG.getNestedValue("monitor", "crashed_notification", "message");
+                STARBOUND_MONITOR.newStarNubTask("Essentials - Server Crash - Notification - " + uuid.toString(), 5, TimeUnit.SECONDS, () -> playerSession.sendBroadcastMessageToClient("ServerName", color + message));
+            }
+        }
+        PLAYER_UUID_CACHE.addCache(uuid, new BooleanCache(false));
     }
 }

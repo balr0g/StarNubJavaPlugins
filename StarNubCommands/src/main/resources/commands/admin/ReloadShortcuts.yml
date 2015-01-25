@@ -1,5 +1,0 @@
-commands: ['reloadshortcuts']
-main_args: ['']
-class: org.starnub.ReloadShortcuts
-can_use: 3
-description: |-

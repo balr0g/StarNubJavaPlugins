@@ -42,7 +42,7 @@ public class Broadcaster extends Plugin {
             String color = Colors.validate((String) broadcastMap.get("color"));
             String message = (String) broadcastMap.get("message");
             newStarNubTask("Essentials - Broadcast", true, interval, interval, TimeUnit.MINUTES, () -> {
-                PlayerSession.sendChatBroadcastToClientsAllFiltered("Essentials", color + message, PSPredicates.doesNotHavePermission("starnub", "motd", "ignore", false));
+                PlayerSession.sendChatBroadcastToClientsAllFiltered("ServerName", color + message, PSPredicates.doesNotHavePermission("starnub", "motd", "ignore", false));
             });
         }
     }
@@ -55,7 +55,7 @@ public class Broadcaster extends Plugin {
             int randInt = RandomNumber.randInt(0, message.size() - 1);
             String randomMessage = message.get(randInt);
             String randomMessageReplacedTokens = StringTokens.replaceTokens(randomMessage);
-            PlayerSession.sendChatBroadcastToClientsAllFiltered("Essentials", color + randomMessageReplacedTokens, PSPredicates.doesNotHavePermission("starnub", "motd", "ignore", false));
+            PlayerSession.sendChatBroadcastToClientsAllFiltered("ServerName", color + randomMessageReplacedTokens, PSPredicates.doesNotHavePermission("starnub", "motd", "ignore", false));
         });
     }
 }
