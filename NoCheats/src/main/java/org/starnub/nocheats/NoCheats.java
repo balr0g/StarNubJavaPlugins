@@ -1,20 +1,20 @@
 package org.starnub.nocheats;
 
 
-import org.starnub.plugins.Plugin;
+import org.starnub.starnubserver.pluggable.Plugin;
 
 public class NoCheats extends Plugin {
 
     private volatile Tiles tiles;
 
     @Override
-    public void onPluginEnable() {
+    public void onEnable() {
         tiles =  new Tiles();
         tiles.registerTileGroupDamage();
     }
 
     @Override
-    public void onPluginDisable() {
+    public void onDisable() {
 
     }
 }

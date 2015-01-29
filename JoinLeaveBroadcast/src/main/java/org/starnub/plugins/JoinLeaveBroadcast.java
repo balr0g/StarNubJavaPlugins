@@ -37,7 +37,6 @@ public class JoinLeaveBroadcast extends Plugin {
         }
     }
 
-
     @Override
     public void onDisable() {
 
@@ -67,7 +66,7 @@ public class JoinLeaveBroadcast extends Plugin {
                             PSPredicates.isCtxNotListed(UNSUBSCRIBED_JOIN_LEAVE.getCACHE_MAP()),
                             PSPredicates.doesNotHavePermission("starnub", "joinleave", "ignore", false))
             );
-            StarNub.getLogger().cInfoPrint("JoinLeave", playerNameConsole + " has connected. (IP: " + playerSession.getSessionIpString() + ")");
+            StarNub.getLogger().cInfoPrint("JoinLeaveBroadcast", playerNameConsole + " has connected. (IP: " + playerSession.getSessionIpString() + ")");
         });
         JOIN_TASK.registerTask(clientCtx, playerJoinTask);
     }
@@ -97,7 +96,7 @@ public class JoinLeaveBroadcast extends Plugin {
                             PSPredicates.isCtxNotListed(UNSUBSCRIBED_JOIN_LEAVE.getCACHE_MAP()),
                             PSPredicates.doesNotHavePermission("starnub", "joinleave", "ignore", false))
             );
-            StarNub.getLogger().cInfoPrint("JoinLeave", playerNameConsole + " has disconnected. (IP: " + playerSession.getSessionIpString() + ")");
+            StarNub.getLogger().cInfoPrint("JoinLeaveBroadcast", playerNameConsole + " has disconnected. (IP: " + playerSession.getSessionIpString() + ")");
         }
     }
 }

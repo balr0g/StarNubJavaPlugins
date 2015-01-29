@@ -65,7 +65,7 @@
         <dependency>
             <groupId>org.starnub</groupId>
             <artifactId>starnub</artifactId>
-            <version>1.09-beta-SNAPSHOT</version>
+            <version>1.5-beta-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>

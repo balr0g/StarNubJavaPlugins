@@ -58,7 +58,7 @@ public final class ChatParser extends Plugin {
     public void chatReceive(Packet packet) {
         ChatReceivePacket chatReceivePacket = (ChatReceivePacket) packet;
         ChatReceivePacket chatReceivePacketCopy = chatReceivePacket.copy();
-        packet.recycle();
+//        packet.recycle();
         chatReceivePacketCopy.setFromName("Starbound");
         PlayerSession playerSession = PlayerSession.getPlayerSession(chatReceivePacketCopy);
         new StarNubEventTwo("Player_Chat_Parsed_From_Server", playerSession, chatReceivePacketCopy);
@@ -67,7 +67,7 @@ public final class ChatParser extends Plugin {
 
     public void chatSend(Packet packet) {
         ChatSendPacket chatSendPacket = (ChatSendPacket) packet;
-        chatSendPacket.recycle();
+        //Recycle
         PlayerSession playerSession = PlayerSession.getPlayerSession(chatSendPacket);
         String chatMessage = chatSendPacket.getMessage();
         chatMessage = Colors.shortcutReplacement(chatMessage);
@@ -76,6 +76,7 @@ public final class ChatParser extends Plugin {
             chatHandle(playerSession, chatSendPacket);
         } else {
             commandHandle(playerSession, chatSendPacket);
+            chatSendPacket.recycle();
         }
     }
 
